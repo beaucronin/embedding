@@ -1,3 +1,5 @@
+'use strict'
+
 class Dataset {
 	constructor() {
 		this.datapoints = {};
@@ -9,8 +11,14 @@ class Dataset {
 	 * Add a datapoint to the Dataset
 	 */
 	addDatapoint(datapoint) {
-		this.datapoints[datapoint.id] = datapoint;
-		this.added.push(datapoint)
+		var d;
+		if (! (datapoint instanceof Datapoint)) {
+			d = new Datapoint(datapoint);
+		} else {
+			d = datapoint;
+		}
+		this.datapoints[d.id] = d;
+		this.added.push(d)
 	}
 
 	/**
@@ -24,18 +32,22 @@ class Dataset {
 	getDatapoint(id) {
 		return this.datapoints[id];
 	}
+
+	processed() {
+		this.added = [];
+		this.removed = [];
+	}
 }
 
 class Datapoint {
 	constructor(values, idAttribute='_id') {
 		this.values = values;
 		this.idAttribute = idAttribute;
-		this.id = values[this.idAttribute];
 		this.dirty = true;
 	}
 
 	get id() {
-		return this.values[idAttribute];
+		return this.values[this.idAttribute];
 	}
 
 	setAttribute(att, val) {

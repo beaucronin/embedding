@@ -2,9 +2,11 @@
   "name": "embedding",
   "version": "0.0.1",
   "description": "Embedding data into time and space",
-  "main": "index.js",
+  "main": "src/main.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build": "browserify ./build/embedding.js --standalone EMBED -o bundle.js",
+    "start": "watchify ./build/embedding.js --standalone EMBED -v -o bundle.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,10 @@
     "gulp-concat": "^2.6.0",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^2.0.0",
-    "mocha": "^3.0.2"
+    "mocha": "^3.0.2",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "object-assign": "^4.1.0"
   }
 }
