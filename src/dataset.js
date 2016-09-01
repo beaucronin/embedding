@@ -3,14 +3,13 @@
 class Dataset {
 	constructor() {
 		this.datapoints = {};
-		this.added = [];
-		this.removed = [];
+		this.embeddings = [];
 	}
 
 	/**
 	 * Add a datapoint to the Dataset
 	 */
-	addDatapoint(datapoint) {
+	add(datapoint) {
 		var d;
 		if (! (datapoint instanceof Datapoint)) {
 			d = new Datapoint(datapoint);
@@ -18,24 +17,45 @@ class Dataset {
 			d = datapoint;
 		}
 		this.datapoints[d.id] = d;
-		this.added.push(d)
+		this.sendNotifications('add', d.id);
 	}
 
 	/**
 	 * Remove a datapoint from the Dataset
 	 */
-	removeDatapoint(id) {
-		this.removed = this.datapoints[id];
+	remove(id) {
 		delete this.datapoints[id];
+		this.sendNotifications('remove', id)
 	}
 
-	getDatapoint(id) {
+	/**
+	 * Modify the value of a datapoint attribute
+	 */
+	update(id, k, v) {
+		let dp = this.datapoints[id];
+		if (dp) {
+			old = dp.get(k);
+			dp.set(k, v);
+			this.sendNotifications('update', id, k, v, old)
+		}
+	}
+
+	get(id) {
 		return this.datapoints[id];
 	}
 
-	processed() {
-		this.added = [];
-		this.removed = [];
+	register(embedding) {
+		this.embeddings.push(embedding);
+	}
+
+	sendNotifications(type, id, ...x) {
+		let msg = { type: type, id: id };
+		if (type == 'update') {
+			msg.attr = x[0];
+			msg.newVal = x[1];
+			msg.oldVal = x[2];
+		}
+		this.embeddings.forEach((e) => e.notify( msg ));
 	}
 }
 
@@ -43,15 +63,15 @@ class Datapoint {
 	constructor(values, idAttribute='_id') {
 		this.values = values;
 		this.idAttribute = idAttribute;
-		this.dirty = true;
 	}
 
 	get id() {
 		return this.values[this.idAttribute];
 	}
 
-	setAttribute(att, val) {
-		this.values[att] = val;
-		dirty = true;
+	get(k) { return this.values[k]; }
+
+	set(k, v) {
+		this.values[k] = v;
 	}
 }

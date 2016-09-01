@@ -9,5 +9,6 @@ var animateEmbeddings = function() {
 module.exports = {
 	Dataset: Dataset,
 	Embedding: Embedding,
-	RandomEmbedding: RandomEmbedding
+	RandomEmbedding: RandomEmbedding,
+	ScatterEmbedding: ScatterEmbedding
 }
