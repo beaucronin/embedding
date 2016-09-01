@@ -20,6 +20,20 @@ A major hypothesis driving the development of Embedding is that direct navigatio
 		- Updating
 	- Multiple embeddings can depend on the same dataset
 
+# Lifecycle
+
+- An `EMBED.Dataset` object, _D_ is created
+- A `THREE.Scene` object, _S_ is created
+- An `EMBED.Embedding` object _E_ is created, with references to _S_ and _D_
+	- _E_ registers itself with _D_ to receive change notifications
+- As datapoints _dp_ in _D_ are added, removed, or updated:
+	- _D_ send an event to _E_ (possibly multiple registered)
+- _E_`.embed()` is called (once, or in the animate() loop, or as needed)
+	- if _E_ is not initialized
+		- creates necessary objects and state
+		- iterates over _dp_ in _D_
+		- sets initialized to `true`
+
 # Example Embeddings
 
 - Random: each point is assigned a random position; configuration by random distribution and parameter values, point mass and size
@@ -39,6 +53,9 @@ A major hypothesis driving the development of Embedding is that direct navigatio
 - Tree: each point is realized as a "leaf" on a hierarchical tree structure whose branches can grow and shrink over time
 - Graph: each point is a node on a graph
 	- Placement is by graph layout algorithm, such as force directed
+- Geo: each point is located in space
+	- Placement is by datapoint attributes plus mapping projection
+- Planar: each point is located in a (possibly curved) plane
 
 # Relationship to other projects
 
