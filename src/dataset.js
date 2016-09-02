@@ -1,9 +1,28 @@
 'use strict'
 
+var Papa = require('papaparse');
+
 class Dataset {
 	constructor() {
 		this.datapoints = {};
 		this.embeddings = [];
+	}
+
+	static createFromCSV(url, callback) {
+		Papa.parse(url, {
+			download: true,
+			header: true,
+			dynamicTyping: true,
+			complete: function(results) {
+				var ds = new Dataset();
+				for (let i in results.data) {
+					let dp = results.data[i];
+					dp._id = i;
+					ds.add(dp);
+				}
+				callback(ds);
+			}
+		});
 	}
 
 	/**
@@ -34,7 +53,7 @@ class Dataset {
 	update(id, k, v) {
 		let dp = this.datapoints[id];
 		if (dp) {
-			old = dp.get(k);
+			let old = dp.get(k);
 			dp.set(k, v);
 			this.sendNotifications('update', id, k, v, old)
 		}

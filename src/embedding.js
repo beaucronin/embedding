@@ -1,4 +1,5 @@
 var assign = require('object-assign');
+var TWEEN = require('tween.js');
 
 class Embedding {
 	constructor(scene, dataset, options = {}) {
@@ -61,7 +62,8 @@ class RandomEmbedding extends MeshEmbedding {
 	_createMeshForDatapoint(dp) {
 		var pos = new THREE.Vector3(normal()*this.spread, normal()*this.spread, normal()*this.spread);
 		var geo = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-		var mat = new THREE.MeshBasicMaterial({ color: new THREE.Color(Math.random(), Math.random(), Math.random()) });
+		var mat = new THREE.MeshBasicMaterial(
+			{ color: new THREE.Color(Math.random(), Math.random(), Math.random()) });
 		var mesh = new THREE.Mesh(geo, mat);
 		mesh.position.copy(pos);
 		this.obj3D.add(mesh);
@@ -99,7 +101,11 @@ class PointsEmbedding extends Embedding {
 
 class ScatterEmbedding extends PointsEmbedding {
 	constructor(scene, dataset, options={}) {
-		options = assign( { bufferSize: 1000 }, options);
+		options = assign( 
+			{ 
+				bufferSize: 1000,
+				moveSpeed: 2,
+			}, options);
 		super(scene, dataset, options)
 		
 		// mapping from datapoint ids to vertex indices
@@ -114,6 +120,8 @@ class ScatterEmbedding extends PointsEmbedding {
 				new THREE.Vector3(-1000000, -1000000, -1000000));
 			this.freeVertices.push(i);
 		}
+
+		this.tweens = {};
 	}
 
 	embed() {
@@ -137,6 +145,8 @@ class ScatterEmbedding extends PointsEmbedding {
 			} 
 			this.events = [];
 		}
+		// TODO move to global embedding update location
+		TWEEN.update();
 	}
 
 	_placeDatapoint(id) {
@@ -162,14 +172,39 @@ class ScatterEmbedding extends PointsEmbedding {
 	}
 
 	_updateDatapoint(id, event) {
-		let vi = this.freeVertices.pop();
+		let vi = this.dpMap[id];
 		if (vi != undefined) {
 			let dp  = this.dataset.datapoints[id];
 			if (! dp) return;
-			// TODO tweens
 			// TODO other attributes beside position
-			this.points.geometry.vertices[vi].set(
-				dp.values.x, dp.values.y, dp.values.z);			
+			let v = this.points.geometry.vertices[vi];
+			let start = { x: v.x, y: v.y, z: v.z };
+			let end = { x: dp.values.x, y: dp.values.y, z: dp.values.z };
+			let d = (new THREE.Vector3(start.x, start.y, start.z))
+				.sub(new THREE.Vector3(end.x, end.y, end.z))
+				.length();
+			let t = 1000 * d / this.options.moveSpeed;
+			var geo = this.points.geometry;
+			var obj = this;
+			if (this.tweens[vi]) {
+				this.tweens[vi].stop();
+				delete this.tweens[vi];
+			}
+			let tween = new TWEEN.Tween(start)
+				.to(end, t)
+				.onUpdate(function() {
+					v.set(this.x, this.y, this.z);
+					geo.verticesNeedUpdate = true;
+				})
+				.onComplete(function() {
+					delete obj.tweens[vi];
+				})
+				.onStop(function() {
+					delete obj.tweens[vi];
+				})
+				.easing(TWEEN.Easing.Exponential.InOut)
+				.start();
+			this.tweens[vi] = tween;
 		}
 	}
 }

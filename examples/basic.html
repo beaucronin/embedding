@@ -30,20 +30,29 @@
 					c++;
 				}
 			};
-			window.setInterval(f, 150);
+			window.setInterval(f, 100);
 			var g = function() {
 				let ids = Object.keys(dataset.datapoints);
 				M = ids.length;
 				let i = Math.floor(Math.random() * M);
 				let id = ids[i];
-				console.log('removing '+id);
 				dataset.remove(id);
 			}
-			window.setInterval(g, 173);
+			// window.setInterval(g, 5000);
+			var h = function() {
+				let ids = Object.keys(dataset.datapoints);
+				M = ids.length;
+				let i = Math.floor(Math.random() * M);
+				let id = ids[i];
+				dataset.update(id, 'x', -4 + 8*Math.random());	
+				dataset.update(id, 'y', -4 + 8*Math.random());	
+				dataset.update(id, 'z', -4 + 8*Math.random());	
+			}
+			window.setInterval(h, 200);
 
 			// var embedding = new EMBED.RandomEmbedding(scene, dataset);
 			embedding = new EMBED.ScatterEmbedding(
-				scene, dataset, {pointSize: 0.5, pointColor: 0x993333});
+				scene, dataset, {pointSize: 0.5, pointColor: 0x993333, moveSpeed: 3});
 
 		}
 
