@@ -189,7 +189,8 @@ class PointsEmbedding extends Embedding {
 			}, options);
 		super(scene, dataset, options);
 
-		let sprite = new THREE.TextureLoader().load("/static/sprites/"+this.options.pointType+".png");
+		// let sprite = new THREE.TextureLoader().load("/static/sprites/"+this.options.pointType+".png");
+		let sprite = new THREE.TextureLoader().load("https://rawgit.com/beaucronin/embedding/master/static/sprites/ball.png");
 		let materialProps = {
 			size: this.options.pointSize,
 			sizeAttenuation: true,
