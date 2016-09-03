@@ -5,6 +5,45 @@ A major hypothesis driving the development of Embedding is that direct navigatio
 
 # Installation
 
+# How do I use it?
+
+Glad you asked! Here's about the simplest thing you can do:
+
+```javascript
+var scene, renderer, camera, dataset, embedding;
+N = 50;
+
+// initialize the scene, renderer, and camera objects and inject into the DOM
+EMBED.initScene();
+
+// create a simple Dataset with x, y, and z attributes
+dataset = new EMBED.Dataset();
+for (let i = 0; i < N; i++) 
+	dataset.add(
+		{ _id: i, 
+			x: i / (N / 10) - 5, 
+			y: 4 * Math.sin(i * 2 * Math.PI / N), 
+			z: 0 
+		}
+	);
+
+// create an embedding that will place the points in the Dataset into space
+embedding = new EMBED.ScatterEmbedding(
+	scene, dataset, {pointColor: 0x339933, pointSize: .5});
+
+// start a simple render loop
+EMBED.animate();
+```
+[fiddle](https://jsfiddle.net/beaucronin/ctd4u9r2/)
+
+### That's...kind of cool. But what if my data is changing - what if new data is arriving, for example?
+
+Just add and remove them to the Dataset as needed, and the Embedding will update itself.
+
+### OK, but what if _existing_ datapoints are being updated?
+
+You can also update values in the Dataset, and the Embedding will change to match. It will even perform configurable animations to help the user to track these.
+
 # Main Abstractions
 
 - A *dataset* is a collection of data points. 
@@ -28,11 +67,17 @@ A major hypothesis driving the development of Embedding is that direct navigatio
 	- _E_ registers itself with _D_ to receive change notifications
 - As datapoints _dp_ in _D_ are added, removed, or updated:
 	- _D_ send an event to _E_ (possibly multiple registered)
+	- _E_ stores event payload (_dp_ `id`, event type, etc) for future reference
 - _E_`.embed()` is called (once, or in the animate() loop, or as needed)
 	- if _E_ is not initialized
 		- creates necessary objects and state
 		- iterates over _dp_ in _D_
+			- creates rendering objects and state
 		- sets initialized to `true`
+	- else (_E_ is initialized)
+		- iterates over change events
+			- updates object state
+		- clears change events
 
 # Example Embeddings
 
