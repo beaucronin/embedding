@@ -1,7 +1,3 @@
-'use strict'
-
-var Papa = require('papaparse');
-
 class Dataset {
 	constructor() {
 		this.datapoints = {};
@@ -59,9 +55,9 @@ class Dataset {
 		}
 	}
 
-	get(id) {
-		return this.datapoints[id];
-	}
+	get(id) { return this.datapoints[id]; }
+
+	getIds() { return Object.keys(this.datapoints); }
 
 	register(embedding) {
 		this.embeddings.push(embedding);
@@ -75,6 +71,20 @@ class Dataset {
 			msg.oldVal = x[2];
 		}
 		this.embeddings.forEach((e) => e.notify( msg ));
+	}
+}
+
+class WebSocketDataset extends Dataset {
+	constructor(url, options = {}) {
+		options = assign({onmessage: (x) => x, init: (s) => {}}, options)
+		super();
+		this.options = options;
+		this.socket = new WebSocket(url);
+		this.socket.onopen = () => this.options.init(this.socket);
+		this.socket.onmessage = function(m) {
+			var d = this.options.onmessage(JSON.parse(m.data));
+			this.add(d);
+		}.bind(this);
 	}
 }
 
