@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<meta charset="utf-8" />
+		<title>Embedding.js basic example</title>
+		<script src="../bundle.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r80/three.min.js"></script>
+		<script src="../static/js/three-vr-viewer.js"></script>
+	</head>
+	<body>
+		<script>
+		const { scene, camera, renderer, events, toggleVR, controllers, vrEffect } = VRViewer({THREE});
+		// var scene, renderer, camera;
+		var dataset, embedding;
+		var N = 1;
+		var c = 0;
+
+		// EMBED.initScene();
+		var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
+		scene.add( light );
+		
+		dataset = new EMBED.WebSocketDataset(
+			// see https://blockchain.info/api/api_websocket
+			"wss://ws.blockchain.info/inv", 
+			{ 
+				init: (s) => s.send('{"op":"unconfirmed_sub"}'), 
+				onmessage: function(m) {
+					let sum_in =  m.x.inputs.map((x) => x.prev_out.value).reduce((a,b) => a+b, 0);
+					let sum_out =  m.x.out.map((x) => x.value).reduce((a,b) => a+b, 0);
+					return {
+						_id: m.x.hash,
+						vin_sz: m.x.vin_sz,
+						vout_sz: m.x.vout_sz,
+						size: m.x.size,
+						time: m.x.time
+					}
+				}
+			}
+		);
+		embedding = new EMBED.PathEmbedding(scene, dataset, 
+			[[-10, 1, 0], 
+			 [-6, 0, -2],
+			 [-4, -1, 5],
+			 [0, -1, 8],
+			 [4, -1, 5],
+			 [6, 0, -2 ],
+			 [10, 1, 0]],
+			 {
+			 	meshSizeX: (d) => d.get("size") / 500,
+			 	meshSizeY: (d) => d.get("vin_sz") / 5,
+			 	meshSizeZ: (d) => d.get("vout_sz") / 5,
+			 	pathTime: 5000
+			 });
+		EMBED.animate();
+
+		</script>
+	</body>
+</html>
