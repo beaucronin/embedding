@@ -10,13 +10,22 @@
 	</head>
 	<body>
 		<script>
-		const { scene, camera, renderer, events, toggleVR, controllers, vrEffect } = VRViewer({THREE});
-		// var scene, renderer, camera;
+		const params = EMBED.queryString.parse(window.location.search);
+		console.log(window.location);
+		var scene, camera, renderer;
 		var dataset, embedding;
+
+		if (params.VR) {
+			let { _scene, _camera, _renderer } = VRViewer({THREE});
+			scene = _scene;
+			camera = _camera;
+			renderer = _renderer;
+		} else {
+			EMBED.initScene();
+		}
 		var N = 1;
 		var c = 0;
 
-		// EMBED.initScene();
 		var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
 		scene.add( light );
 		

@@ -3,6 +3,7 @@
 var Papa = require('papaparse');
 var assign = require('object-assign');
 var TWEEN = require('tween.js');
+var queryString = require('query-string');
 
 var embeddings = [];
 
@@ -38,5 +39,6 @@ module.exports = {
 	ScatterEmbedding: ScatterEmbedding,
 	PathEmbedding: PathEmbedding,
 	initScene: initScene,
-	animate: animate
+	animate: animate,
+	queryString: queryString
 }
