@@ -15,11 +15,7 @@
 		var dataset, embedding;
 
 		if (params.VR) {
-			const { _scene, _camera, _renderer, events, toggleVR, controllers, vrEffect } = VRViewer({THREE});
-			console.log(_scene);
-			scene = _scene;
-			camera = _camera;
-			renderer = _renderer;
+			var { scene, camera, renderer, events, toggleVR, controllers, vrEffect } = VRViewer({THREE});
 		} else {
 			EMBED.initScene();
 		}
