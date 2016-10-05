@@ -11,12 +11,12 @@
 	<body>
 		<script>
 		const params = EMBED.queryString.parse(window.location.search);
-		console.log(window.location);
 		var scene, camera, renderer;
 		var dataset, embedding;
 
 		if (params.VR) {
-			let { _scene, _camera, _renderer } = VRViewer({THREE});
+			const { _scene, _camera, _renderer, events, toggleVR, controllers, vrEffect } = VRViewer({THREE});
+			console.log(_scene);
 			scene = _scene;
 			camera = _camera;
 			renderer = _renderer;
