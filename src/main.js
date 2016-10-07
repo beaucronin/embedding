@@ -5,6 +5,8 @@ var assign = require('object-assign');
 var TWEEN = require('tween.js');
 var queryString = require('query-string');
 
+var controls;
+
 var embeddings = [];
 
 var animateEmbeddings = function() {
@@ -13,8 +15,8 @@ var animateEmbeddings = function() {
 	}
 }
 
-function initScene(inVR) {
-	if (inVR) {
+function initScene(controlType) {
+	if (controlType.toLowerCase() == "vr") {
 		// use mflux's webvr harness
 		const { scene, camera, renderer, events, toggleVR, controllers, vrEffect } = VRViewer({THREE});
 		return { scene, camera, renderer };
@@ -26,6 +28,14 @@ function initScene(inVR) {
 		const renderer = new THREE.WebGLRenderer();
 		renderer.setSize( window.innerWidth, window.innerHeight );
 	    document.body.appendChild( renderer.domElement );
+
+	    if (controlType.toLowerCase() == "orbit") {
+	    	const OrbitControls = require('three-orbit-controls')(THREE);
+	    	controls = new OrbitControls(camera, renderer.domElement);
+	    } else if (controlType.toLowerCase() == "trackball") {
+	    	const TrackballControls = require('three-trackballcontrols');
+	    	controls = new TrackballControls(camera, renderer.domElement);
+	    }
 	    return { scene, camera, renderer };		
 	}
 }

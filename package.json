@@ -37,6 +37,7 @@
     "object-assign": "^4.1.0",
     "papaparse": "^4.1.2",
     "query-string": "^4.2.3",
+    "three-orbit-controls": "^72.0.0",
     "tween.js": "^16.3.5"
   }
 }
