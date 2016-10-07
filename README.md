@@ -1,6 +1,8 @@
 # embedding
 Embedding is a javascript library that makes it easy to create data-driven environments. It is built on three.js, and takes inspiration from D3.
 
+**NOTE: Embedding is embryonic, and not yet ready for any use other than playing and experimenting. Issues, discussion, and PRs very welcome!**
+
 A major hypothesis driving the development of Embedding is that direct navigation and manipulation of environments provide fundamentally new opportunities in the creation of compelling data visualization, exploration, and discovery experiences - in particular, the ability to directly change the viewpoint via position- and direction-tracked camera in VR.
 
 # Installation
