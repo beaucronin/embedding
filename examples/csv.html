@@ -12,8 +12,6 @@
 		const params = EMBED.queryString.parse(window.location.search);
 		const { scene, camera, renderer } = EMBED.initScene(params.control || "none");
 		var dataset, embedding;
-		var N = 1;
-		var c = 0;
 
 		initEmbedding();
 		EMBED.animate();
@@ -24,10 +22,8 @@
 					embedding = new EMBED.ScatterEmbedding(
 						scene, dataset, {
 							pointSize: 0.1,
-							moveSpeed: 3,
 							autoScale: true,
 							autoScaleRange: 5,
-							bufferSize: 10000,
 							mapping: {
 								x: "Whole_Weight",
 								y: "Shucked_Weight",
