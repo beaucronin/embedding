@@ -15,7 +15,7 @@ var animateEmbeddings = function() {
 	}
 }
 
-function initScene(controlType) {
+function initScene(controlType = "") {
 	if (controlType.toLowerCase() == "vr") {
 		// use mflux's webvr harness
 		const { scene, camera, renderer, events, toggleVR, controllers, vrEffect } = VRViewer({THREE});
@@ -32,9 +32,6 @@ function initScene(controlType) {
 	    if (controlType.toLowerCase() == "orbit") {
 	    	const OrbitControls = require('three-orbit-controls')(THREE);
 	    	controls = new OrbitControls(camera, renderer.domElement);
-	    } else if (controlType.toLowerCase() == "trackball") {
-	    	const TrackballControls = require('three-trackballcontrols');
-	    	controls = new TrackballControls(camera, renderer.domElement);
 	    }
 	    return { scene, camera, renderer };		
 	}
