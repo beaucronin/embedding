@@ -189,6 +189,7 @@ class ScatterEmbedding extends PointsEmbedding {
 					else if (e.type == "remove") this._removeDatapoint(e.id);
 					else if (e.type == "update") this._updateDatapoint(e.id, e);
 				}
+				console.log("calling vertices update");
 				this.points.geometry.verticesNeedUpdate = true;			
 			} 
 			this.events = [];
@@ -359,7 +360,7 @@ class PathEmbedding extends Embedding {
 }
 
 class Rescaling {
-	constructor(xo=0, yo=0, zo=0, xs=0, ys=0, zs=0) {
+	constructor(xo=0, yo=0, zo=0, xs=1, ys=1, zs=1) {
 		if (typeof(xo) == "number") {
 			this.xo = xo;
 			this.yo = yo;
