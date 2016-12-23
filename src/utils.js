@@ -1,6 +1,6 @@
 'use strict';
 
-var assign = require('object-assign');
+import assign from 'object-assign';
 
 // from https://github.com/mock-end/random-normal
 function normalPool(options) {

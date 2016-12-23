@@ -1,4 +1,7 @@
-class Dataset {
+import Papa from 'papaparse';
+import assign from 'object-assign';
+
+export class Dataset {
 	constructor() {
 		this.datapoints = {};
 		this.embeddings = [];

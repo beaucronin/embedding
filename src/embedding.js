@@ -1,4 +1,7 @@
-class Embedding {
+import assign from 'object-assign';
+import TWEEN from 'tween.js';
+
+export class Embedding {
 	constructor(scene, dataset, options = {}) {
 		this.dataset = dataset;
 		dataset.register(this);

@@ -1,9 +1,6 @@
 'use strict'
 
-var Papa = require('papaparse');
-var assign = require('object-assign');
-var TWEEN = require('tween.js');
-var queryString = require('query-string');
+import OrbitControls from 'three-orbit-controls';
 
 var controls;
 
@@ -15,7 +12,7 @@ var animateEmbeddings = function() {
 	}
 }
 
-function initScene(controlType = "") {
+export function initScene(controlType = "") {
 	if (controlType.toLowerCase() == "vr") {
 		// use mflux's webvr harness
 		const { scene, camera, renderer, events, toggleVR, controllers, vrEffect } = VRViewer({THREE});
@@ -30,14 +27,14 @@ function initScene(controlType = "") {
 	    document.body.appendChild( renderer.domElement );
 
 	    if (controlType.toLowerCase() == "orbit") {
-	    	const OrbitControls = require('three-orbit-controls')(THREE);
+	    	// const OrbitControls = require('three-orbit-controls')(THREE);
 	    	controls = new OrbitControls(camera, renderer.domElement);
 	    }
 	    return { scene, camera, renderer };		
 	}
 }
 
-function animate() {
+export function animate() {
 
     requestAnimationFrame( animate );
 	embedding.embed();
