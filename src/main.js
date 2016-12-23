@@ -1,6 +1,19 @@
 'use strict'
 
 import OrbitControls from 'three-orbit-controls';
+import queryString from 'query-string';
+import {
+	WebSocketDataset, 
+	Dataset
+} from './dataset.js';
+import {
+	Embedding,
+	MeshEmbedding,
+	RandomEmbedding,
+	ScatterEmbedding,
+	PathEmbedding
+} from './embedding.js';
+
 
 var controls;
 

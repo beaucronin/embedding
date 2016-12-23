@@ -51,13 +51,13 @@ export class Embedding {
 /**
  * Base class for embeddings that render Datapoints as individual meshes
  */
-class MeshEmbedding extends Embedding {
+export class MeshEmbedding extends Embedding {
 	constructor(scene, dataset, options={}) {
 		super(scene, dataset, options);
 	}
 }
 
-class RandomEmbedding extends MeshEmbedding {
+export class RandomEmbedding extends MeshEmbedding {
 	constructor(scene, dataset, options={}) {
 		options = assign({spread: 1.0}, options)
 		super(scene, dataset, options);
@@ -92,7 +92,7 @@ class RandomEmbedding extends MeshEmbedding {
 /**
  * Base class for embedding backed by a Points object (i.e., particle clouds)
  */
-class PointsEmbedding extends Embedding {
+export class PointsEmbedding extends Embedding {
 	constructor(scene, dataset, options={}) {
 		options = assign(
 			{ 
@@ -120,7 +120,7 @@ class PointsEmbedding extends Embedding {
 	}
 }
 
-class ScatterEmbedding extends PointsEmbedding {
+export class ScatterEmbedding extends PointsEmbedding {
 	constructor(scene, dataset, options={}) {
 		options = assign( 
 			{ 
@@ -266,7 +266,7 @@ class ScatterEmbedding extends PointsEmbedding {
 	}
 }
 
-class PathEmbedding extends Embedding {
+export class PathEmbedding extends Embedding {
 	constructor(scene, dataset, waypoints, options) {
 		options = assign({
 			meshSizeX: .2,
