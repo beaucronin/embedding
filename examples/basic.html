@@ -11,9 +11,9 @@
 	<body>
 		<script>
 		const params = EMBED.queryString.parse(window.location.search);
-		const { scene, camera, renderer } = EMBED.initScene(params.VR);
+		const { scene, camera, renderer } = EMBED.initScene(params.control || "none");
 		var dataset, embedding;
-		var N = 100;
+		var N = 1;
 		var c = 0;
 
 		initEmbedding();
@@ -23,16 +23,16 @@
 			dataset = new EMBED.Dataset();
 			var f = function() {
 				for (let i = 0; i < N; i++) {
-					dataset.add(
-						{ _id: c, 
+					let dp = { _id: c, 
 							x: -4 + 8*Math.random(), 
 							y: -4 + 8*Math.random(), 
-							z: -4 + 8*Math.random() });
+							z: -4 + 8*Math.random() };
+					dataset.add(dp);
 					c++;
-					console.log('added');
+					// console.log('added', dp);
 				}
 			};
-			window.setInterval(f, 100);
+			window.setInterval(f, 200);
 			var g = function() {
 				let ids = Object.keys(dataset.datapoints);
 				M = ids.length;
@@ -40,7 +40,7 @@
 				let id = ids[i];
 				dataset.remove(id);
 			}
-			// window.setInterval(g, 5000);
+			window.setInterval(g, 500);
 			var h = function() {
 				let ids = Object.keys(dataset.datapoints);
 				M = ids.length;
