@@ -49,6 +49,7 @@ module.exports = {
 	Dataset: Dataset,
 	WebSocketDataset: WebSocketDataset,
 	Embedding: Embedding,
+	MeshEmbedding: MeshEmbedding,
 	RandomEmbedding: RandomEmbedding,
 	ScatterEmbedding: ScatterEmbedding,
 	PathEmbedding: PathEmbedding,
