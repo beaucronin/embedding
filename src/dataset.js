@@ -77,7 +77,7 @@ export class Dataset {
 	}
 }
 
-class WebSocketDataset extends Dataset {
+export class WebSocketDataset extends Dataset {
 	constructor(url, options = {}) {
 		options = assign({onmessage: (x) => x, init: (s) => {}}, options)
 		super();
@@ -91,7 +91,7 @@ class WebSocketDataset extends Dataset {
 	}
 }
 
-class Datapoint {
+export class Datapoint {
 	constructor(values, idAttribute='_id') {
 		this.values = values;
 		this.idAttribute = idAttribute;
