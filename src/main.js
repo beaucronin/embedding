@@ -1,6 +1,8 @@
 'use strict'
 
 import OrbitControls from 'three-orbit-controls';
+import RayInput from 'ray-input';
+
 import queryString from 'query-string';
 import {
 	WebSocketDataset, 
@@ -43,6 +45,13 @@ export function initScene(controlType = "") {
 	    	// const OrbitControls = require('three-orbit-controls')(THREE);
 	    	controls = new OrbitControls(camera, renderer.domElement);
 	    }
+
+	    // putting the input in the THREE global for now; probably want embeddings to fire 
+	    // events when meshes are added/removed rather than referencing the input directly
+		THREE.input = new RayInput(camera, renderer.domElement);
+		THREE.input.on('rayover', (mesh) => console.log(mesh));
+		THREE.input.setSize(renderer.getSize());
+		
 	    return { scene, camera, renderer };		
 	}
 }
@@ -51,6 +60,7 @@ export function animate() {
 
     requestAnimationFrame( animate );
 	embedding.embed();
+	THREE.input.update();
     renderer.render( scene, camera );
 
 }

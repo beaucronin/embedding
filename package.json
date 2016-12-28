@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "test": "mocha",
-    "build": "browserify --standalone EMBED -vdt [ babelify --presets [ es2015 ] ] src/main.js -o build/embedding.js && uglify -s build/embedding.js -o build/embedding.min.js",
+    "build": "browserify --standalone EMBED -v -d -t [ babelify --presets [ es2015 ] ] src/main.js -o build/embedding.js && uglify -s build/embedding.js -o build/embedding.min.js",
     "start": "watchify ./build/embedding.js --standalone EMBED -v -o bundle.js"
   },
   "repository": {
@@ -24,18 +24,19 @@
   },
   "homepage": "https://github.com/beaucronin/embedding#readme",
   "devDependencies": {
-    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-es2015": "^6.16.0",
     "mocha": "^3.0.2",
     "watchify": "^3.7.0",
     "babelify": "^7.3.0",
-    "uglify-js": "^2.7.5"    
+    "uglify-js": "^2.7.5"
   },
   "dependencies": {
     "object-assign": "^4.1.0",
     "papaparse": "^4.1.2",
     "query-string": "^4.2.3",
+    "ray-input": "^0.1.2",
+    "three": "^0.81.2",
     "three-orbit-controls": "^72.0.0",
-    "tween.js": "^16.3.5",
-    "three": "^0.81.2"
+    "tween.js": "^16.3.5"
   }
 }
