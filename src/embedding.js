@@ -192,7 +192,7 @@ export class ScatterEmbedding extends PointsEmbedding {
 					else if (e.type == "remove") this._removeDatapoint(e.id);
 					else if (e.type == "update") this._updateDatapoint(e.id, e);
 				}
-				console.log("calling vertices update");
+				// console.log("calling vertices update");
 				this.points.geometry.verticesNeedUpdate = true;			
 			} 
 			this.events = [];

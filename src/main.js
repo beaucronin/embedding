@@ -13,7 +13,7 @@ import {
 	ScatterEmbedding,
 	PathEmbedding
 } from './embedding.js';
-
+import { detectMode } from './detection-utils.js';
 
 var controls;
 
@@ -65,5 +65,6 @@ module.exports = {
 	PathEmbedding: PathEmbedding,
 	initScene: initScene,
 	animate: animate,
-	queryString: queryString
+	queryString: queryString,
+	detectMode: detectMode
 }
