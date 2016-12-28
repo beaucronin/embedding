@@ -5,13 +5,20 @@
 		<meta charset="utf-8" />
 		<title>Embedding.js basic example</title>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r81/three.min.js"></script>
-		<script src="js/three-vr-viewer.js"></script>
+		<script type="text/javascript" src="js/VRControls.js"></script>
+		<script type="text/javascript" src="js/VREffect.js"></script>
+		<script type="text/javascript" src="js/webvr-polyfill.js"></script>
+		<script type="text/javascript" src="js/webvr-manager.js"></script>
 	</head>
 	<body>
 		<script src="../build/embedding.js"></script>
 		<script>
 		const params = EMBED.queryString.parse(window.location.search);
-		const { scene, camera, renderer } = EMBED.initScene(params.control || "none");
+		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene(params.control || "none");
+		var vrDisplay;
+		navigator.getVRDisplays().then(function(displays) {
+	    	if (displays.length > 0) vrDisplay = displays[0];
+		});		
 		var dataset, embedding;
 		var N = 1;
 		var c = 0;
