@@ -48,6 +48,7 @@ export function initScene(controlType = "") {
     // events when meshes are added/removed rather than referencing the input directly
 	THREE.input = new RayInput(camera, renderer.domElement);
 	THREE.input.setSize(renderer.getSize());
+	scene.add(THREE.input.getMesh());
 
 	// NOTE: relies on the polyfill to always have a valid display
 	var vrDisplay;
