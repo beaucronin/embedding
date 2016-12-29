@@ -272,6 +272,7 @@ export class PathEmbedding extends Embedding {
 			meshSizeX: .2,
 			meshSizeY: .2,
 			meshSizeZ: .2,
+			description: '',
 			removeAfter: true,
 			pathTime: 10000
 		}, options);
@@ -310,13 +311,14 @@ export class PathEmbedding extends Embedding {
 			color: 0x156289,
 			shading: THREE.FlatShading
 		} );
-		mat = new THREE.MeshPhongMaterial( {
+		mat = new THREE.MeshStandardMaterial( {
 					color: 0xff00ff,
 					emissive: 0x072534,
 					side: THREE.DoubleSide,
 					shading: THREE.FlatShading
 				} );
 		var mesh = new THREE.Mesh(geo,mat);
+		mesh.userData.description = this.getOpt("description", dp);
 		this.dpMap[id] = mesh;
 		this.obj3D.add(mesh);
 		THREE.input.add(mesh);

@@ -16,6 +16,8 @@ import {
 } from './embedding.js';
 import { detectMode } from './detection-utils.js';
 
+var embeddings = [];
+
 export function initScene(controlType = "") {
 	const scene = new THREE.Scene();
 	const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
@@ -68,13 +70,19 @@ export function animate(timestamp) {
 	var delta = Math.min(timestamp - lastRender, 500);
   	lastRender = timestamp;
 
-	embedding.embed();
+  	for (let e of embeddings) {
+		e.embed();
+  	}
 	THREE.input.update();
     cameraControls.update();
     manager.render( scene, camera, timestamp );
     effect.render( scene, camera );
     vrDisplay.requestAnimationFrame( animate );
 
+}
+
+export function register(embedding) {
+	embeddings.push(embedding);
 }
 
 module.exports = {
@@ -88,5 +96,6 @@ module.exports = {
 	initScene: initScene,
 	animate: animate,
 	queryString: queryString,
-	detectMode: detectMode
+	detectMode: detectMode,
+	register: register
 }
