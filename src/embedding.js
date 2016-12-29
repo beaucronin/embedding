@@ -4,7 +4,7 @@ import TWEEN from 'tween.js';
 export class Embedding {
 	constructor(scene, dataset, options = {}) {
 		this.dataset = dataset;
-		dataset.register(this);
+		if (dataset) dataset.register(this);
 		this.obj3D = new THREE.Object3D();
 		scene.add(this.obj3D);
 		this.initialized = false;
@@ -362,6 +362,41 @@ export class PathEmbedding extends Embedding {
 
 	_createMeshForDatapoint() {
 
+	}
+}
+
+export class ConsoleEmbedding extends Embedding {
+	constructor(scene, dataset, options={}) {
+		options = assign({
+			font: "Bold 24px Arial",
+			fillStyle: "rgba(255,0,0,0.95)"
+		}, options);
+		super(scene, dataset, options);
+		this.canvas = document.createElement('canvas');
+		this.canvas.width = 256;
+		this.canvas.height = 128;
+		this.context = this.canvas.getContext('2d');
+		this.context.font = this.getOpt('font');
+		this.context.fillStyle = this.getOpt('fillStyle');
+		this.mesh = undefined;
+	}
+
+	setText(text) {
+		if (this.mesh)
+			this.obj3D.remove(this.mesh)
+
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.context.fillText(text, 0, 25);
+		let texture = new THREE.Texture(this.canvas);
+		texture.needsUpdate = true;
+		let material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+		material.transparent = true;
+		this.mesh = new THREE.Mesh(
+			new THREE.PlaneGeometry(this.canvas.width * .1, this.canvas.height * .1),
+			material
+		);
+		this.mesh.position.set(this.getOpt('x'), this.getOpt('y'), this.getOpt('z'));
+		this.obj3D.add(this.mesh);
 	}
 }
 

@@ -48,11 +48,11 @@
 		);
 		embedding = new EMBED.PathEmbedding(scene, dataset, 
 			[[-10, 1, 0], 
-			 [-6, 0, -2],
-			 [-4, -1, 5],
-			 [0, -1, 8],
-			 [4, -1, 5],
-			 [6, 0, -2 ],
+			 [-6, 0, 2],
+			 [-4, -1, -5],
+			 [0, -1, -8],
+			 [4, -1, -5],
+			 [6, 0, 2 ],
 			 [10, 1, 0]],
 			 {
 			 	meshSizeX: (d) => d.get("size") / 500,
@@ -62,6 +62,13 @@
 			 	pathTime: 5000
 			 });
 		EMBED.register(embedding);
+
+		let status = new EMBED.ConsoleEmbedding(scene, null, 
+			{ x: 5, z: -20, sx: 1, sy: 1, font: "Bold 12px Arial" }
+		)
+		THREE.input.on('rayover', (mesh) => {if (mesh) status.setText(mesh.userData.description) })
+		EMBED.register(status);
+
 		EMBED.animate();
 
 		</script>

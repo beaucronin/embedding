@@ -12,7 +12,8 @@ import {
 	MeshEmbedding,
 	RandomEmbedding,
 	ScatterEmbedding,
-	PathEmbedding
+	PathEmbedding,
+	ConsoleEmbedding
 } from './embedding.js';
 import { detectMode } from './detection-utils.js';
 
@@ -46,24 +47,16 @@ export function initScene(controlType = "") {
     // putting the input in the THREE global for now; probably want embeddings to fire 
     // events when meshes are added/removed rather than referencing the input directly
 	THREE.input = new RayInput(camera, renderer.domElement);
-	THREE.input.on('rayover', (mesh) => {
-		if (mesh) console.log('rayover '+mesh.userData.description)
-	});
-	THREE.input.on('raydown', (mesh) => {
-		if (mesh) console.log('RAYDOWN '+mesh.userData.description) 
-	});
 	THREE.input.setSize(renderer.getSize());
 
 	// NOTE: relies on the polyfill to always have a valid display
 	var vrDisplay;
 	navigator.getVRDisplays().then(function(displays) {
 	    if (displays.length > 0) {
-	    	console.log(displays);
-	      vrDisplay = displays[0];
-	      vrDisplay.requestAnimationFrame(animate);
+	      	vrDisplay = displays[0];
+	      	vrDisplay.requestAnimationFrame(animate);
 	    }
 	});
-	console.log(vrDisplay);
 
     return { scene, camera, manager, effect, cameraControls, vrDisplay };
 }
@@ -97,6 +90,7 @@ module.exports = {
 	RandomEmbedding: RandomEmbedding,
 	ScatterEmbedding: ScatterEmbedding,
 	PathEmbedding: PathEmbedding,
+	ConsoleEmbedding: ConsoleEmbedding,
 	initScene: initScene,
 	animate: animate,
 	queryString: queryString,
