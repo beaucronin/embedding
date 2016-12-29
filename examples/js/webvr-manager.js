@@ -429,7 +429,8 @@ WebVRManager.prototype.getDeviceByType_ = function(type) {
     navigator.getVRDisplays().then(function(displays) {
       // Promise succeeds, but check if there are any displays actually.
       for (var i = 0; i < displays.length; i++) {
-        if (displays[i] instanceof type) {
+        // hack to get around weird bug
+        if (displays[i] instanceof type || displays[i].displayName == "HTC Vive DVT") {
           resolve(displays[i]);
           break;
         }
