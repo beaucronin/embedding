@@ -46,8 +46,12 @@ export function initScene(controlType = "") {
     // putting the input in the THREE global for now; probably want embeddings to fire 
     // events when meshes are added/removed rather than referencing the input directly
 	THREE.input = new RayInput(camera, renderer.domElement);
-	THREE.input.on('rayover', (mesh) => console.log('rayover '+mesh.userData.description));
-	THREE.input.on('raydown', (mesh) => console.log('RAYDOWN '+mesh.userData.description));
+	THREE.input.on('rayover', (mesh) => {
+		if (mesh) console.log('rayover '+mesh.userData.description)
+	});
+	THREE.input.on('raydown', (mesh) => {
+		if (mesh) console.log('RAYDOWN '+mesh.userData.description) 
+	});
 	THREE.input.setSize(renderer.getSize());
 
 	// NOTE: relies on the polyfill to always have a valid display
