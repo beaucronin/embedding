@@ -66,7 +66,18 @@
 		let status = new EMBED.ConsoleEmbedding(scene, null, 
 			{ x: 5, z: -20, sx: 1, sy: 1, font: "Bold 12px Arial" }
 		)
-		THREE.input.on('rayover', (mesh) => {if (mesh) status.setText(mesh.userData.description) })
+		THREE.input.on('rayover', function(mesh) {
+			if (mesh) {
+				status.setText(mesh.userData.description);
+				mesh.material.color.setHex(0xffffff)
+			}
+		});
+		THREE.input.on('rayout', function(mesh) {
+			if (mesh) {
+				status.setText('');
+				mesh.material.color.setHex(0xff00ff)
+			}
+		});
 		EMBED.register(status);
 
 		EMBED.animate();
