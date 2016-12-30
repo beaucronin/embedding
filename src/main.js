@@ -50,7 +50,7 @@ export function initScene(controlType = "") {
 	THREE.input.setSize(renderer.getSize());
 	scene.add(THREE.input.getMesh());
 
-	// NOTE: relies on the polyfill to always have a valid display
+	// NOTE: relies on the webvr polyfill being present to always have a valid display
 	var vrDisplay;
 	navigator.getVRDisplays().then(function(displays) {
 	    if (displays.length > 0) {
@@ -74,7 +74,8 @@ export function animate(timestamp) {
 	THREE.input.update();
     cameraControls.update();
     manager.render( scene, camera, timestamp );
-    effect.render( scene, camera );
+    // FIXME: is this render call necessary?
+    // effect.render( scene, camera );
     vrDisplay.requestAnimationFrame( animate );
 
 }
