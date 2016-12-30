@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "test": "mocha",
-    "build": "browserify --standalone EMBED -v -d -t [ babelify --presets [ es2015 ] ] src/main.js -o build/embedding.js && uglify -s build/embedding.js -o build/embedding.min.js",
+    "build": "browserify --standalone EMBED -v -d -t [ babelify --presets [ es2015 ] ] src/main.js -o build/embedding.js && uglify -s build/embedding.js -o build/embedding.min.js && cp build/embedding.js docs/examples/js/",
     "start": "watchify ./build/embedding.js --standalone EMBED -v -o bundle.js"
   },
   "repository": {
