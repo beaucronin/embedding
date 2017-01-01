@@ -1,0 +1,13 @@
+site_name: Embedding.js Docs
+site_url: http://embeddingjs.org
+repo_url: https://github.com/beaucronin/embedding
+site_author: Beau Cronin
+site_dir: ../docs/docs
+pages:
+  - Intro: 'index.md'
+  - Docs:
+    - Getting Started: 'getting-started.md'
+    - Compatibility: 'compatibility.md'
+    - Contributing: 'contributing.md'
+    - Roadmap: 'roadmap.md'
+

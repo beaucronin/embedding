@@ -1,0 +1,64 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Welcome to Embedding\n\n\nEmbedding is a javascript library that makes it easy to create data-driven immersive environments - by \nembedding\n data points in space and time.\n\n\nEmbedding relies heavily on the \"Borisphere\" of tools to provide a \nresponsive experience\n that works well on desktop, mobile, and WebVR platforms. In particular, it uses the \nWebVR polyfill\n, the \nWebVR boilerplate\n library, and \nray-input\n to provide pointing-based input across these platforms. WebVR support in various browsers is changing fast, and you can view the latest Embedding compatibility report.\n\n\nSimilar to how \nD3\n builds on HTML and the DOM, including canvases and SVG, Embedding provides an abstraction layer over 3D objects defined in \nWebGL\n and \nthree.js\n, including geometries, materials, and lighting. A primary goal of Embeding is to enable developers who are not 3D experts to create beautiful, effective, and compelling data-driven environments.\n\n\nWhere to go next\n\n\n\n\nCheck out the \ngetting started guide\n to see how easy it is to create your first data-driven environment.\n\n\nTake a look at some examples to get a sense for the range of possibilities.\n\n\nView the main \nembedding project repo\n on github.\n\n\nClone or download the embedding boilerplate repo to get started on your own project.\n\n\nWe'd love your help in building and testing Embedding! Read about \ncontributing\n, checkout the \nroadmap\n, or \nfile an issue\n with any bugs or problems.", 
+            "title": "Intro"
+        }, 
+        {
+            "location": "/#welcome-to-embedding", 
+            "text": "Embedding is a javascript library that makes it easy to create data-driven immersive environments - by  embedding  data points in space and time.  Embedding relies heavily on the \"Borisphere\" of tools to provide a  responsive experience  that works well on desktop, mobile, and WebVR platforms. In particular, it uses the  WebVR polyfill , the  WebVR boilerplate  library, and  ray-input  to provide pointing-based input across these platforms. WebVR support in various browsers is changing fast, and you can view the latest Embedding compatibility report.  Similar to how  D3  builds on HTML and the DOM, including canvases and SVG, Embedding provides an abstraction layer over 3D objects defined in  WebGL  and  three.js , including geometries, materials, and lighting. A primary goal of Embeding is to enable developers who are not 3D experts to create beautiful, effective, and compelling data-driven environments.", 
+            "title": "Welcome to Embedding"
+        }, 
+        {
+            "location": "/#where-to-go-next", 
+            "text": "Check out the  getting started guide  to see how easy it is to create your first data-driven environment.  Take a look at some examples to get a sense for the range of possibilities.  View the main  embedding project repo  on github.  Clone or download the embedding boilerplate repo to get started on your own project.  We'd love your help in building and testing Embedding! Read about  contributing , checkout the  roadmap , or  file an issue  with any bugs or problems.", 
+            "title": "Where to go next"
+        }, 
+        {
+            "location": "/getting-started/", 
+            "text": "Getting Started With Embedding\n\n\nTODO", 
+            "title": "Getting Started"
+        }, 
+        {
+            "location": "/getting-started/#getting-started-with-embedding", 
+            "text": "TODO", 
+            "title": "Getting Started With Embedding"
+        }, 
+        {
+            "location": "/compatibility/", 
+            "text": "Compatibility\n\n\n\n\n\n\n\n\nSystem\n\n\nPlatform\n\n\nChrom(ium)\n\n\nFirefox (Nightly)\n\n\nSafari\n\n\nEdge\n\n\nSamsung Internet\n\n\nCarmel\n\n\n\n\n\n\n\n\n\n\nWindows\n\n\nDesktop\n\n\nYES\n\n\nYES\n\n\nn/a\n\n\n?\n\n\nn/a\n\n\nn/a\n\n\n\n\n\n\n\n\nVive\n\n\nYES\n\n\n?\n\n\nn/a\n\n\nNo\n\n\nn/a\n\n\nn/a\n\n\n\n\n\n\n\n\nRift+Touch\n\n\n?\n\n\n?\n\n\nn/a\n\n\nNo\n\n\nn/a\n\n\nn/a\n\n\n\n\n\n\nMac\n\n\nDesktop\n\n\nYES\n\n\n?\n\n\n?\n\n\nn/a\n\n\nn/a\n\n\nn/a\n\n\n\n\n\n\niOS\n\n\nTouch\n\n\nYES\n\n\n?\n\n\nYES\n\n\nn/a\n\n\nn/a\n\n\nn/a\n\n\n\n\n\n\nAndroid\n\n\nTouch\n\n\n?\n\n\n?\n\n\nn/a\n\n\nn/a\n\n\nn/a\n\n\nn/a\n\n\n\n\n\n\n\n\nCardboard\n\n\n?\n\n\n?\n\n\nn/a\n\n\nn/a\n\n\nn/a\n\n\nn/a\n\n\n\n\n\n\n\n\nGear VR\n\n\nn/a\n\n\nn/a\n\n\nn/a\n\n\nn/a\n\n\n?\n\n\n?\n\n\n\n\n\n\n\n\nDaydream\n\n\n?\n\n\n?\n\n\nn/a\n\n\nn/a\n\n\nn/a\n\n\nn/a\n\n\n\n\n\n\n\n\nLegend:\n\n\n\n\nYES\n: Confirmed to work\n\n\n?\n: Should work, but not tested\n\n\nNo\n: Does not work\n\n\nn/a\n: Not applicable - browser not available on that system/platform\n\n\n\n\nPlease \nfile an issue\n if you have a compatibility problem on one of the supported system/platform/browser combinations.\n\n\nNotes:\n\n\n\n\nMicrosoft has announced that it intends to support WebVR in Edge\n, but this version has not yet shipped.\n\n\nSpecial Chromium builds and/or Firefox Nightlies are currently required to use WebVR with Vive and Rift.\n\n\nWindows has been tested with 64-bit Windows 8.\n\n\n\n\nSee \nhttps://iswebvrready.org/\n for the latest in overall WebVR compatibility, and \nhttps://webvr.info/\n for links to the latest browser builds, libraries, and other info.", 
+            "title": "Compatibility"
+        }, 
+        {
+            "location": "/compatibility/#compatibility", 
+            "text": "System  Platform  Chrom(ium)  Firefox (Nightly)  Safari  Edge  Samsung Internet  Carmel      Windows  Desktop  YES  YES  n/a  ?  n/a  n/a     Vive  YES  ?  n/a  No  n/a  n/a     Rift+Touch  ?  ?  n/a  No  n/a  n/a    Mac  Desktop  YES  ?  ?  n/a  n/a  n/a    iOS  Touch  YES  ?  YES  n/a  n/a  n/a    Android  Touch  ?  ?  n/a  n/a  n/a  n/a     Cardboard  ?  ?  n/a  n/a  n/a  n/a     Gear VR  n/a  n/a  n/a  n/a  ?  ?     Daydream  ?  ?  n/a  n/a  n/a  n/a     Legend:   YES : Confirmed to work  ? : Should work, but not tested  No : Does not work  n/a : Not applicable - browser not available on that system/platform   Please  file an issue  if you have a compatibility problem on one of the supported system/platform/browser combinations.", 
+            "title": "Compatibility"
+        }, 
+        {
+            "location": "/compatibility/#notes", 
+            "text": "Microsoft has announced that it intends to support WebVR in Edge , but this version has not yet shipped.  Special Chromium builds and/or Firefox Nightlies are currently required to use WebVR with Vive and Rift.  Windows has been tested with 64-bit Windows 8.   See  https://iswebvrready.org/  for the latest in overall WebVR compatibility, and  https://webvr.info/  for links to the latest browser builds, libraries, and other info.", 
+            "title": "Notes:"
+        }, 
+        {
+            "location": "/contributing/", 
+            "text": "Contributing to Embedding\n\n\nContributions to the library are welcome! Please check out the \nroadmap\n to get some ideas for future directions.", 
+            "title": "Contributing"
+        }, 
+        {
+            "location": "/contributing/#contributing-to-embedding", 
+            "text": "Contributions to the library are welcome! Please check out the  roadmap  to get some ideas for future directions.", 
+            "title": "Contributing to Embedding"
+        }, 
+        {
+            "location": "/roadmap/", 
+            "text": "Roadmap", 
+            "title": "Roadmap"
+        }, 
+        {
+            "location": "/roadmap/#roadmap", 
+            "text": "", 
+            "title": "Roadmap"
+        }
+    ]
+}
