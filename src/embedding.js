@@ -1,7 +1,26 @@
 import assign from 'object-assign';
 import TWEEN from 'tween.js';
 
+/**
+ * Base class for all embeddings.
+ */
 export class Embedding {
+	/**
+	 * Embedding base constructor.
+	 * @constructor
+	 * @param scene - The scene to which the embedding belongs
+	 * @param {Dataset} dataset - The dataset that backs the embedding
+	 * @param {Object} [options={}] - Options describing the embedding's location and scale
+	 * @param {Number} [options.x=0] - x position of the embedding
+	 * @param {Number} [options.y=0] - y position of the embedding
+	 * @param {Number} [options.z=0] - z position of the embedding
+	 * @param {Number} [options.rx=0] - x rotation of the embedding
+	 * @param {Number} [options.ry=0] - y rotation of the embedding
+	 * @param {Number} [options.rz=0] - z rotation of the embedding
+	 * @param {Number} [options.sx=1] - x scale of the embedding
+	 * @param {Number} [options.sy=1] - y scale of the embedding
+	 * @param {Number} [options.sz=1] - z scale of the embedding
+	 */
 	constructor(scene, dataset, options = {}) {
 		this.dataset = dataset;
 		if (dataset) dataset.register(this);
@@ -33,6 +52,10 @@ export class Embedding {
 		return tgt ? tgt : src;
 	}
 
+	/**
+	 * Render the embedding - must be implemented by each concrete subclass.
+	 * @abstract
+	 */
 	embed() {
 		// not implemented here
 	}

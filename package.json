@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "build": "browserify --standalone EMBED -v -d -t [ babelify --presets [ es2015 ] ] src/main.js -o build/embedding.js && uglify -s build/embedding.js -o build/embedding.min.js && cp build/embedding.js docs/examples/js/",
-    "start": "watchify ./build/embedding.js --standalone EMBED -v -o bundle.js"
+    "start": "watchify ./build/embedding.js --standalone EMBED -v -o bundle.js",
+    "build-docs": "jsdoc2md --files src/*.js > docs_src/docs/api.md && cd docs_src && mkdocs build"
   },
   "repository": {
     "type": "git",

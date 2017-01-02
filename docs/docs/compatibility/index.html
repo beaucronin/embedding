@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Beau Cronin">
+        <link rel="canonical" href="http://embeddingjs.org/compatibility/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Compatibility - Embedding.js Docs</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="..">Embedding.js Docs</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="..">Intro</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../getting-started/">Getting Started</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Compatibility</a>
+</li>
+                            
+<li >
+    <a href="../contributing/">Contributing</a>
+</li>
+                            
+<li >
+    <a href="../roadmap/">Roadmap</a>
+</li>
+                        </ul>
+                    </li>
+                    <li >
+                        <a href="../api/">API</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../getting-started/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../contributing/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/beaucronin/embedding">
+                                <i class="fa fa-github"></i>GitHub
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#compatibility">Compatibility</a></li>
+            <li><a href="#notes">Notes:</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="compatibility">Compatibility</h1>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Platform</th>
+<th>Chrom(ium)</th>
+<th>Firefox (Nightly)</th>
+<th>Safari</th>
+<th>Edge</th>
+<th>Samsung Internet</th>
+<th>Carmel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td>Desktop</td>
+<td><strong>YES</strong></td>
+<td><strong>YES</strong></td>
+<td>n/a</td>
+<td>?</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td></td>
+<td>Vive</td>
+<td><strong>YES</strong></td>
+<td>?</td>
+<td>n/a</td>
+<td>No</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td></td>
+<td>Rift+Touch</td>
+<td>?</td>
+<td>?</td>
+<td>n/a</td>
+<td>No</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Mac</td>
+<td>Desktop</td>
+<td><strong>YES</strong></td>
+<td>?</td>
+<td>?</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>iOS</td>
+<td>Touch</td>
+<td><strong>YES</strong></td>
+<td>?</td>
+<td><strong>YES</strong></td>
+<td>n/a</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Android</td>
+<td>Touch</td>
+<td>?</td>
+<td>?</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td></td>
+<td>Cardboard</td>
+<td>?</td>
+<td>?</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td></td>
+<td>Gear VR</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr>
+<td></td>
+<td>Daydream</td>
+<td>?</td>
+<td>?</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<p>Legend:</p>
+<ul>
+<li><strong>YES</strong>: Confirmed to work</li>
+<li><strong>?</strong>: Should work, but not tested</li>
+<li><strong>No</strong>: Does not work</li>
+<li><strong>n/a</strong>: Not applicable - browser not available on that system/platform</li>
+</ul>
+<p><strong>Please <a href="https://github.com/beaucronin/embedding/issues">file an issue</a> if you find a compatibility problem on one of the supported system/platform/browser combinations.</strong></p>
+<h3 id="notes">Notes:</h3>
+<ul>
+<li><a href="https://blogs.windows.com/msedgedev/2016/09/09/webvr-in-development-edge/">Microsoft has announced that it intends to support WebVR in Edge</a>, but this version has not yet shipped.</li>
+<li>Special Chromium builds and/or Firefox Nightlies are currently required to use WebVR with Vive and Rift.</li>
+<li>Windows has been tested with 64-bit Windows 8.</li>
+</ul>
+<p>See <a href="https://iswebvrready.org/">https://iswebvrready.org/</a> for the latest in overall WebVR compatibility, and <a href="https://webvr.info/">https://webvr.info/</a> for links to the latest browser builds, libraries, and other info.</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

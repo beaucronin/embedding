@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Beau Cronin">
+        <link rel="canonical" href="http://embeddingjs.org/api/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>API - Embedding.js Docs</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="..">Embedding.js Docs</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="..">Intro</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../getting-started/">Getting Started</a>
+</li>
+                            
+<li >
+    <a href="../compatibility/">Compatibility</a>
+</li>
+                            
+<li >
+    <a href="../contributing/">Contributing</a>
+</li>
+                            
+<li >
+    <a href="../roadmap/">Roadmap</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="active">
+                        <a href="./">API</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../roadmap/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="prev" >
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/beaucronin/embedding">
+                                <i class="fa fa-github"></i>GitHub
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#classes">Classes</a></li>
+        <li class="main "><a href="#dataset">Dataset</a></li>
+            <li><a href="#datasetadd">dataset.add()</a></li>
+            <li><a href="#datasetremove">dataset.remove()</a></li>
+            <li><a href="#datasetupdate">dataset.update()</a></li>
+        <li class="main "><a href="#websocketdataset">WebSocketDataset</a></li>
+        <li class="main "><a href="#embedding">Embedding</a></li>
+            <li><a href="#new-embeddingscene-dataset-options">new Embedding(scene, dataset, [options])</a></li>
+            <li><a href="#embeddingembed">embedding.embed()</a></li>
+        <li class="main "><a href="#embedding_1">Embedding</a></li>
+            <li><a href="#new-embeddingscene-dataset-options_1">new Embedding(scene, dataset, [options])</a></li>
+            <li><a href="#embeddingembed_1">embedding.embed()</a></li>
+        <li class="main "><a href="#meshembedding">MeshEmbedding</a></li>
+        <li class="main "><a href="#pointsembedding">PointsEmbedding</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="classes">Classes</h2>
+<dl>
+<dt><a href="#Dataset">Dataset</a></dt>
+<dd><p>Base Dataset class</p>
+</dd>
+<dt><a href="#WebSocketDataset">WebSocketDataset</a></dt>
+<dd><p>A Dataset whose datapoints are received from a websocket.</p>
+</dd>
+<dt><a href="#Embedding">Embedding</a></dt>
+<dd><p>Base class for all embeddings.</p>
+</dd>
+<dt><a href="#Embedding">Embedding</a></dt>
+<dd></dd>
+<dt><a href="#MeshEmbedding">MeshEmbedding</a></dt>
+<dd><p>Base class for embeddings that render Datapoints as individual meshes</p>
+</dd>
+<dt><a href="#PointsEmbedding">PointsEmbedding</a></dt>
+<dd><p>Base class for embedding backed by a Points object (i.e., particle clouds)</p>
+</dd>
+</dl>
+
+<p><a name="Dataset"></a></p>
+<h2 id="dataset">Dataset</h2>
+<p>Base Dataset class</p>
+<p><strong>Kind</strong>: global class  </p>
+<ul>
+<li><a href="#Dataset">Dataset</a><ul>
+<li><a href="#Dataset+add">.add()</a></li>
+<li><a href="#Dataset+remove">.remove()</a></li>
+<li><a href="#Dataset+update">.update()</a></li>
+</ul>
+</li>
+</ul>
+<p><a name="Dataset+add"></a></p>
+<h3 id="datasetadd">dataset.add()</h3>
+<p>Add a datapoint to the Dataset</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code><br />
+<a name="Dataset+remove"></a></p>
+<h3 id="datasetremove">dataset.remove()</h3>
+<p>Remove a datapoint from the Dataset</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code><br />
+<a name="Dataset+update"></a></p>
+<h3 id="datasetupdate">dataset.update()</h3>
+<p>Modify the value of a datapoint attribute</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code><br />
+<a name="WebSocketDataset"></a></p>
+<h2 id="websocketdataset">WebSocketDataset</h2>
+<p>A Dataset whose datapoints are received from a websocket.</p>
+<p><strong>Kind</strong>: global class<br />
+<a name="Embedding"></a></p>
+<h2 id="embedding">Embedding</h2>
+<p>Base class for all embeddings.</p>
+<p><strong>Kind</strong>: global class  </p>
+<ul>
+<li><a href="#Embedding">Embedding</a><ul>
+<li><a href="#new_Embedding_new">new Embedding(scene, dataset, [options])</a></li>
+<li><em><a href="#Embedding+embed">.embed()</a></em></li>
+</ul>
+</li>
+</ul>
+<p><a name="new_Embedding_new"></a></p>
+<h3 id="new-embeddingscene-dataset-options">new Embedding(scene, dataset, [options])</h3>
+<p>Embedding base constructor.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scene</td>
+<td></td>
+<td></td>
+<td>The scene to which the embedding belongs</td>
+</tr>
+<tr>
+<td>dataset</td>
+<td><code><a href="#Dataset">Dataset</a></code></td>
+<td></td>
+<td>The dataset that backs the embedding</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td><code>{}</code></td>
+<td>Options describing the embedding's location and scale</td>
+</tr>
+<tr>
+<td>[options.x]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>x position of the embedding</td>
+</tr>
+<tr>
+<td>[options.y]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>y position of the embedding</td>
+</tr>
+<tr>
+<td>[options.z]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>z position of the embedding</td>
+</tr>
+<tr>
+<td>[options.rx]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>x rotation of the embedding</td>
+</tr>
+<tr>
+<td>[options.ry]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>y rotation of the embedding</td>
+</tr>
+<tr>
+<td>[options.rz]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>z rotation of the embedding</td>
+</tr>
+<tr>
+<td>[options.sx]</td>
+<td><code>Number</code></td>
+<td><code>1</code></td>
+<td>x scale of the embedding</td>
+</tr>
+<tr>
+<td>[options.sy]</td>
+<td><code>Number</code></td>
+<td><code>1</code></td>
+<td>y scale of the embedding</td>
+</tr>
+<tr>
+<td>[options.sz]</td>
+<td><code>Number</code></td>
+<td><code>1</code></td>
+<td>z scale of the embedding</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Embedding+embed"></a></p>
+<h3 id="embeddingembed"><em>embedding.embed()</em></h3>
+<p>Render the embedding - must be implemented by each concrete subclass.</p>
+<p><strong>Kind</strong>: instance abstract method of <code><a href="#Embedding">Embedding</a></code><br />
+<a name="Embedding"></a></p>
+<h2 id="embedding_1">Embedding</h2>
+<p><strong>Kind</strong>: global class  </p>
+<ul>
+<li><a href="#Embedding">Embedding</a><ul>
+<li><a href="#new_Embedding_new">new Embedding(scene, dataset, [options])</a></li>
+<li><em><a href="#Embedding+embed">.embed()</a></em></li>
+</ul>
+</li>
+</ul>
+<p><a name="new_Embedding_new"></a></p>
+<h3 id="new-embeddingscene-dataset-options_1">new Embedding(scene, dataset, [options])</h3>
+<p>Embedding base constructor.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scene</td>
+<td></td>
+<td></td>
+<td>The scene to which the embedding belongs</td>
+</tr>
+<tr>
+<td>dataset</td>
+<td><code><a href="#Dataset">Dataset</a></code></td>
+<td></td>
+<td>The dataset that backs the embedding</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td><code>{}</code></td>
+<td>Options describing the embedding's location and scale</td>
+</tr>
+<tr>
+<td>[options.x]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>x position of the embedding</td>
+</tr>
+<tr>
+<td>[options.y]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>y position of the embedding</td>
+</tr>
+<tr>
+<td>[options.z]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>z position of the embedding</td>
+</tr>
+<tr>
+<td>[options.rx]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>x rotation of the embedding</td>
+</tr>
+<tr>
+<td>[options.ry]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>y rotation of the embedding</td>
+</tr>
+<tr>
+<td>[options.rz]</td>
+<td><code>Number</code></td>
+<td><code>0</code></td>
+<td>z rotation of the embedding</td>
+</tr>
+<tr>
+<td>[options.sx]</td>
+<td><code>Number</code></td>
+<td><code>1</code></td>
+<td>x scale of the embedding</td>
+</tr>
+<tr>
+<td>[options.sy]</td>
+<td><code>Number</code></td>
+<td><code>1</code></td>
+<td>y scale of the embedding</td>
+</tr>
+<tr>
+<td>[options.sz]</td>
+<td><code>Number</code></td>
+<td><code>1</code></td>
+<td>z scale of the embedding</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Embedding+embed"></a></p>
+<h3 id="embeddingembed_1"><em>embedding.embed()</em></h3>
+<p>Render the embedding - must be implemented by each concrete subclass.</p>
+<p><strong>Kind</strong>: instance abstract method of <code><a href="#Embedding">Embedding</a></code><br />
+<a name="MeshEmbedding"></a></p>
+<h2 id="meshembedding">MeshEmbedding</h2>
+<p>Base class for embeddings that render Datapoints as individual meshes</p>
+<p><strong>Kind</strong>: global class<br />
+<a name="PointsEmbedding"></a></p>
+<h2 id="pointsembedding">PointsEmbedding</h2>
+<p>Base class for embedding backed by a Points object (i.e., particle clouds)</p>
+<p><strong>Kind</strong>: global class  </p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

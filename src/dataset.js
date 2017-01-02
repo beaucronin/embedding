@@ -1,6 +1,9 @@
 import Papa from 'papaparse';
 import assign from 'object-assign';
 
+/**
+ * Base Dataset class
+ */
 export class Dataset {
 	constructor() {
 		this.datapoints = {};
@@ -77,6 +80,9 @@ export class Dataset {
 	}
 }
 
+/**
+ * A Dataset whose datapoints are received from a websocket.
+ */
 export class WebSocketDataset extends Dataset {
 	constructor(url, options = {}) {
 		options = assign({onmessage: (x) => x, init: (s) => {}}, options)
