@@ -3,8 +3,8 @@
 | System   | Platform   | Chrom(ium) | Firefox (Nightly) | Safari | Edge | Samsung Internet | Carmel |
 | -------- | ---------- | ---------- | ----------------- | ------ | ---- | ---------------- | ------ |
 | Windows  | Desktop    | **YES**    | **YES**           | n/a    | ?    | n/a              | n/a    |
-|          | Vive       | **YES**    | ?                 | n/a    | No   | n/a              | n/a    |
-|          | Rift+Touch | ?          | ?                 | n/a    | No   | n/a              | n/a    |
+|          | Vive       | **YES**    | **YES**           | n/a    | No   | n/a              | n/a    |
+|          | Rift+Touch | **YES**    | NO                | n/a    | No   | n/a              | n/a    |
 | Mac      | Desktop    | **YES**    | ?                 | ?      | n/a  | n/a              | n/a    |
 | iOS      | Touch      | **YES**    | ?                 | **YES**| n/a  | n/a              | n/a    |
 | Android  | Touch      | ?          | ?                 | n/a    | n/a  | n/a              | n/a    |
