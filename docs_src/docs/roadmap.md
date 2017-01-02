@@ -4,6 +4,8 @@
 
 - Force-directed layout, including gravitational attraction, repulsion, springs, viscosity; possible starting points include
 - FIXME graph grammar
+- Embedding "chaining" via events
+- Aggregate embedding: display summary functions of data points that update as DPs are added/removed, possibly with filters, possibly grouped or binned
 
 ## Effects 
 
@@ -13,6 +15,7 @@
 - Moving lighting
 
 ## Interactivity
+
 - Default navigation: teleportation
 - Haptic feedback on supported browsers/controllers
 - Spatialized sound effects on events

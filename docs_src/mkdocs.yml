@@ -10,4 +10,5 @@ pages:
     - Compatibility: 'compatibility.md'
     - Contributing: 'contributing.md'
     - Roadmap: 'roadmap.md'
+  - API: 'api.md'
 

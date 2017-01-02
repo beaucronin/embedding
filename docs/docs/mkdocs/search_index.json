@@ -2,12 +2,12 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Welcome to Embedding\n\n\nEmbedding is a javascript library that makes it easy to create data-driven immersive environments - by \nembedding\n data points in space and time.\n\n\nEmbedding relies heavily on the \"Borisphere\" of tools to provide a \nresponsive experience\n that works well on desktop, mobile, and WebVR platforms. In particular, it uses the \nWebVR polyfill\n, the \nWebVR boilerplate\n library, and \nray-input\n to provide pointing-based input across these platforms. WebVR support in various browsers is changing fast, and you can view the latest Embedding compatibility report.\n\n\nSimilar to how \nD3\n builds on HTML and the DOM, including canvases and SVG, Embedding provides an abstraction layer over 3D objects defined in \nWebGL\n and \nthree.js\n, including geometries, materials, and lighting. A primary goal of Embeding is to enable developers who are not 3D experts to create beautiful, effective, and compelling data-driven environments.\n\n\nWhere to go next\n\n\n\n\nCheck out the \ngetting started guide\n to see how easy it is to create your first data-driven environment.\n\n\nTake a look at some examples to get a sense for the range of possibilities.\n\n\nView the main \nembedding project repo\n on github.\n\n\nClone or download the embedding boilerplate repo to get started on your own project.\n\n\nWe'd love your help in building and testing Embedding! Read about \ncontributing\n, checkout the \nroadmap\n, or \nfile an issue\n with any bugs or problems.", 
+            "text": "Welcome to Embedding\n\n\nEmbedding is a javascript library that makes it easy to create data-driven immersive environments - by \nembedding\n data points in space and time.\n\n\nEmbedding relies heavily on the \"Borisphere\" of tools to provide a \nresponsive experience\n that works well on desktop, mobile, and \nWebVR\n platforms. In particular, it uses the \nWebVR polyfill\n, the \nWebVR boilerplate\n library, and \nray-input\n to provide pointing-based input across these platforms. WebVR support in various browsers is changing fast, and you can view the latest Embedding compatibility report.\n\n\nSimilar to how \nD3\n builds on HTML and the DOM, including canvases and SVG, Embedding provides an abstraction layer over 3D objects defined in \nWebGL\n and \nthree.js\n, including geometries, materials, and lighting. A primary goal of Embeding is to enable developers who are not 3D experts to create beautiful, effective, and compelling data-driven environments.\n\n\nWhere to go next\n\n\n\n\nCheck out the \ngetting started guide\n to see how easy it is to create your first data-driven environment.\n\n\nTake a look at some examples to get a sense for the range of possibilities.\n\n\nView the main \nembedding project repo\n on github.\n\n\nClone or download the embedding boilerplate repo to get started on your own project.\n\n\nWe'd love your help in building and testing Embedding! Read about \ncontributing\n, checkout the \nroadmap\n, or \nfile an issue\n with any bugs or problems.", 
             "title": "Intro"
         }, 
         {
             "location": "/#welcome-to-embedding", 
-            "text": "Embedding is a javascript library that makes it easy to create data-driven immersive environments - by  embedding  data points in space and time.  Embedding relies heavily on the \"Borisphere\" of tools to provide a  responsive experience  that works well on desktop, mobile, and WebVR platforms. In particular, it uses the  WebVR polyfill , the  WebVR boilerplate  library, and  ray-input  to provide pointing-based input across these platforms. WebVR support in various browsers is changing fast, and you can view the latest Embedding compatibility report.  Similar to how  D3  builds on HTML and the DOM, including canvases and SVG, Embedding provides an abstraction layer over 3D objects defined in  WebGL  and  three.js , including geometries, materials, and lighting. A primary goal of Embeding is to enable developers who are not 3D experts to create beautiful, effective, and compelling data-driven environments.", 
+            "text": "Embedding is a javascript library that makes it easy to create data-driven immersive environments - by  embedding  data points in space and time.  Embedding relies heavily on the \"Borisphere\" of tools to provide a  responsive experience  that works well on desktop, mobile, and  WebVR  platforms. In particular, it uses the  WebVR polyfill , the  WebVR boilerplate  library, and  ray-input  to provide pointing-based input across these platforms. WebVR support in various browsers is changing fast, and you can view the latest Embedding compatibility report.  Similar to how  D3  builds on HTML and the DOM, including canvases and SVG, Embedding provides an abstraction layer over 3D objects defined in  WebGL  and  three.js , including geometries, materials, and lighting. A primary goal of Embeding is to enable developers who are not 3D experts to create beautiful, effective, and compelling data-driven environments.", 
             "title": "Welcome to Embedding"
         }, 
         {
@@ -42,17 +42,17 @@
         }, 
         {
             "location": "/contributing/", 
-            "text": "Contributing to Embedding\n\n\nContributions to the library are welcome! Please check out the \nroadmap\n to get some ideas for future directions.", 
+            "text": "Contributing to Embedding\n\n\nContributions to the library are welcome! Please check out the \nroadmap\n to get some ideas for future directions.\n\n\nDefinitely come introduce yourself on \ngitter\n!", 
             "title": "Contributing"
         }, 
         {
             "location": "/contributing/#contributing-to-embedding", 
-            "text": "Contributions to the library are welcome! Please check out the  roadmap  to get some ideas for future directions.", 
+            "text": "Contributions to the library are welcome! Please check out the  roadmap  to get some ideas for future directions.  Definitely come introduce yourself on  gitter !", 
             "title": "Contributing to Embedding"
         }, 
         {
             "location": "/roadmap/", 
-            "text": "Roadmap\n\n\nEmbeddings\n\n\n\n\nForce-directed layout, including gravitational attraction, repulsion, springs, viscosity; possible starting points include\n\n\nFIXME graph grammar\n\n\n\n\nEffects\n\n\n\n\nRigid-body interactions and gravity\n\n\n\"Wind\" and perturbation\n\n\nDirectional lighting and shadows\n\n\nMoving lighting\n\n\n\n\nInteractivity\n\n\n\n\nDefault navigation: teleportation\n\n\nHaptic feedback on supported browsers/controllers\n\n\nSpatialized sound effects on events\n\n\nSelection model and operations\n\n\n\n\nData Sources\n\n\n\n\nSQL query loading into Dataset\n\n\n\n\nIntegrations\n\n\n\n\nAltspaceSDK\n\n\n\n\nBuilds / Packaging\n\n\n\n\nAutomated testing and CI\n\n\nBuild status, code coverage, etc. reported in README widgets\n\n\nClean up dependencies to use node_modules where possible", 
+            "text": "Roadmap\n\n\nEmbeddings\n\n\n\n\nForce-directed layout, including gravitational attraction, repulsion, springs, viscosity; possible starting points include\n\n\nFIXME graph grammar\n\n\nEmbedding \"chaining\" via events\n\n\nAggregate embedding: display summary functions of data points that update as DPs are added/removed, possibly with filters, possibly grouped or binned\n\n\n\n\nEffects\n\n\n\n\nRigid-body interactions and gravity\n\n\n\"Wind\" and perturbation\n\n\nDirectional lighting and shadows\n\n\nMoving lighting\n\n\n\n\nInteractivity\n\n\n\n\nDefault navigation: teleportation\n\n\nHaptic feedback on supported browsers/controllers\n\n\nSpatialized sound effects on events\n\n\nSelection model and operations\n\n\n\n\nData Sources\n\n\n\n\nSQL query loading into Dataset\n\n\n\n\nIntegrations\n\n\n\n\nAltspaceSDK\n\n\n\n\nBuilds / Packaging\n\n\n\n\nAutomated testing and CI\n\n\nBuild status, code coverage, etc. reported in README widgets\n\n\nClean up dependencies to use node_modules where possible", 
             "title": "Roadmap"
         }, 
         {
@@ -62,7 +62,7 @@
         }, 
         {
             "location": "/roadmap/#embeddings", 
-            "text": "Force-directed layout, including gravitational attraction, repulsion, springs, viscosity; possible starting points include  FIXME graph grammar", 
+            "text": "Force-directed layout, including gravitational attraction, repulsion, springs, viscosity; possible starting points include  FIXME graph grammar  Embedding \"chaining\" via events  Aggregate embedding: display summary functions of data points that update as DPs are added/removed, possibly with filters, possibly grouped or binned", 
             "title": "Embeddings"
         }, 
         {
@@ -89,6 +89,81 @@
             "location": "/roadmap/#builds-packaging", 
             "text": "Automated testing and CI  Build status, code coverage, etc. reported in README widgets  Clean up dependencies to use node_modules where possible", 
             "title": "Builds / Packaging"
+        }, 
+        {
+            "location": "/api/", 
+            "text": "Classes\n\n\n\n\nDataset\n\n\nBase Dataset class\n\n\n\n\nWebSocketDataset\n\n\nA Dataset whose datapoints are received from a websocket.\n\n\n\n\nEmbedding\n\n\nBase class for all embeddings.\n\n\n\n\nEmbedding\n\n\n\n\nMeshEmbedding\n\n\nBase class for embeddings that render Datapoints as individual meshes\n\n\n\n\nPointsEmbedding\n\n\nBase class for embedding backed by a Points object (i.e., particle clouds)\n\n\n\n\n\n\n\n\n\nDataset\n\n\nBase Dataset class\n\n\nKind\n: global class  \n\n\n\n\nDataset\n\n\n.add()\n\n\n.remove()\n\n\n.update()\n\n\n\n\n\n\n\n\n\n\ndataset.add()\n\n\nAdd a datapoint to the Dataset\n\n\nKind\n: instance method of \nDataset\n\n\n\n\ndataset.remove()\n\n\nRemove a datapoint from the Dataset\n\n\nKind\n: instance method of \nDataset\n\n\n\n\ndataset.update()\n\n\nModify the value of a datapoint attribute\n\n\nKind\n: instance method of \nDataset\n\n\n\n\nWebSocketDataset\n\n\nA Dataset whose datapoints are received from a websocket.\n\n\nKind\n: global class\n\n\n\n\nEmbedding\n\n\nBase class for all embeddings.\n\n\nKind\n: global class  \n\n\n\n\nEmbedding\n\n\nnew Embedding(scene, dataset, [options])\n\n\n.embed()\n\n\n\n\n\n\n\n\n\n\nnew Embedding(scene, dataset, [options])\n\n\nEmbedding base constructor.\n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\nDefault\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nscene\n\n\n\n\n\n\nThe scene to which the embedding belongs\n\n\n\n\n\n\ndataset\n\n\nDataset\n\n\n\n\nThe dataset that backs the embedding\n\n\n\n\n\n\n[options]\n\n\nObject\n\n\n{}\n\n\nOptions describing the embedding's location and scale\n\n\n\n\n\n\n[options.x]\n\n\nNumber\n\n\n0\n\n\nx position of the embedding\n\n\n\n\n\n\n[options.y]\n\n\nNumber\n\n\n0\n\n\ny position of the embedding\n\n\n\n\n\n\n[options.z]\n\n\nNumber\n\n\n0\n\n\nz position of the embedding\n\n\n\n\n\n\n[options.rx]\n\n\nNumber\n\n\n0\n\n\nx rotation of the embedding\n\n\n\n\n\n\n[options.ry]\n\n\nNumber\n\n\n0\n\n\ny rotation of the embedding\n\n\n\n\n\n\n[options.rz]\n\n\nNumber\n\n\n0\n\n\nz rotation of the embedding\n\n\n\n\n\n\n[options.sx]\n\n\nNumber\n\n\n1\n\n\nx scale of the embedding\n\n\n\n\n\n\n[options.sy]\n\n\nNumber\n\n\n1\n\n\ny scale of the embedding\n\n\n\n\n\n\n[options.sz]\n\n\nNumber\n\n\n1\n\n\nz scale of the embedding\n\n\n\n\n\n\n\n\n\n\nembedding.embed()\n\n\nRender the embedding - must be implemented by each concrete subclass.\n\n\nKind\n: instance abstract method of \nEmbedding\n\n\n\n\nEmbedding\n\n\nKind\n: global class  \n\n\n\n\nEmbedding\n\n\nnew Embedding(scene, dataset, [options])\n\n\n.embed()\n\n\n\n\n\n\n\n\n\n\nnew Embedding(scene, dataset, [options])\n\n\nEmbedding base constructor.\n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\nDefault\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nscene\n\n\n\n\n\n\nThe scene to which the embedding belongs\n\n\n\n\n\n\ndataset\n\n\nDataset\n\n\n\n\nThe dataset that backs the embedding\n\n\n\n\n\n\n[options]\n\n\nObject\n\n\n{}\n\n\nOptions describing the embedding's location and scale\n\n\n\n\n\n\n[options.x]\n\n\nNumber\n\n\n0\n\n\nx position of the embedding\n\n\n\n\n\n\n[options.y]\n\n\nNumber\n\n\n0\n\n\ny position of the embedding\n\n\n\n\n\n\n[options.z]\n\n\nNumber\n\n\n0\n\n\nz position of the embedding\n\n\n\n\n\n\n[options.rx]\n\n\nNumber\n\n\n0\n\n\nx rotation of the embedding\n\n\n\n\n\n\n[options.ry]\n\n\nNumber\n\n\n0\n\n\ny rotation of the embedding\n\n\n\n\n\n\n[options.rz]\n\n\nNumber\n\n\n0\n\n\nz rotation of the embedding\n\n\n\n\n\n\n[options.sx]\n\n\nNumber\n\n\n1\n\n\nx scale of the embedding\n\n\n\n\n\n\n[options.sy]\n\n\nNumber\n\n\n1\n\n\ny scale of the embedding\n\n\n\n\n\n\n[options.sz]\n\n\nNumber\n\n\n1\n\n\nz scale of the embedding\n\n\n\n\n\n\n\n\n\n\nembedding.embed()\n\n\nRender the embedding - must be implemented by each concrete subclass.\n\n\nKind\n: instance abstract method of \nEmbedding\n\n\n\n\nMeshEmbedding\n\n\nBase class for embeddings that render Datapoints as individual meshes\n\n\nKind\n: global class\n\n\n\n\nPointsEmbedding\n\n\nBase class for embedding backed by a Points object (i.e., particle clouds)\n\n\nKind\n: global class", 
+            "title": "API"
+        }, 
+        {
+            "location": "/api/#classes", 
+            "text": "Dataset  Base Dataset class   WebSocketDataset  A Dataset whose datapoints are received from a websocket.   Embedding  Base class for all embeddings.   Embedding   MeshEmbedding  Base class for embeddings that render Datapoints as individual meshes   PointsEmbedding  Base class for embedding backed by a Points object (i.e., particle clouds)", 
+            "title": "Classes"
+        }, 
+        {
+            "location": "/api/#dataset", 
+            "text": "Base Dataset class  Kind : global class     Dataset  .add()  .remove()  .update()", 
+            "title": "Dataset"
+        }, 
+        {
+            "location": "/api/#datasetadd", 
+            "text": "Add a datapoint to the Dataset  Kind : instance method of  Dataset", 
+            "title": "dataset.add()"
+        }, 
+        {
+            "location": "/api/#datasetremove", 
+            "text": "Remove a datapoint from the Dataset  Kind : instance method of  Dataset", 
+            "title": "dataset.remove()"
+        }, 
+        {
+            "location": "/api/#datasetupdate", 
+            "text": "Modify the value of a datapoint attribute  Kind : instance method of  Dataset", 
+            "title": "dataset.update()"
+        }, 
+        {
+            "location": "/api/#websocketdataset", 
+            "text": "A Dataset whose datapoints are received from a websocket.  Kind : global class", 
+            "title": "WebSocketDataset"
+        }, 
+        {
+            "location": "/api/#embedding", 
+            "text": "Base class for all embeddings.  Kind : global class     Embedding  new Embedding(scene, dataset, [options])  .embed()", 
+            "title": "Embedding"
+        }, 
+        {
+            "location": "/api/#new-embeddingscene-dataset-options", 
+            "text": "Embedding base constructor.     Param  Type  Default  Description      scene    The scene to which the embedding belongs    dataset  Dataset   The dataset that backs the embedding    [options]  Object  {}  Options describing the embedding's location and scale    [options.x]  Number  0  x position of the embedding    [options.y]  Number  0  y position of the embedding    [options.z]  Number  0  z position of the embedding    [options.rx]  Number  0  x rotation of the embedding    [options.ry]  Number  0  y rotation of the embedding    [options.rz]  Number  0  z rotation of the embedding    [options.sx]  Number  1  x scale of the embedding    [options.sy]  Number  1  y scale of the embedding    [options.sz]  Number  1  z scale of the embedding", 
+            "title": "new Embedding(scene, dataset, [options])"
+        }, 
+        {
+            "location": "/api/#embeddingembed", 
+            "text": "Render the embedding - must be implemented by each concrete subclass.  Kind : instance abstract method of  Embedding", 
+            "title": "embedding.embed()"
+        }, 
+        {
+            "location": "/api/#embedding_1", 
+            "text": "Kind : global class     Embedding  new Embedding(scene, dataset, [options])  .embed()", 
+            "title": "Embedding"
+        }, 
+        {
+            "location": "/api/#new-embeddingscene-dataset-options_1", 
+            "text": "Embedding base constructor.     Param  Type  Default  Description      scene    The scene to which the embedding belongs    dataset  Dataset   The dataset that backs the embedding    [options]  Object  {}  Options describing the embedding's location and scale    [options.x]  Number  0  x position of the embedding    [options.y]  Number  0  y position of the embedding    [options.z]  Number  0  z position of the embedding    [options.rx]  Number  0  x rotation of the embedding    [options.ry]  Number  0  y rotation of the embedding    [options.rz]  Number  0  z rotation of the embedding    [options.sx]  Number  1  x scale of the embedding    [options.sy]  Number  1  y scale of the embedding    [options.sz]  Number  1  z scale of the embedding", 
+            "title": "new Embedding(scene, dataset, [options])"
+        }, 
+        {
+            "location": "/api/#embeddingembed_1", 
+            "text": "Render the embedding - must be implemented by each concrete subclass.  Kind : instance abstract method of  Embedding", 
+            "title": "embedding.embed()"
+        }, 
+        {
+            "location": "/api/#meshembedding", 
+            "text": "Base class for embeddings that render Datapoints as individual meshes  Kind : global class", 
+            "title": "MeshEmbedding"
+        }, 
+        {
+            "location": "/api/#pointsembedding", 
+            "text": "Base class for embedding backed by a Points object (i.e., particle clouds)  Kind : global class", 
+            "title": "PointsEmbedding"
         }
     ]
 }
