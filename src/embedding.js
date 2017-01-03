@@ -42,11 +42,19 @@ export class Embedding {
 		this.mapping = this.options.mapping;
 	}
 
+	/**
+	 * Translates from a source property of a datapoint to a target property of an embedding
+	 * element.
+	 */
 	_map(dp, src) {
 		let tgt = this.mapping[src];
 		return tgt ? dp.get(tgt) : dp.get(src);
 	}
 
+	/**
+	 * Translates from a source property of a datapoint to a target property of an embedding
+	 * element.
+	 */
 	_mapAttr(src) {
 		let tgt = this.mapping[src];
 		return tgt ? tgt : src;
@@ -76,39 +84,27 @@ export class Embedding {
  */
 export class MeshEmbedding extends Embedding {
 	constructor(scene, dataset, options={}) {
+		options = assign(
+			{
+				material: new THREE.MeshStandardMaterial( {
+					color: 0xff00ff,
+					emissive: 0x072534,
+					side: THREE.DoubleSide,
+					shading: THREE.FlatShading
+				} )
+			}, options);
 		super(scene, dataset, options);
 	}
-}
 
-export class RandomEmbedding extends MeshEmbedding {
-	constructor(scene, dataset, options={}) {
-		options = assign({spread: 1.0}, options)
-		super(scene, dataset, options);
-	}
 
-	get spread() { return this.getOpt("spread"); }
-
-	embed() {
-		if (! this.initialized) {
-			// need to process all the datapoints in the Dataset
-			for (let id in this.dataset.datapoints) {
-				let dp  = this.dataset.datapoints[id];
-				this._createMeshForDatapoint(dp);
-			}
-			this.initialized = true;
-		} else {
-			// just process the added datapoints
-		}
-	}
-
-	_createMeshForDatapoint(dp) {
-		var pos = new THREE.Vector3(normal()*this.spread, normal()*this.spread, normal()*this.spread);
-		var geo = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-		var mat = new THREE.MeshBasicMaterial(
-			{ color: new THREE.Color(Math.random(), Math.random(), Math.random()) });
-		var mesh = new THREE.Mesh(geo, mat);
-		mesh.position.copy(pos);
-		this.obj3D.add(mesh);
+	/**
+	 * A default mesh creator; this can be overriden by subclasses 
+	 */
+	createMeshForDatapoint(dp) {
+		let geo = new THREE.BoxGeometry(
+			this.getOpt("meshSizeX", dp), this.getOpt("meshSizeY", dp), this.getOpt("meshSizeZ", dp));
+		let mat = this.getOpt('material').clone();
+		return new THREE.Mesh(geo, mat);
 	}
 }
 
@@ -143,6 +139,9 @@ export class PointsEmbedding extends Embedding {
 	}
 }
 
+/**
+ * An embedding in which each datapoint is rendered as a vertex in a THREE.Points object.
+ */
 export class ScatterEmbedding extends PointsEmbedding {
 	constructor(scene, dataset, options={}) {
 		options = assign( 
@@ -220,8 +219,6 @@ export class ScatterEmbedding extends PointsEmbedding {
 			} 
 			this.events = [];
 		}
-		// TODO move to global embedding update location
-		TWEEN.update();
 	}
 
 	_placeDatapoint(id) {
@@ -289,7 +286,11 @@ export class ScatterEmbedding extends PointsEmbedding {
 	}
 }
 
-export class PathEmbedding extends Embedding {
+/**
+ * A {MeshEmbedding} in which each {Datapoint} is rendered as a Mesh that follows a
+ * path defined by waypoints.
+ */
+export class PathEmbedding extends MeshEmbedding {
 	constructor(scene, dataset, waypoints, options) {
 		options = assign({
 			meshSizeX: .2,
@@ -321,26 +322,11 @@ export class PathEmbedding extends Embedding {
 			}
 		} 
 		this.events = [];		
-		// TODO move to global embedding update location
-		TWEEN.update();
 	}
 
 	_placeDatapoint(id) {
 		let dp  = this.dataset.datapoints[id];
-		// create mesh
-		let geo = new THREE.BoxGeometry(
-			this.getOpt("meshSizeX", dp), this.getOpt("meshSizeY", dp), this.getOpt("meshSizeZ", dp));
-		let mat = new THREE.MeshBasicMaterial( {
-			color: 0x156289,
-			shading: THREE.FlatShading
-		} );
-		mat = new THREE.MeshStandardMaterial( {
-					color: 0xff00ff,
-					emissive: 0x072534,
-					side: THREE.DoubleSide,
-					shading: THREE.FlatShading
-				} );
-		var mesh = new THREE.Mesh(geo,mat);
+		let mesh = this.createMeshForDatapoint(dp);
 		mesh.userData.description = this.getOpt("description", dp);
 		this.dpMap[id] = mesh;
 		this.obj3D.add(mesh);
@@ -359,6 +345,7 @@ export class PathEmbedding extends Embedding {
 			.to(end, t)
 			.interpolation( TWEEN.Interpolation.CatmullRom )
 			.onUpdate(function() {
+				// keep the x-axis of the mesh tangent to the path as it moves
 				let oldPos = mesh.position.clone();
 				let newPos = new THREE.Vector3(this.x, this.y, this.z);
 				let dir = newPos.sub(oldPos).normalize();
@@ -376,15 +363,13 @@ export class PathEmbedding extends Embedding {
 	}
 
 	_removeDatapoint(id) {
-		// TODO implement
+		if (this.tweens[id]) this.tweens[id].stop();
+		let mesh = this.dpMap[id];
+		if (mesh) this.obj3D.remove(mesh);
 	}
 
 	_updateDatapoint(id, event) {
 		// TODO implement
-	}
-
-	_createMeshForDatapoint() {
-
 	}
 }
 
@@ -421,6 +406,10 @@ export class ConsoleEmbedding extends Embedding {
 		this.mesh.position.set(this.getOpt('x'), this.getOpt('y'), this.getOpt('z'));
 		this.obj3D.add(this.mesh);
 	}
+}
+
+export class AggregateEmbedding extends Embedding {
+
 }
 
 class Rescaling {

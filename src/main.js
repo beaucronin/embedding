@@ -5,6 +5,7 @@
  */
 
 import RayInput from 'ray-input';
+import TWEEN from 'tween.js';
 import queryString from 'query-string';
 import {
 	WebSocketDataset, 
@@ -93,6 +94,7 @@ export function animate(timestamp) {
   	for (let e of embeddings) {
 		e.embed();
   	}
+  	TWEEN.update();
 	THREE.input.update();
     cameraControls.update();
     manager.render( scene, camera, timestamp );
