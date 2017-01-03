@@ -296,6 +296,9 @@ export class PathEmbedding extends MeshEmbedding {
 			meshSizeX: .2,
 			meshSizeY: .2,
 			meshSizeZ: .2,
+			pathWidthX: 0,
+			pathWidthY: 0,
+			pathWidthZ: 0,
 			description: '',
 			removeAfter: true,
 			pathTime: 10000
@@ -305,7 +308,7 @@ export class PathEmbedding extends MeshEmbedding {
 
 		// mapping from datapoint ids to meshes
 		this.dpMap = {};
-
+		this.meshOffsets = {};
 		this.tweens = {};
 	}
 
@@ -324,9 +327,20 @@ export class PathEmbedding extends MeshEmbedding {
 		this.events = [];		
 	}
 
+	_createMeshOffset(id) {
+		let pwx = this.getOpt('pathWidthX');
+		let pwy = this.getOpt('pathWidthY');
+		let pwz = this.getOpt('pathWidthZ');
+		let ox = pwx * Math.random() - pwx / 2;
+		let oy = pwy * Math.random() - pwy / 2;
+		let oz = pwz * Math.random() - pwz / 2;
+		this.meshOffsets[id] = new THREE.Vector3(ox, oy, oz);
+	}
+
 	_placeDatapoint(id) {
 		let dp  = this.dataset.datapoints[id];
 		let mesh = this.createMeshForDatapoint(dp);
+		this._createMeshOffset(id);
 		mesh.userData.description = this.getOpt("description", dp);
 		this.dpMap[id] = mesh;
 		this.obj3D.add(mesh);
@@ -350,7 +364,9 @@ export class PathEmbedding extends MeshEmbedding {
 				let newPos = new THREE.Vector3(this.x, this.y, this.z);
 				let dir = newPos.sub(oldPos).normalize();
 				let axis = new THREE.Vector3(1, 0, 0);
-				mesh.position.set(this.x, this.y, this.z);
+				let offset = obj.meshOffsets[id]
+				mesh.position.set(this.x + offset.x, this.y + offset.y, this.z + offset.z);
+				// mesh.position.set(this.x, this.y, this.z);
 				mesh.quaternion.setFromUnitVectors(axis, dir);
 			})
 			.onComplete(function() {
