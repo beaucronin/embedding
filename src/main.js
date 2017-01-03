@@ -1,7 +1,10 @@
 'use strict'
 
-import RayInput from 'ray-input';
+/**
+ * @author Beau Cronin <beau.cronin@gmail.com>
+ */
 
+import RayInput from 'ray-input';
 import queryString from 'query-string';
 import {
 	WebSocketDataset, 
@@ -18,21 +21,36 @@ import {
 import { detectMode } from './detection-utils.js';
 
 var embeddings = [];
+var lastRender = 0;
 
-export function initScene(controlType = "") {
+/**
+ * Convenience function to create a responsive THREE scene and related objects. Returns a number 
+ * of objects that should probably be kept around by the enclosing script.
+ */
+export function initScene() {
 	const scene = new THREE.Scene();
 	const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 10;
+	
+	// The VRControls object updates the camera position in response to position and orientation
+	// changes of the HMD.
 	const cameraControls = new THREE.VRControls(camera);
 	cameraControls.standing = true;
 
+	// This renderer is the standard WebGL renderer; it may be further processed for VR use depending
+	// on the mode selected by the webvr-boilerplate
 	const renderer = new THREE.WebGLRenderer();
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setPixelRatio(window.devicePixelRatio);
     document.body.appendChild( renderer.domElement );
+    
+    // The VREffect is responsible for distorting the rendered image to match the optics of the HMD,
+    // as well as rendering different, offset images for each eye
     const effect = new THREE.VREffect(renderer);
 	effect.setSize( window.innerWidth, window.innerHeight );
 
+	// The WebVRManager is provided by the webvr-boilerplate, and handles detection of display hardware
+	// (desktop, mobile, VR) and switching between regular and VR modes
 	const manager = new WebVRManager(renderer, effect);
 
 	var onResize = function(e) {
@@ -44,13 +62,13 @@ export function initScene(controlType = "") {
 	window.addEventListener('resize', onResize, true);
 	window.addEventListener('vrdisplaypresentchange', onResize, true);
 
-    // putting the input in the THREE global for now; probably want embeddings to fire 
+    // TODO putting the input in the THREE global for now; probably want embeddings to fire 
     // events when meshes are added/removed rather than referencing the input directly
 	THREE.input = new RayInput(camera, renderer.domElement);
 	THREE.input.setSize(renderer.getSize());
 	scene.add(THREE.input.getMesh());
 
-	// NOTE: relies on the webvr polyfill being present to always have a valid display
+	// NOTE: assumes the webvr polyfill is present, so can count on a valid display
 	var vrDisplay;
 	navigator.getVRDisplays().then(function(displays) {
 	    if (displays.length > 0) {
@@ -62,7 +80,11 @@ export function initScene(controlType = "") {
     return { scene, camera, manager, effect, cameraControls, vrDisplay };
 }
 
-var lastRender = 0;
+/**
+ * The core animation call that is executed for each frame. Updates all registered
+ * embeddings, the pointer controls, and the camera position. Renders the scene
+ * using the WebVRManager, which applies the VREffect if in VR mode.
+ */
 export function animate(timestamp) {
 	if (! timestamp) timestamp = Date.now();
 	var delta = Math.min(timestamp - lastRender, 500);
@@ -74,12 +96,14 @@ export function animate(timestamp) {
 	THREE.input.update();
     cameraControls.update();
     manager.render( scene, camera, timestamp );
-    // FIXME: is this render call necessary?
-    // effect.render( scene, camera );
-    vrDisplay.requestAnimationFrame( animate );
 
+    vrDisplay.requestAnimationFrame( animate );
 }
 
+/**
+ * Register an embedding so that it will be updated on each animation frame.
+ * @param {Embedding} embedding - The embedding
+ */
 export function register(embedding) {
 	embeddings.push(embedding);
 }
