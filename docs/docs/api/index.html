@@ -104,10 +104,18 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#classes">Classes</a></li>
+        <li class="main "><a href="#functions">Functions</a></li>
+        <li class="main "><a href="#typedefs">Typedefs</a></li>
         <li class="main "><a href="#dataset">Dataset</a></li>
-            <li><a href="#datasetadd">dataset.add()</a></li>
-            <li><a href="#datasetremove">dataset.remove()</a></li>
-            <li><a href="#datasetupdate">dataset.update()</a></li>
+            <li><a href="#datasetadddatapoint">dataset.add(datapoint)</a></li>
+            <li><a href="#datasetremoveid">dataset.remove(id)</a></li>
+            <li><a href="#datasetupdateid-k">dataset.update(id, k)</a></li>
+            <li><a href="#datasetcreatefromcsvurl-callback">Dataset.createFromCSV(url, callback)</a></li>
+        <li class="main "><a href="#dataset_1">Dataset</a></li>
+            <li><a href="#datasetadddatapoint_1">dataset.add(datapoint)</a></li>
+            <li><a href="#datasetremoveid_1">dataset.remove(id)</a></li>
+            <li><a href="#datasetupdateid-k_1">dataset.update(id, k)</a></li>
+            <li><a href="#datasetcreatefromcsvurl-callback_1">Dataset.createFromCSV(url, callback)</a></li>
         <li class="main "><a href="#websocketdataset">WebSocketDataset</a></li>
         <li class="main "><a href="#embedding">Embedding</a></li>
             <li><a href="#new-embeddingscene-dataset-options">new Embedding(scene, dataset, [options])</a></li>
@@ -117,6 +125,10 @@
             <li><a href="#embeddingembed_1">embedding.embed()</a></li>
         <li class="main "><a href="#meshembedding">MeshEmbedding</a></li>
         <li class="main "><a href="#pointsembedding">PointsEmbedding</a></li>
+        <li class="main "><a href="#initscene">initScene()</a></li>
+        <li class="main "><a href="#animate">animate()</a></li>
+        <li class="main "><a href="#registerembedding">register(embedding)</a></li>
+        <li class="main "><a href="#csvdatasetcallback-function">CSVDatasetCallback : function</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -126,6 +138,8 @@
 <dt><a href="#Dataset">Dataset</a></dt>
 <dd><p>Base Dataset class</p>
 </dd>
+<dt><a href="#Dataset">Dataset</a></dt>
+<dd></dd>
 <dt><a href="#WebSocketDataset">WebSocketDataset</a></dt>
 <dd><p>A Dataset whose datapoints are received from a websocket.</p>
 </dd>
@@ -142,31 +156,234 @@
 </dd>
 </dl>
 
+<h2 id="functions">Functions</h2>
+<dl>
+<dt><a href="#initScene">initScene()</a></dt>
+<dd><p>Convenience function to create a responsive THREE scene and related objects. Returns a number 
+of objects that should probably be kept around by the enclosing script.</p>
+</dd>
+<dt><a href="#animate">animate()</a></dt>
+<dd><p>The core animation call that is executed for each frame. Updates all registered
+embeddings, the pointer controls, and the camera position. Renders the scene
+using the WebVRManager, which applies the VREffect if in VR mode.</p>
+</dd>
+<dt><a href="#register">register(embedding)</a></dt>
+<dd><p>Register an embedding so that it will be updated on each animation frame.</p>
+</dd>
+</dl>
+
+<h2 id="typedefs">Typedefs</h2>
+<dl>
+<dt><a href="#CSVDatasetCallback">CSVDatasetCallback</a> : <code>function</code></dt>
+<dd><p>A callback that is triggered after the dataset is loaded; typically used to create
+an embedding based on the dataset.</p>
+</dd>
+</dl>
+
 <p><a name="Dataset"></a></p>
 <h2 id="dataset">Dataset</h2>
 <p>Base Dataset class</p>
 <p><strong>Kind</strong>: global class  </p>
 <ul>
 <li><a href="#Dataset">Dataset</a><ul>
-<li><a href="#Dataset+add">.add()</a></li>
-<li><a href="#Dataset+remove">.remove()</a></li>
-<li><a href="#Dataset+update">.update()</a></li>
+<li><em>instance</em><ul>
+<li><a href="#Dataset+add">.add(datapoint)</a></li>
+<li><a href="#Dataset+remove">.remove(id)</a></li>
+<li><a href="#Dataset+update">.update(id, k)</a></li>
+</ul>
+</li>
+<li><em>static</em><ul>
+<li><a href="#Dataset.createFromCSV">.createFromCSV(url, callback)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <p><a name="Dataset+add"></a></p>
-<h3 id="datasetadd">dataset.add()</h3>
+<h3 id="datasetadddatapoint">dataset.add(datapoint)</h3>
 <p>Add a datapoint to the Dataset</p>
-<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code><br />
-<a name="Dataset+remove"></a></p>
-<h3 id="datasetremove">dataset.remove()</h3>
+<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>datapoint</td>
+<td><code>Datapoint</code></td>
+</tr>
+</tbody>
+</table>
+<p><a name="Dataset+remove"></a></p>
+<h3 id="datasetremoveid">dataset.remove(id)</h3>
 <p>Remove a datapoint from the Dataset</p>
-<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code><br />
-<a name="Dataset+update"></a></p>
-<h3 id="datasetupdate">dataset.update()</h3>
+<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>The id of the datapoint to remove</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Dataset+update"></a></p>
+<h3 id="datasetupdateid-k">dataset.update(id, k)</h3>
 <p>Modify the value of a datapoint attribute</p>
-<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code><br />
-<a name="WebSocketDataset"></a></p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>The id of the datapoint to modify</td>
+</tr>
+<tr>
+<td>k</td>
+<td>The key whose value to modify      @ @param v - The new value</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Dataset.createFromCSV"></a></p>
+<h3 id="datasetcreatefromcsvurl-callback">Dataset.createFromCSV(url, callback)</h3>
+<p>Create a {Dataset} from a csv file that can be found at the given url</p>
+<p><strong>Kind</strong>: static method of <code><a href="#Dataset">Dataset</a></code>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td><code>String</code></td>
+<td>The url where the csv file can be found</td>
+</tr>
+<tr>
+<td>callback</td>
+<td><code><a href="#CSVDatasetCallback">CSVDatasetCallback</a></code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><a name="Dataset"></a></p>
+<h2 id="dataset_1">Dataset</h2>
+<p><strong>Kind</strong>: global class  </p>
+<ul>
+<li><a href="#Dataset">Dataset</a><ul>
+<li><em>instance</em><ul>
+<li><a href="#Dataset+add">.add(datapoint)</a></li>
+<li><a href="#Dataset+remove">.remove(id)</a></li>
+<li><a href="#Dataset+update">.update(id, k)</a></li>
+</ul>
+</li>
+<li><em>static</em><ul>
+<li><a href="#Dataset.createFromCSV">.createFromCSV(url, callback)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><a name="Dataset+add"></a></p>
+<h3 id="datasetadddatapoint_1">dataset.add(datapoint)</h3>
+<p>Add a datapoint to the Dataset</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>datapoint</td>
+<td><code>Datapoint</code></td>
+</tr>
+</tbody>
+</table>
+<p><a name="Dataset+remove"></a></p>
+<h3 id="datasetremoveid_1">dataset.remove(id)</h3>
+<p>Remove a datapoint from the Dataset</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>The id of the datapoint to remove</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Dataset+update"></a></p>
+<h3 id="datasetupdateid-k_1">dataset.update(id, k)</h3>
+<p>Modify the value of a datapoint attribute</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>The id of the datapoint to modify</td>
+</tr>
+<tr>
+<td>k</td>
+<td>The key whose value to modify      @ @param v - The new value</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Dataset.createFromCSV"></a></p>
+<h3 id="datasetcreatefromcsvurl-callback_1">Dataset.createFromCSV(url, callback)</h3>
+<p>Create a {Dataset} from a csv file that can be found at the given url</p>
+<p><strong>Kind</strong>: static method of <code><a href="#Dataset">Dataset</a></code>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td><code>String</code></td>
+<td>The url where the csv file can be found</td>
+</tr>
+<tr>
+<td>callback</td>
+<td><code><a href="#CSVDatasetCallback">CSVDatasetCallback</a></code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><a name="WebSocketDataset"></a></p>
 <h2 id="websocketdataset">WebSocketDataset</h2>
 <p>A Dataset whose datapoints are received from a websocket.</p>
 <p><strong>Kind</strong>: global class<br />
@@ -380,7 +597,59 @@
 <a name="PointsEmbedding"></a></p>
 <h2 id="pointsembedding">PointsEmbedding</h2>
 <p>Base class for embedding backed by a Points object (i.e., particle clouds)</p>
-<p><strong>Kind</strong>: global class  </p></div>
+<p><strong>Kind</strong>: global class<br />
+<a name="initScene"></a></p>
+<h2 id="initscene">initScene()</h2>
+<p>Convenience function to create a responsive THREE scene and related objects. Returns a number 
+of objects that should probably be kept around by the enclosing script.</p>
+<p><strong>Kind</strong>: global function<br />
+<a name="animate"></a></p>
+<h2 id="animate">animate()</h2>
+<p>The core animation call that is executed for each frame. Updates all registered
+embeddings, the pointer controls, and the camera position. Renders the scene
+using the WebVRManager, which applies the VREffect if in VR mode.</p>
+<p><strong>Kind</strong>: global function<br />
+<a name="register"></a></p>
+<h2 id="registerembedding">register(embedding)</h2>
+<p>Register an embedding so that it will be updated on each animation frame.</p>
+<p><strong>Kind</strong>: global function  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>embedding</td>
+<td><code><a href="#Embedding">Embedding</a></code></td>
+<td>The embedding</td>
+</tr>
+</tbody>
+</table>
+<p><a name="CSVDatasetCallback"></a></p>
+<h2 id="csvdatasetcallback-function">CSVDatasetCallback : <code>function</code></h2>
+<p>A callback that is triggered after the dataset is loaded; typically used to create
+an embedding based on the dataset.</p>
+<p><strong>Kind</strong>: global typedef  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dataset</td>
+<td><code><a href="#Dataset">Dataset</a></code></td>
+<td>The Dataset loaded from the csv file</td>
+</tr>
+</tbody>
+</table></div>
         </div>
 
         <footer class="col-md-12">

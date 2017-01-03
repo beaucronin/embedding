@@ -4,6 +4,8 @@
 <dt><a href="#Dataset">Dataset</a></dt>
 <dd><p>Base Dataset class</p>
 </dd>
+<dt><a href="#Dataset">Dataset</a></dt>
+<dd></dd>
 <dt><a href="#WebSocketDataset">WebSocketDataset</a></dt>
 <dd><p>A Dataset whose datapoints are received from a websocket.</p>
 </dd>
@@ -20,6 +22,32 @@
 </dd>
 </dl>
 
+## Functions
+
+<dl>
+<dt><a href="#initScene">initScene()</a></dt>
+<dd><p>Convenience function to create a responsive THREE scene and related objects. Returns a number 
+of objects that should probably be kept around by the enclosing script.</p>
+</dd>
+<dt><a href="#animate">animate()</a></dt>
+<dd><p>The core animation call that is executed for each frame. Updates all registered
+embeddings, the pointer controls, and the camera position. Renders the scene
+using the WebVRManager, which applies the VREffect if in VR mode.</p>
+</dd>
+<dt><a href="#register">register(embedding)</a></dt>
+<dd><p>Register an embedding so that it will be updated on each animation frame.</p>
+</dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#CSVDatasetCallback">CSVDatasetCallback</a> : <code>function</code></dt>
+<dd><p>A callback that is triggered after the dataset is loaded; typically used to create
+an embedding based on the dataset.</p>
+</dd>
+</dl>
+
 <a name="Dataset"></a>
 
 ## Dataset
@@ -28,28 +56,118 @@ Base Dataset class
 **Kind**: global class  
 
 * [Dataset](#Dataset)
-    * [.add()](#Dataset+add)
-    * [.remove()](#Dataset+remove)
-    * [.update()](#Dataset+update)
+    * _instance_
+        * [.add(datapoint)](#Dataset+add)
+        * [.remove(id)](#Dataset+remove)
+        * [.update(id, k)](#Dataset+update)
+    * _static_
+        * [.createFromCSV(url, callback)](#Dataset.createFromCSV)
 
 <a name="Dataset+add"></a>
 
-### dataset.add()
+### dataset.add(datapoint)
 Add a datapoint to the Dataset
 
 **Kind**: instance method of <code>[Dataset](#Dataset)</code>  
+
+| Param | Type |
+| --- | --- |
+| datapoint | <code>Datapoint</code> | 
+
 <a name="Dataset+remove"></a>
 
-### dataset.remove()
+### dataset.remove(id)
 Remove a datapoint from the Dataset
 
 **Kind**: instance method of <code>[Dataset](#Dataset)</code>  
+
+| Param | Description |
+| --- | --- |
+| id | The id of the datapoint to remove |
+
 <a name="Dataset+update"></a>
 
-### dataset.update()
+### dataset.update(id, k)
 Modify the value of a datapoint attribute
 
 **Kind**: instance method of <code>[Dataset](#Dataset)</code>  
+
+| Param | Description |
+| --- | --- |
+| id | The id of the datapoint to modify |
+| k | The key whose value to modify 	 @ @param v - The new value |
+
+<a name="Dataset.createFromCSV"></a>
+
+### Dataset.createFromCSV(url, callback)
+Create a {Dataset} from a csv file that can be found at the given url
+
+**Kind**: static method of <code>[Dataset](#Dataset)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>String</code> | The url where the csv file can be found |
+| callback | <code>[CSVDatasetCallback](#CSVDatasetCallback)</code> |  |
+
+<a name="Dataset"></a>
+
+## Dataset
+**Kind**: global class  
+
+* [Dataset](#Dataset)
+    * _instance_
+        * [.add(datapoint)](#Dataset+add)
+        * [.remove(id)](#Dataset+remove)
+        * [.update(id, k)](#Dataset+update)
+    * _static_
+        * [.createFromCSV(url, callback)](#Dataset.createFromCSV)
+
+<a name="Dataset+add"></a>
+
+### dataset.add(datapoint)
+Add a datapoint to the Dataset
+
+**Kind**: instance method of <code>[Dataset](#Dataset)</code>  
+
+| Param | Type |
+| --- | --- |
+| datapoint | <code>Datapoint</code> | 
+
+<a name="Dataset+remove"></a>
+
+### dataset.remove(id)
+Remove a datapoint from the Dataset
+
+**Kind**: instance method of <code>[Dataset](#Dataset)</code>  
+
+| Param | Description |
+| --- | --- |
+| id | The id of the datapoint to remove |
+
+<a name="Dataset+update"></a>
+
+### dataset.update(id, k)
+Modify the value of a datapoint attribute
+
+**Kind**: instance method of <code>[Dataset](#Dataset)</code>  
+
+| Param | Description |
+| --- | --- |
+| id | The id of the datapoint to modify |
+| k | The key whose value to modify 	 @ @param v - The new value |
+
+<a name="Dataset.createFromCSV"></a>
+
+### Dataset.createFromCSV(url, callback)
+Create a {Dataset} from a csv file that can be found at the given url
+
+**Kind**: static method of <code>[Dataset](#Dataset)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>String</code> | The url where the csv file can be found |
+| callback | <code>[CSVDatasetCallback](#CSVDatasetCallback)</code> |  |
+
 <a name="WebSocketDataset"></a>
 
 ## WebSocketDataset
@@ -142,3 +260,41 @@ Base class for embeddings that render Datapoints as individual meshes
 Base class for embedding backed by a Points object (i.e., particle clouds)
 
 **Kind**: global class  
+<a name="initScene"></a>
+
+## initScene()
+Convenience function to create a responsive THREE scene and related objects. Returns a number 
+of objects that should probably be kept around by the enclosing script.
+
+**Kind**: global function  
+<a name="animate"></a>
+
+## animate()
+The core animation call that is executed for each frame. Updates all registered
+embeddings, the pointer controls, and the camera position. Renders the scene
+using the WebVRManager, which applies the VREffect if in VR mode.
+
+**Kind**: global function  
+<a name="register"></a>
+
+## register(embedding)
+Register an embedding so that it will be updated on each animation frame.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| embedding | <code>[Embedding](#Embedding)</code> | The embedding |
+
+<a name="CSVDatasetCallback"></a>
+
+## CSVDatasetCallback : <code>function</code>
+A callback that is triggered after the dataset is loaded; typically used to create
+an embedding based on the dataset.
+
+**Kind**: global typedef  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dataset | <code>[Dataset](#Dataset)</code> | The Dataset loaded from the csv file |
+

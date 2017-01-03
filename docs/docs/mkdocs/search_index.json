@@ -92,33 +92,73 @@
         }, 
         {
             "location": "/api/", 
-            "text": "Classes\n\n\n\n\nDataset\n\n\nBase Dataset class\n\n\n\n\nWebSocketDataset\n\n\nA Dataset whose datapoints are received from a websocket.\n\n\n\n\nEmbedding\n\n\nBase class for all embeddings.\n\n\n\n\nEmbedding\n\n\n\n\nMeshEmbedding\n\n\nBase class for embeddings that render Datapoints as individual meshes\n\n\n\n\nPointsEmbedding\n\n\nBase class for embedding backed by a Points object (i.e., particle clouds)\n\n\n\n\n\n\n\n\n\nDataset\n\n\nBase Dataset class\n\n\nKind\n: global class  \n\n\n\n\nDataset\n\n\n.add()\n\n\n.remove()\n\n\n.update()\n\n\n\n\n\n\n\n\n\n\ndataset.add()\n\n\nAdd a datapoint to the Dataset\n\n\nKind\n: instance method of \nDataset\n\n\n\n\ndataset.remove()\n\n\nRemove a datapoint from the Dataset\n\n\nKind\n: instance method of \nDataset\n\n\n\n\ndataset.update()\n\n\nModify the value of a datapoint attribute\n\n\nKind\n: instance method of \nDataset\n\n\n\n\nWebSocketDataset\n\n\nA Dataset whose datapoints are received from a websocket.\n\n\nKind\n: global class\n\n\n\n\nEmbedding\n\n\nBase class for all embeddings.\n\n\nKind\n: global class  \n\n\n\n\nEmbedding\n\n\nnew Embedding(scene, dataset, [options])\n\n\n.embed()\n\n\n\n\n\n\n\n\n\n\nnew Embedding(scene, dataset, [options])\n\n\nEmbedding base constructor.\n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\nDefault\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nscene\n\n\n\n\n\n\nThe scene to which the embedding belongs\n\n\n\n\n\n\ndataset\n\n\nDataset\n\n\n\n\nThe dataset that backs the embedding\n\n\n\n\n\n\n[options]\n\n\nObject\n\n\n{}\n\n\nOptions describing the embedding's location and scale\n\n\n\n\n\n\n[options.x]\n\n\nNumber\n\n\n0\n\n\nx position of the embedding\n\n\n\n\n\n\n[options.y]\n\n\nNumber\n\n\n0\n\n\ny position of the embedding\n\n\n\n\n\n\n[options.z]\n\n\nNumber\n\n\n0\n\n\nz position of the embedding\n\n\n\n\n\n\n[options.rx]\n\n\nNumber\n\n\n0\n\n\nx rotation of the embedding\n\n\n\n\n\n\n[options.ry]\n\n\nNumber\n\n\n0\n\n\ny rotation of the embedding\n\n\n\n\n\n\n[options.rz]\n\n\nNumber\n\n\n0\n\n\nz rotation of the embedding\n\n\n\n\n\n\n[options.sx]\n\n\nNumber\n\n\n1\n\n\nx scale of the embedding\n\n\n\n\n\n\n[options.sy]\n\n\nNumber\n\n\n1\n\n\ny scale of the embedding\n\n\n\n\n\n\n[options.sz]\n\n\nNumber\n\n\n1\n\n\nz scale of the embedding\n\n\n\n\n\n\n\n\n\n\nembedding.embed()\n\n\nRender the embedding - must be implemented by each concrete subclass.\n\n\nKind\n: instance abstract method of \nEmbedding\n\n\n\n\nEmbedding\n\n\nKind\n: global class  \n\n\n\n\nEmbedding\n\n\nnew Embedding(scene, dataset, [options])\n\n\n.embed()\n\n\n\n\n\n\n\n\n\n\nnew Embedding(scene, dataset, [options])\n\n\nEmbedding base constructor.\n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\nDefault\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nscene\n\n\n\n\n\n\nThe scene to which the embedding belongs\n\n\n\n\n\n\ndataset\n\n\nDataset\n\n\n\n\nThe dataset that backs the embedding\n\n\n\n\n\n\n[options]\n\n\nObject\n\n\n{}\n\n\nOptions describing the embedding's location and scale\n\n\n\n\n\n\n[options.x]\n\n\nNumber\n\n\n0\n\n\nx position of the embedding\n\n\n\n\n\n\n[options.y]\n\n\nNumber\n\n\n0\n\n\ny position of the embedding\n\n\n\n\n\n\n[options.z]\n\n\nNumber\n\n\n0\n\n\nz position of the embedding\n\n\n\n\n\n\n[options.rx]\n\n\nNumber\n\n\n0\n\n\nx rotation of the embedding\n\n\n\n\n\n\n[options.ry]\n\n\nNumber\n\n\n0\n\n\ny rotation of the embedding\n\n\n\n\n\n\n[options.rz]\n\n\nNumber\n\n\n0\n\n\nz rotation of the embedding\n\n\n\n\n\n\n[options.sx]\n\n\nNumber\n\n\n1\n\n\nx scale of the embedding\n\n\n\n\n\n\n[options.sy]\n\n\nNumber\n\n\n1\n\n\ny scale of the embedding\n\n\n\n\n\n\n[options.sz]\n\n\nNumber\n\n\n1\n\n\nz scale of the embedding\n\n\n\n\n\n\n\n\n\n\nembedding.embed()\n\n\nRender the embedding - must be implemented by each concrete subclass.\n\n\nKind\n: instance abstract method of \nEmbedding\n\n\n\n\nMeshEmbedding\n\n\nBase class for embeddings that render Datapoints as individual meshes\n\n\nKind\n: global class\n\n\n\n\nPointsEmbedding\n\n\nBase class for embedding backed by a Points object (i.e., particle clouds)\n\n\nKind\n: global class", 
+            "text": "Classes\n\n\n\n\nDataset\n\n\nBase Dataset class\n\n\n\n\nDataset\n\n\n\n\nWebSocketDataset\n\n\nA Dataset whose datapoints are received from a websocket.\n\n\n\n\nEmbedding\n\n\nBase class for all embeddings.\n\n\n\n\nEmbedding\n\n\n\n\nMeshEmbedding\n\n\nBase class for embeddings that render Datapoints as individual meshes\n\n\n\n\nPointsEmbedding\n\n\nBase class for embedding backed by a Points object (i.e., particle clouds)\n\n\n\n\n\n\n\nFunctions\n\n\n\n\ninitScene()\n\n\nConvenience function to create a responsive THREE scene and related objects. Returns a number \nof objects that should probably be kept around by the enclosing script.\n\n\n\n\nanimate()\n\n\nThe core animation call that is executed for each frame. Updates all registered\nembeddings, the pointer controls, and the camera position. Renders the scene\nusing the WebVRManager, which applies the VREffect if in VR mode.\n\n\n\n\nregister(embedding)\n\n\nRegister an embedding so that it will be updated on each animation frame.\n\n\n\n\n\n\n\nTypedefs\n\n\n\n\nCSVDatasetCallback\n : \nfunction\n\n\nA callback that is triggered after the dataset is loaded; typically used to create\nan embedding based on the dataset.\n\n\n\n\n\n\n\n\n\nDataset\n\n\nBase Dataset class\n\n\nKind\n: global class  \n\n\n\n\nDataset\n\n\ninstance\n\n\n.add(datapoint)\n\n\n.remove(id)\n\n\n.update(id, k)\n\n\n\n\n\n\nstatic\n\n\n.createFromCSV(url, callback)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndataset.add(datapoint)\n\n\nAdd a datapoint to the Dataset\n\n\nKind\n: instance method of \nDataset\n  \n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\n\n\n\n\n\n\n\n\ndatapoint\n\n\nDatapoint\n\n\n\n\n\n\n\n\n\n\ndataset.remove(id)\n\n\nRemove a datapoint from the Dataset\n\n\nKind\n: instance method of \nDataset\n  \n\n\n\n\n\n\n\n\nParam\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nThe id of the datapoint to remove\n\n\n\n\n\n\n\n\n\n\ndataset.update(id, k)\n\n\nModify the value of a datapoint attribute\n\n\nKind\n: instance method of \nDataset\n  \n\n\n\n\n\n\n\n\nParam\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nThe id of the datapoint to modify\n\n\n\n\n\n\nk\n\n\nThe key whose value to modify      @ @param v - The new value\n\n\n\n\n\n\n\n\n\n\nDataset.createFromCSV(url, callback)\n\n\nCreate a {Dataset} from a csv file that can be found at the given url\n\n\nKind\n: static method of \nDataset\n  \n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nurl\n\n\nString\n\n\nThe url where the csv file can be found\n\n\n\n\n\n\ncallback\n\n\nCSVDatasetCallback\n\n\n\n\n\n\n\n\n\n\n\n\nDataset\n\n\nKind\n: global class  \n\n\n\n\nDataset\n\n\ninstance\n\n\n.add(datapoint)\n\n\n.remove(id)\n\n\n.update(id, k)\n\n\n\n\n\n\nstatic\n\n\n.createFromCSV(url, callback)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndataset.add(datapoint)\n\n\nAdd a datapoint to the Dataset\n\n\nKind\n: instance method of \nDataset\n  \n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\n\n\n\n\n\n\n\n\ndatapoint\n\n\nDatapoint\n\n\n\n\n\n\n\n\n\n\ndataset.remove(id)\n\n\nRemove a datapoint from the Dataset\n\n\nKind\n: instance method of \nDataset\n  \n\n\n\n\n\n\n\n\nParam\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nThe id of the datapoint to remove\n\n\n\n\n\n\n\n\n\n\ndataset.update(id, k)\n\n\nModify the value of a datapoint attribute\n\n\nKind\n: instance method of \nDataset\n  \n\n\n\n\n\n\n\n\nParam\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nThe id of the datapoint to modify\n\n\n\n\n\n\nk\n\n\nThe key whose value to modify      @ @param v - The new value\n\n\n\n\n\n\n\n\n\n\nDataset.createFromCSV(url, callback)\n\n\nCreate a {Dataset} from a csv file that can be found at the given url\n\n\nKind\n: static method of \nDataset\n  \n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nurl\n\n\nString\n\n\nThe url where the csv file can be found\n\n\n\n\n\n\ncallback\n\n\nCSVDatasetCallback\n\n\n\n\n\n\n\n\n\n\n\n\nWebSocketDataset\n\n\nA Dataset whose datapoints are received from a websocket.\n\n\nKind\n: global class\n\n\n\n\nEmbedding\n\n\nBase class for all embeddings.\n\n\nKind\n: global class  \n\n\n\n\nEmbedding\n\n\nnew Embedding(scene, dataset, [options])\n\n\n.embed()\n\n\n\n\n\n\n\n\n\n\nnew Embedding(scene, dataset, [options])\n\n\nEmbedding base constructor.\n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\nDefault\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nscene\n\n\n\n\n\n\nThe scene to which the embedding belongs\n\n\n\n\n\n\ndataset\n\n\nDataset\n\n\n\n\nThe dataset that backs the embedding\n\n\n\n\n\n\n[options]\n\n\nObject\n\n\n{}\n\n\nOptions describing the embedding's location and scale\n\n\n\n\n\n\n[options.x]\n\n\nNumber\n\n\n0\n\n\nx position of the embedding\n\n\n\n\n\n\n[options.y]\n\n\nNumber\n\n\n0\n\n\ny position of the embedding\n\n\n\n\n\n\n[options.z]\n\n\nNumber\n\n\n0\n\n\nz position of the embedding\n\n\n\n\n\n\n[options.rx]\n\n\nNumber\n\n\n0\n\n\nx rotation of the embedding\n\n\n\n\n\n\n[options.ry]\n\n\nNumber\n\n\n0\n\n\ny rotation of the embedding\n\n\n\n\n\n\n[options.rz]\n\n\nNumber\n\n\n0\n\n\nz rotation of the embedding\n\n\n\n\n\n\n[options.sx]\n\n\nNumber\n\n\n1\n\n\nx scale of the embedding\n\n\n\n\n\n\n[options.sy]\n\n\nNumber\n\n\n1\n\n\ny scale of the embedding\n\n\n\n\n\n\n[options.sz]\n\n\nNumber\n\n\n1\n\n\nz scale of the embedding\n\n\n\n\n\n\n\n\n\n\nembedding.embed()\n\n\nRender the embedding - must be implemented by each concrete subclass.\n\n\nKind\n: instance abstract method of \nEmbedding\n\n\n\n\nEmbedding\n\n\nKind\n: global class  \n\n\n\n\nEmbedding\n\n\nnew Embedding(scene, dataset, [options])\n\n\n.embed()\n\n\n\n\n\n\n\n\n\n\nnew Embedding(scene, dataset, [options])\n\n\nEmbedding base constructor.\n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\nDefault\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nscene\n\n\n\n\n\n\nThe scene to which the embedding belongs\n\n\n\n\n\n\ndataset\n\n\nDataset\n\n\n\n\nThe dataset that backs the embedding\n\n\n\n\n\n\n[options]\n\n\nObject\n\n\n{}\n\n\nOptions describing the embedding's location and scale\n\n\n\n\n\n\n[options.x]\n\n\nNumber\n\n\n0\n\n\nx position of the embedding\n\n\n\n\n\n\n[options.y]\n\n\nNumber\n\n\n0\n\n\ny position of the embedding\n\n\n\n\n\n\n[options.z]\n\n\nNumber\n\n\n0\n\n\nz position of the embedding\n\n\n\n\n\n\n[options.rx]\n\n\nNumber\n\n\n0\n\n\nx rotation of the embedding\n\n\n\n\n\n\n[options.ry]\n\n\nNumber\n\n\n0\n\n\ny rotation of the embedding\n\n\n\n\n\n\n[options.rz]\n\n\nNumber\n\n\n0\n\n\nz rotation of the embedding\n\n\n\n\n\n\n[options.sx]\n\n\nNumber\n\n\n1\n\n\nx scale of the embedding\n\n\n\n\n\n\n[options.sy]\n\n\nNumber\n\n\n1\n\n\ny scale of the embedding\n\n\n\n\n\n\n[options.sz]\n\n\nNumber\n\n\n1\n\n\nz scale of the embedding\n\n\n\n\n\n\n\n\n\n\nembedding.embed()\n\n\nRender the embedding - must be implemented by each concrete subclass.\n\n\nKind\n: instance abstract method of \nEmbedding\n\n\n\n\nMeshEmbedding\n\n\nBase class for embeddings that render Datapoints as individual meshes\n\n\nKind\n: global class\n\n\n\n\nPointsEmbedding\n\n\nBase class for embedding backed by a Points object (i.e., particle clouds)\n\n\nKind\n: global class\n\n\n\n\ninitScene()\n\n\nConvenience function to create a responsive THREE scene and related objects. Returns a number \nof objects that should probably be kept around by the enclosing script.\n\n\nKind\n: global function\n\n\n\n\nanimate()\n\n\nThe core animation call that is executed for each frame. Updates all registered\nembeddings, the pointer controls, and the camera position. Renders the scene\nusing the WebVRManager, which applies the VREffect if in VR mode.\n\n\nKind\n: global function\n\n\n\n\nregister(embedding)\n\n\nRegister an embedding so that it will be updated on each animation frame.\n\n\nKind\n: global function  \n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nembedding\n\n\nEmbedding\n\n\nThe embedding\n\n\n\n\n\n\n\n\n\n\nCSVDatasetCallback : \nfunction\n\n\nA callback that is triggered after the dataset is loaded; typically used to create\nan embedding based on the dataset.\n\n\nKind\n: global typedef  \n\n\n\n\n\n\n\n\nParam\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\ndataset\n\n\nDataset\n\n\nThe Dataset loaded from the csv file", 
             "title": "API"
         }, 
         {
             "location": "/api/#classes", 
-            "text": "Dataset  Base Dataset class   WebSocketDataset  A Dataset whose datapoints are received from a websocket.   Embedding  Base class for all embeddings.   Embedding   MeshEmbedding  Base class for embeddings that render Datapoints as individual meshes   PointsEmbedding  Base class for embedding backed by a Points object (i.e., particle clouds)", 
+            "text": "Dataset  Base Dataset class   Dataset   WebSocketDataset  A Dataset whose datapoints are received from a websocket.   Embedding  Base class for all embeddings.   Embedding   MeshEmbedding  Base class for embeddings that render Datapoints as individual meshes   PointsEmbedding  Base class for embedding backed by a Points object (i.e., particle clouds)", 
             "title": "Classes"
         }, 
         {
+            "location": "/api/#functions", 
+            "text": "initScene()  Convenience function to create a responsive THREE scene and related objects. Returns a number \nof objects that should probably be kept around by the enclosing script.   animate()  The core animation call that is executed for each frame. Updates all registered\nembeddings, the pointer controls, and the camera position. Renders the scene\nusing the WebVRManager, which applies the VREffect if in VR mode.   register(embedding)  Register an embedding so that it will be updated on each animation frame.", 
+            "title": "Functions"
+        }, 
+        {
+            "location": "/api/#typedefs", 
+            "text": "CSVDatasetCallback  :  function  A callback that is triggered after the dataset is loaded; typically used to create\nan embedding based on the dataset.", 
+            "title": "Typedefs"
+        }, 
+        {
             "location": "/api/#dataset", 
-            "text": "Base Dataset class  Kind : global class     Dataset  .add()  .remove()  .update()", 
+            "text": "Base Dataset class  Kind : global class     Dataset  instance  .add(datapoint)  .remove(id)  .update(id, k)    static  .createFromCSV(url, callback)", 
             "title": "Dataset"
         }, 
         {
-            "location": "/api/#datasetadd", 
-            "text": "Add a datapoint to the Dataset  Kind : instance method of  Dataset", 
-            "title": "dataset.add()"
+            "location": "/api/#datasetadddatapoint", 
+            "text": "Add a datapoint to the Dataset  Kind : instance method of  Dataset        Param  Type      datapoint  Datapoint", 
+            "title": "dataset.add(datapoint)"
         }, 
         {
-            "location": "/api/#datasetremove", 
-            "text": "Remove a datapoint from the Dataset  Kind : instance method of  Dataset", 
-            "title": "dataset.remove()"
+            "location": "/api/#datasetremoveid", 
+            "text": "Remove a datapoint from the Dataset  Kind : instance method of  Dataset        Param  Description      id  The id of the datapoint to remove", 
+            "title": "dataset.remove(id)"
         }, 
         {
-            "location": "/api/#datasetupdate", 
-            "text": "Modify the value of a datapoint attribute  Kind : instance method of  Dataset", 
-            "title": "dataset.update()"
+            "location": "/api/#datasetupdateid-k", 
+            "text": "Modify the value of a datapoint attribute  Kind : instance method of  Dataset        Param  Description      id  The id of the datapoint to modify    k  The key whose value to modify      @ @param v - The new value", 
+            "title": "dataset.update(id, k)"
+        }, 
+        {
+            "location": "/api/#datasetcreatefromcsvurl-callback", 
+            "text": "Create a {Dataset} from a csv file that can be found at the given url  Kind : static method of  Dataset        Param  Type  Description      url  String  The url where the csv file can be found    callback  CSVDatasetCallback", 
+            "title": "Dataset.createFromCSV(url, callback)"
+        }, 
+        {
+            "location": "/api/#dataset_1", 
+            "text": "Kind : global class     Dataset  instance  .add(datapoint)  .remove(id)  .update(id, k)    static  .createFromCSV(url, callback)", 
+            "title": "Dataset"
+        }, 
+        {
+            "location": "/api/#datasetadddatapoint_1", 
+            "text": "Add a datapoint to the Dataset  Kind : instance method of  Dataset        Param  Type      datapoint  Datapoint", 
+            "title": "dataset.add(datapoint)"
+        }, 
+        {
+            "location": "/api/#datasetremoveid_1", 
+            "text": "Remove a datapoint from the Dataset  Kind : instance method of  Dataset        Param  Description      id  The id of the datapoint to remove", 
+            "title": "dataset.remove(id)"
+        }, 
+        {
+            "location": "/api/#datasetupdateid-k_1", 
+            "text": "Modify the value of a datapoint attribute  Kind : instance method of  Dataset        Param  Description      id  The id of the datapoint to modify    k  The key whose value to modify      @ @param v - The new value", 
+            "title": "dataset.update(id, k)"
+        }, 
+        {
+            "location": "/api/#datasetcreatefromcsvurl-callback_1", 
+            "text": "Create a {Dataset} from a csv file that can be found at the given url  Kind : static method of  Dataset        Param  Type  Description      url  String  The url where the csv file can be found    callback  CSVDatasetCallback", 
+            "title": "Dataset.createFromCSV(url, callback)"
         }, 
         {
             "location": "/api/#websocketdataset", 
@@ -164,6 +204,26 @@
             "location": "/api/#pointsembedding", 
             "text": "Base class for embedding backed by a Points object (i.e., particle clouds)  Kind : global class", 
             "title": "PointsEmbedding"
+        }, 
+        {
+            "location": "/api/#initscene", 
+            "text": "Convenience function to create a responsive THREE scene and related objects. Returns a number \nof objects that should probably be kept around by the enclosing script.  Kind : global function", 
+            "title": "initScene()"
+        }, 
+        {
+            "location": "/api/#animate", 
+            "text": "The core animation call that is executed for each frame. Updates all registered\nembeddings, the pointer controls, and the camera position. Renders the scene\nusing the WebVRManager, which applies the VREffect if in VR mode.  Kind : global function", 
+            "title": "animate()"
+        }, 
+        {
+            "location": "/api/#registerembedding", 
+            "text": "Register an embedding so that it will be updated on each animation frame.  Kind : global function       Param  Type  Description      embedding  Embedding  The embedding", 
+            "title": "register(embedding)"
+        }, 
+        {
+            "location": "/api/#csvdatasetcallback-function", 
+            "text": "A callback that is triggered after the dataset is loaded; typically used to create\nan embedding based on the dataset.  Kind : global typedef       Param  Type  Description      dataset  Dataset  The Dataset loaded from the csv file", 
+            "title": "CSVDatasetCallback : function"
         }
     ]
 }

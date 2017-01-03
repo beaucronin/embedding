@@ -5,11 +5,27 @@ import assign from 'object-assign';
  * Base Dataset class
  */
 export class Dataset {
+
+	/**
+	 *
+	 */
 	constructor() {
 		this.datapoints = {};
 		this.embeddings = [];
 	}
 
+	/**
+	 * A callback that is triggered after the dataset is loaded; typically used to create
+	 * an embedding based on the dataset.
+	 * @callback CSVDatasetCallback
+	 * @param {Dataset} dataset - The Dataset loaded from the csv file
+	 */
+
+	/**
+	 * Create a {Dataset} from a csv file that can be found at the given url
+	 * @param {String} url - The url where the csv file can be found
+	 * @param {CSVDatasetCallback} callback
+	 */
 	static createFromCSV(url, callback) {
 		Papa.parse(url, {
 			download: true,
@@ -29,6 +45,7 @@ export class Dataset {
 
 	/**
 	 * Add a datapoint to the Dataset
+	 * @param {Datapoint} datapoint
 	 */
 	add(datapoint) {
 		var d;
@@ -43,6 +60,7 @@ export class Dataset {
 
 	/**
 	 * Remove a datapoint from the Dataset
+	 * @param id - The id of the datapoint to remove
 	 */
 	remove(id) {
 		delete this.datapoints[id];
@@ -51,6 +69,9 @@ export class Dataset {
 
 	/**
 	 * Modify the value of a datapoint attribute
+	 * @param id - The id of the datapoint to modify
+	 * @param k - The key whose value to modify
+	 @ @param v - The new value
 	 */
 	update(id, k, v) {
 		let dp = this.datapoints[id];
