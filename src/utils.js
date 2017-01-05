@@ -3,7 +3,7 @@
 import assign from 'object-assign';
 
 // from https://github.com/mock-end/random-normal
-function normalPool(options) {
+export function normalPool(options) {
 
   var performanceCounter = 0;
 
@@ -23,7 +23,7 @@ function normalPool(options) {
   } while (performanceCounter < 100);
 }
 
-function normal(options) {
+export function normal(options) {
 
   options = assign({ mean: 0, dev: 1, pool: [] }, options);
 
@@ -54,5 +54,29 @@ function normal(options) {
 
   // Shape and scale
   return dev * norm + mean;
+}
+
+export function degToRad(deg) {
+  return deg * Math.PI / 180;
+}
+
+export function latLongToEuclidean(lat, long, R=1, reverse=true) {
+  let radLat = degToRad(lat);
+  let radLong = reverse ? degToRad(-long) : degToRad(long);
+  let x = R * Math.cos(radLat) * Math.cos(radLong);
+  let z = R * Math.cos(radLat) * Math.sin(radLong);
+  let y = R * Math.sin(radLat)
+  return {x, y, z}
+}
+
+export function ajaxWithCallback(url, cb) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.send(null);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      cb(JSON.parse(xhr.responseText));
+    }
+  }
 }
 
