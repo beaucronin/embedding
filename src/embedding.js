@@ -86,16 +86,35 @@ export class MeshEmbedding extends Embedding {
 	constructor(scene, dataset, options={}) {
 		options = assign(
 			{
+				meshSizeX: .02,
+				meshSizeY: .02,
+				meshSizeZ: .02,
 				material: new THREE.MeshStandardMaterial( {
 					color: 0xff00ff,
-					emissive: 0x072534,
-					side: THREE.DoubleSide,
+					emissive: 0x888888,
 					shading: THREE.FlatShading
 				} )
 			}, options);
 		super(scene, dataset, options);
+
+		// mapping from datapoint ids to meshes
+		this.dpMap = {};
+
+		for (let id of this.dataset.getIds()) this._placeDatapoint(id);
 	}
 
+	embed() {
+		// process events sent by the dataset since last embed() call
+		if (this.events.length > 0) {
+			for (let i in this.events) {
+				let e = this.events[i];
+				if      (e.type == "add")    this._placeDatapoint(e.id);
+				else if (e.type == "remove") this._removeDatapoint(e.id);
+				else if (e.type == "update") this._updateDatapoint(e.id, e);
+			}
+		} 
+		this.events = [];		
+	}
 
 	/**
 	 * A default mesh creator; this can be overriden by subclasses 
@@ -106,6 +125,27 @@ export class MeshEmbedding extends Embedding {
 		let mat = this.getOpt('material').clone();
 		return new THREE.Mesh(geo, mat);
 	}
+
+	_placeDatapoint(id) {
+		let dp  = this.dataset.datapoints[id];
+		let mesh = this.createMeshForDatapoint(dp);
+		mesh.userData.description = this.getOpt("description", dp);
+		this.dpMap[id] = mesh;
+		this.obj3D.add(mesh);
+		THREE.input.add(mesh);
+		mesh.position.set(dp.get(this._mapAttr('x')), dp.get(this._mapAttr('y')), dp.get(this._mapAttr('z')));
+	}
+
+	_removeDatapoint(id) {
+		let mesh = this.dpMap[id];
+		if (mesh) this.obj3D.remove(mesh);
+	}
+
+	_updateDatapoint(id, event) {
+		_removeDatapoint(id);
+		_placeDatapoint(id);
+	}
+
 }
 
 /**
@@ -293,9 +333,6 @@ export class ScatterEmbedding extends PointsEmbedding {
 export class PathEmbedding extends MeshEmbedding {
 	constructor(scene, dataset, waypoints, options) {
 		options = assign({
-			meshSizeX: .2,
-			meshSizeY: .2,
-			meshSizeZ: .2,
 			pathWidthX: 0,
 			pathWidthY: 0,
 			pathWidthZ: 0,
@@ -306,15 +343,11 @@ export class PathEmbedding extends MeshEmbedding {
 		super(scene, dataset, options);
 		this.waypoints = waypoints.map((x) => new THREE.Vector3(x[0], x[1], x[2]));
 
-		// mapping from datapoint ids to meshes
-		this.dpMap = {};
 		this.meshOffsets = {};
 		this.tweens = {};
 	}
 
 	embed() {
-		// note: ignore datapoints that are already present in the dataset
-
 		// process events sent by the dataset since last embed() call
 		if (this.events.length > 0) {
 			for (let i in this.events) {
