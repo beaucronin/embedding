@@ -14,11 +14,7 @@
 		<script src="js/embedding.js"></script>
 		<script>
 		const params = EMBED.queryString.parse(window.location.search);
-		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene(params.control || "none");
-		var vrDisplay;
-		navigator.getVRDisplays().then(function(displays) {
-	    	if (displays.length > 0) vrDisplay = displays[0];
-		});		
+		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene();
 		var dataset, embedding;
 
 		var N = 1;
@@ -63,9 +59,8 @@
 			 });
 		EMBED.register(embedding);
 
-		let status = new EMBED.ConsoleEmbedding(scene, null, 
-			{ x: 5, z: -20, font: "Bold 12px Arial" }
-		)
+		let status = new EMBED.ConsoleEmbedding( scene, null, { x: 5, z: -20, font: "Bold 12px Arial" } );
+
 		THREE.input.on('rayover', function(mesh) {
 			if (mesh) {
 				status.setText(mesh.userData.description);
@@ -80,7 +75,7 @@
 		});
 		EMBED.register(status);
 
-		EMBED.animate();
+		EMBED.startAnimation();
 
 		</script>
 	</body>

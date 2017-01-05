@@ -20,9 +20,15 @@ import {
 	ConsoleEmbedding
 } from './embedding.js';
 import { detectMode } from './detection-utils.js';
+import {
+	latLongToEuclidean,
+	degToRad,
+	ajaxWithCallback
+} from './utils.js';
 
 var embeddings = [];
 var lastRender = 0;
+var vrDisplay;
 
 /**
  * Convenience function to create a responsive THREE scene and related objects. Returns a number 
@@ -69,16 +75,17 @@ export function initScene() {
 	THREE.input.setSize(renderer.getSize());
 	scene.add(THREE.input.getMesh());
 
+    return { scene, camera, manager, effect, cameraControls };
+}
+
+export function startAnimation() {
 	// NOTE: assumes the webvr polyfill is present, so can count on a valid display
-	var vrDisplay;
 	navigator.getVRDisplays().then(function(displays) {
 	    if (displays.length > 0) {
 	      	vrDisplay = displays[0];
 	      	vrDisplay.requestAnimationFrame(animate);
 	    }
 	});
-
-    return { scene, camera, manager, effect, cameraControls, vrDisplay };
 }
 
 /**
@@ -123,5 +130,11 @@ module.exports = {
 	animate: animate,
 	queryString: queryString,
 	detectMode: detectMode,
-	register: register
+	register: register,
+	startAnimation,
+	utils: {
+		degToRad,
+		latLongToEuclidean,
+		ajaxWithCallback
+	}
 }

@@ -14,17 +14,13 @@
 		<script src="js/embedding.js"></script>
 		<script>
 		const params = EMBED.queryString.parse(window.location.search);
-		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene(params.control || "none");
-		var vrDisplay;
-		navigator.getVRDisplays().then(function(displays) {
-	    	if (displays.length > 0) vrDisplay = displays[0];
-		});		
+		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene();
 		var dataset, embedding;
 		var N = 1;
 		var c = 0;
 
 		initEmbedding();
-		EMBED.animate();
+		EMBED.startAnimation();
 
 		function initEmbedding() {
 			dataset = new EMBED.Dataset();
