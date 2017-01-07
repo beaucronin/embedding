@@ -27,7 +27,8 @@
 
 ## Integrations
 
-- AltspaceSDK
+- [AltspaceSDK](https://developer.altvr.com/)
+- [A-Frame](https://aframe.io/docs/0.4.0/guides/using-with-threejs.html)
 
 ## Builds / Packaging
 
