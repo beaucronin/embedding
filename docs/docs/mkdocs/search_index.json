@@ -52,7 +52,7 @@
         }, 
         {
             "location": "/roadmap/", 
-            "text": "Roadmap\n\n\nEmbeddings\n\n\n\n\nForce-directed layout, including gravitational attraction, repulsion, springs, viscosity; possible starting points include\n\n\nFIXME graph grammar\n\n\nEmbedding \"chaining\" via events\n\n\nAggregate embedding: display summary functions of data points that update as DPs are added/removed, possibly with filters, possibly grouped or binned\n\n\n\n\nEffects\n\n\n\n\nRigid-body interactions and gravity\n\n\n\"Wind\" and perturbation\n\n\nDirectional lighting and shadows\n\n\nMoving lighting\n\n\n\n\nInteractivity\n\n\n\n\nDefault navigation: teleportation\n\n\nHaptic feedback on supported browsers/controllers\n\n\nSpatialized sound effects on events\n\n\nSelection model and operations\n\n\n\n\nData Sources\n\n\n\n\nSQL query loading into Dataset\n\n\n\n\nIntegrations\n\n\n\n\nAltspaceSDK\n\n\n\n\nBuilds / Packaging\n\n\n\n\nAutomated testing and CI\n\n\nBuild status, code coverage, etc. reported in README widgets\n\n\nClean up dependencies to use node_modules where possible", 
+            "text": "Roadmap\n\n\nEmbeddings\n\n\n\n\nForce-directed layout, including gravitational attraction, repulsion, springs, viscosity; possible starting points include\n\n\nEmbedding \"chaining\" via events\n\n\nAggregate embedding: display summary functions of data points that update as DPs are added/removed, possibly with filters, possibly grouped or binned\n\n\n\n\nEffects\n\n\n\n\nRigid-body interactions and gravity\n\n\n\"Wind\" and perturbation\n\n\nDirectional lighting and shadows\n\n\nMoving lighting\n\n\n\n\nInteractivity\n\n\n\n\nDefault navigation: teleportation\n\n\nHaptic feedback on supported browsers/controllers\n\n\nSpatialized sound effects on events\n\n\nSelection model and operations\n\n\n\n\nData Sources\n\n\n\n\nSQL query loading into Dataset\n\n\n\n\nIntegrations\n\n\n\n\nAltspaceSDK\n\n\nA-Frame\n\n\n\n\nBuilds / Packaging\n\n\n\n\nAutomated testing and CI\n\n\nBuild status, code coverage, etc. reported in README widgets\n\n\nClean up dependencies to use node_modules where possible (rather than script tags)", 
             "title": "Roadmap"
         }, 
         {
@@ -62,7 +62,7 @@
         }, 
         {
             "location": "/roadmap/#embeddings", 
-            "text": "Force-directed layout, including gravitational attraction, repulsion, springs, viscosity; possible starting points include  FIXME graph grammar  Embedding \"chaining\" via events  Aggregate embedding: display summary functions of data points that update as DPs are added/removed, possibly with filters, possibly grouped or binned", 
+            "text": "Force-directed layout, including gravitational attraction, repulsion, springs, viscosity; possible starting points include  Embedding \"chaining\" via events  Aggregate embedding: display summary functions of data points that update as DPs are added/removed, possibly with filters, possibly grouped or binned", 
             "title": "Embeddings"
         }, 
         {
@@ -82,12 +82,12 @@
         }, 
         {
             "location": "/roadmap/#integrations", 
-            "text": "AltspaceSDK", 
+            "text": "AltspaceSDK  A-Frame", 
             "title": "Integrations"
         }, 
         {
             "location": "/roadmap/#builds-packaging", 
-            "text": "Automated testing and CI  Build status, code coverage, etc. reported in README widgets  Clean up dependencies to use node_modules where possible", 
+            "text": "Automated testing and CI  Build status, code coverage, etc. reported in README widgets  Clean up dependencies to use node_modules where possible (rather than script tags)", 
             "title": "Builds / Packaging"
         }, 
         {

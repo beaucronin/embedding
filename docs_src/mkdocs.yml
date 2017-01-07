@@ -4,6 +4,7 @@ repo_url: https://github.com/beaucronin/embedding
 site_author: Beau Cronin
 site_dir: ../docs/docs
 theme: flatly
+google_analytics: ['UA-89921769-2', 'embeddingjs.org/docs']
 pages:
   - Intro: 'index.md'
   - Docs:

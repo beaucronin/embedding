@@ -23,6 +23,16 @@
         <![endif]-->
 
         
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-89921769-2', 'embeddingjs.org/docs');
+            ga('send', 'pageview');
+        </script>
+        
     </head>
 
     <body>
@@ -155,7 +165,6 @@
 <h2 id="embeddings">Embeddings</h2>
 <ul>
 <li>Force-directed layout, including gravitational attraction, repulsion, springs, viscosity; possible starting points include</li>
-<li>FIXME graph grammar</li>
 <li>Embedding "chaining" via events</li>
 <li>Aggregate embedding: display summary functions of data points that update as DPs are added/removed, possibly with filters, possibly grouped or binned</li>
 </ul>
@@ -179,13 +188,14 @@
 </ul>
 <h2 id="integrations">Integrations</h2>
 <ul>
-<li>AltspaceSDK</li>
+<li><a href="https://developer.altvr.com/">AltspaceSDK</a></li>
+<li><a href="https://aframe.io/docs/0.4.0/guides/using-with-threejs.html">A-Frame</a></li>
 </ul>
 <h2 id="builds-packaging">Builds / Packaging</h2>
 <ul>
 <li>Automated testing and CI</li>
 <li>Build status, code coverage, etc. reported in README widgets</li>
-<li>Clean up dependencies to use node_modules where possible</li>
+<li>Clean up dependencies to use node_modules where possible (rather than script tags)</li>
 </ul></div>
         </div>
 
