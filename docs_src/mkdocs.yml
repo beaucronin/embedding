@@ -3,6 +3,7 @@ site_url: http://embeddingjs.org
 repo_url: https://github.com/beaucronin/embedding
 site_author: Beau Cronin
 site_dir: ../docs/docs
+theme: flatly
 pages:
   - Intro: 'index.md'
   - Docs:

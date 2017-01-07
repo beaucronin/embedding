@@ -8,20 +8,21 @@
         <meta name="author" content="Beau Cronin">
         <link rel="canonical" href="http://embeddingjs.org/api/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>API - Embedding.js Docs</title>
+
+	<title>API - Embedding.js Docs</title>
+
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
         <link rel="stylesheet" href="../css/highlight.css">
+        <link href="../css/base.css" rel="stylesheet">
+
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
-	
-	<script src="../js/jquery-1.10.2.min.js"></script>
-        <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/highlight.pack.js"></script> 
+
+        
     </head>
 
     <body>
@@ -38,100 +39,184 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+
+            <!-- Main title -->
             <a class="navbar-brand" href="..">Embedding.js Docs</a>
         </div>
 
         <!-- Expanded navigation -->
         <div class="navbar-collapse collapse">
-                <!-- Main navigation -->
-                <ul class="nav navbar-nav">
-                    <li >
-                        <a href="..">Intro</a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+                <li >
+                    <a href="..">Intro</a>
+                </li>
+            
+            
+            
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        
 <li >
     <a href="../getting-started/">Getting Started</a>
 </li>
-                            
+
+                    
+                        
 <li >
     <a href="../compatibility/">Compatibility</a>
 </li>
-                            
+
+                    
+                        
 <li >
     <a href="../contributing/">Contributing</a>
 </li>
-                            
+
+                    
+                        
 <li >
     <a href="../roadmap/">Roadmap</a>
 </li>
-                        </ul>
-                    </li>
-                    <li class="active">
-                        <a href="./">API</a>
-                    </li>
-                </ul>
 
+                    
+                    </ul>
+                </li>
+            
+            
+            
+                <li class="active">
+                    <a href="./">API</a>
+                </li>
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                         <i class="fa fa-search"></i> Search
                     </a>
                 </li>
-                    <li >
-                        <a rel="next" href="../roadmap/">
-                            <i class="fa fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li class="disabled">
-                        <a rel="prev" >
-                            Next <i class="fa fa-arrow-right"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/beaucronin/embedding">
-                                <i class="fa fa-github"></i>GitHub
-                        </a>
-                    </li>
+                <li >
+                    <a rel="next" href="../roadmap/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a rel="prev" >
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/beaucronin/embedding">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
             </ul>
         </div>
     </div>
 </div>
 
         <div class="container">
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
+    
         <li class="main active"><a href="#classes">Classes</a></li>
+        
+    
         <li class="main "><a href="#functions">Functions</a></li>
+        
+    
         <li class="main "><a href="#typedefs">Typedefs</a></li>
+        
+    
         <li class="main "><a href="#dataset">Dataset</a></li>
+        
             <li><a href="#datasetadddatapoint">dataset.add(datapoint)</a></li>
+        
             <li><a href="#datasetremoveid">dataset.remove(id)</a></li>
+        
             <li><a href="#datasetupdateid-k">dataset.update(id, k)</a></li>
+        
             <li><a href="#datasetcreatefromcsvurl-callback">Dataset.createFromCSV(url, callback)</a></li>
+        
+    
         <li class="main "><a href="#dataset_1">Dataset</a></li>
+        
             <li><a href="#datasetadddatapoint_1">dataset.add(datapoint)</a></li>
+        
             <li><a href="#datasetremoveid_1">dataset.remove(id)</a></li>
+        
             <li><a href="#datasetupdateid-k_1">dataset.update(id, k)</a></li>
+        
             <li><a href="#datasetcreatefromcsvurl-callback_1">Dataset.createFromCSV(url, callback)</a></li>
+        
+    
         <li class="main "><a href="#websocketdataset">WebSocketDataset</a></li>
+        
+    
         <li class="main "><a href="#embedding">Embedding</a></li>
+        
             <li><a href="#new-embeddingscene-dataset-options">new Embedding(scene, dataset, [options])</a></li>
+        
+            <li><a href="#embedding_map">embedding._map()</a></li>
+        
+            <li><a href="#embedding_mapattr">embedding._mapAttr()</a></li>
+        
             <li><a href="#embeddingembed">embedding.embed()</a></li>
+        
+    
         <li class="main "><a href="#embedding_1">Embedding</a></li>
+        
             <li><a href="#new-embeddingscene-dataset-options_1">new Embedding(scene, dataset, [options])</a></li>
+        
+            <li><a href="#embedding_map_1">embedding._map()</a></li>
+        
+            <li><a href="#embedding_mapattr_1">embedding._mapAttr()</a></li>
+        
             <li><a href="#embeddingembed_1">embedding.embed()</a></li>
+        
+    
         <li class="main "><a href="#meshembedding">MeshEmbedding</a></li>
+        
+            <li><a href="#meshembeddingcreatemeshfordatapoint">meshEmbedding.createMeshForDatapoint()</a></li>
+        
+    
         <li class="main "><a href="#pointsembedding">PointsEmbedding</a></li>
+        
+    
+        <li class="main "><a href="#scatterembedding">ScatterEmbedding</a></li>
+        
+    
+        <li class="main "><a href="#pathembedding">PathEmbedding</a></li>
+        
+    
         <li class="main "><a href="#initscene">initScene()</a></li>
+        
+    
         <li class="main "><a href="#animate">animate()</a></li>
+        
+    
         <li class="main "><a href="#registerembedding">register(embedding)</a></li>
+        
+    
         <li class="main "><a href="#csvdatasetcallback-function">CSVDatasetCallback : function</a></li>
+        
+    
     </ul>
 </div></div>
-                <div class="col-md-9" role="main">
+            <div class="col-md-9" role="main">
 
 <h2 id="classes">Classes</h2>
 <dl>
@@ -153,6 +238,13 @@
 </dd>
 <dt><a href="#PointsEmbedding">PointsEmbedding</a></dt>
 <dd><p>Base class for embedding backed by a Points object (i.e., particle clouds)</p>
+</dd>
+<dt><a href="#ScatterEmbedding">ScatterEmbedding</a></dt>
+<dd><p>An embedding in which each datapoint is rendered as a vertex in a THREE.Points object.</p>
+</dd>
+<dt><a href="#PathEmbedding">PathEmbedding</a></dt>
+<dd><p>A {MeshEmbedding} in which each {Datapoint} is rendered as a Mesh that follows a
+path defined by waypoints.</p>
 </dd>
 </dl>
 
@@ -394,6 +486,8 @@ an embedding based on the dataset.</p>
 <ul>
 <li><a href="#Embedding">Embedding</a><ul>
 <li><a href="#new_Embedding_new">new Embedding(scene, dataset, [options])</a></li>
+<li><a href="#Embedding+_map">._map()</a></li>
+<li><a href="#Embedding+_mapAttr">._mapAttr()</a></li>
 <li><em><a href="#Embedding+embed">.embed()</a></em></li>
 </ul>
 </li>
@@ -485,7 +579,17 @@ an embedding based on the dataset.</p>
 </tr>
 </tbody>
 </table>
-<p><a name="Embedding+embed"></a></p>
+<p><a name="Embedding+_map"></a></p>
+<h3 id="embedding_map">embedding._map()</h3>
+<p>Translates from a source property of a datapoint to a target property of an embedding
+element.</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Embedding">Embedding</a></code><br />
+<a name="Embedding+_mapAttr"></a></p>
+<h3 id="embedding_mapattr">embedding._mapAttr()</h3>
+<p>Translates from a source property of a datapoint to a target property of an embedding
+element.</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Embedding">Embedding</a></code><br />
+<a name="Embedding+embed"></a></p>
 <h3 id="embeddingembed"><em>embedding.embed()</em></h3>
 <p>Render the embedding - must be implemented by each concrete subclass.</p>
 <p><strong>Kind</strong>: instance abstract method of <code><a href="#Embedding">Embedding</a></code><br />
@@ -495,6 +599,8 @@ an embedding based on the dataset.</p>
 <ul>
 <li><a href="#Embedding">Embedding</a><ul>
 <li><a href="#new_Embedding_new">new Embedding(scene, dataset, [options])</a></li>
+<li><a href="#Embedding+_map">._map()</a></li>
+<li><a href="#Embedding+_mapAttr">._mapAttr()</a></li>
 <li><em><a href="#Embedding+embed">.embed()</a></em></li>
 </ul>
 </li>
@@ -586,7 +692,17 @@ an embedding based on the dataset.</p>
 </tr>
 </tbody>
 </table>
-<p><a name="Embedding+embed"></a></p>
+<p><a name="Embedding+_map"></a></p>
+<h3 id="embedding_map_1">embedding._map()</h3>
+<p>Translates from a source property of a datapoint to a target property of an embedding
+element.</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Embedding">Embedding</a></code><br />
+<a name="Embedding+_mapAttr"></a></p>
+<h3 id="embedding_mapattr_1">embedding._mapAttr()</h3>
+<p>Translates from a source property of a datapoint to a target property of an embedding
+element.</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Embedding">Embedding</a></code><br />
+<a name="Embedding+embed"></a></p>
 <h3 id="embeddingembed_1"><em>embedding.embed()</em></h3>
 <p>Render the embedding - must be implemented by each concrete subclass.</p>
 <p><strong>Kind</strong>: instance abstract method of <code><a href="#Embedding">Embedding</a></code><br />
@@ -594,9 +710,22 @@ an embedding based on the dataset.</p>
 <h2 id="meshembedding">MeshEmbedding</h2>
 <p>Base class for embeddings that render Datapoints as individual meshes</p>
 <p><strong>Kind</strong>: global class<br />
+<a name="MeshEmbedding+createMeshForDatapoint"></a></p>
+<h3 id="meshembeddingcreatemeshfordatapoint">meshEmbedding.createMeshForDatapoint()</h3>
+<p>A default mesh creator; this can be overriden by subclasses</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#MeshEmbedding">MeshEmbedding</a></code><br />
 <a name="PointsEmbedding"></a></p>
 <h2 id="pointsembedding">PointsEmbedding</h2>
 <p>Base class for embedding backed by a Points object (i.e., particle clouds)</p>
+<p><strong>Kind</strong>: global class<br />
+<a name="ScatterEmbedding"></a></p>
+<h2 id="scatterembedding">ScatterEmbedding</h2>
+<p>An embedding in which each datapoint is rendered as a vertex in a THREE.Points object.</p>
+<p><strong>Kind</strong>: global class<br />
+<a name="PathEmbedding"></a></p>
+<h2 id="pathembedding">PathEmbedding</h2>
+<p>A {MeshEmbedding} in which each {Datapoint} is rendered as a Mesh that follows a
+path defined by waypoints.</p>
 <p><strong>Kind</strong>: global class<br />
 <a name="initScene"></a></p>
 <h2 id="initscene">initScene()</h2>
@@ -654,34 +783,40 @@ an embedding based on the dataset.</p>
 
         <footer class="col-md-12">
             <hr>
-            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+            
+            <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
         </footer>
+
+        <script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
         <script>var base_url = '..';</script>
         <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
-        <script src="../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
-                <form role="form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+        <script src="../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
                     </div>
-                </form>
-                <div id="mkdocs-search-results"></div>
-            </div>
-            <div class="modal-footer">
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
     </body>
 </html>

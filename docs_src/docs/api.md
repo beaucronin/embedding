@@ -20,6 +20,13 @@
 <dt><a href="#PointsEmbedding">PointsEmbedding</a></dt>
 <dd><p>Base class for embedding backed by a Points object (i.e., particle clouds)</p>
 </dd>
+<dt><a href="#ScatterEmbedding">ScatterEmbedding</a></dt>
+<dd><p>An embedding in which each datapoint is rendered as a vertex in a THREE.Points object.</p>
+</dd>
+<dt><a href="#PathEmbedding">PathEmbedding</a></dt>
+<dd><p>A {MeshEmbedding} in which each {Datapoint} is rendered as a Mesh that follows a
+path defined by waypoints.</p>
+</dd>
 </dl>
 
 ## Functions
@@ -183,6 +190,8 @@ Base class for all embeddings.
 
 * [Embedding](#Embedding)
     * [new Embedding(scene, dataset, [options])](#new_Embedding_new)
+    * [._map()](#Embedding+_map)
+    * [._mapAttr()](#Embedding+_mapAttr)
     * *[.embed()](#Embedding+embed)*
 
 <a name="new_Embedding_new"></a>
@@ -206,6 +215,20 @@ Embedding base constructor.
 | [options.sy] | <code>Number</code> | <code>1</code> | y scale of the embedding |
 | [options.sz] | <code>Number</code> | <code>1</code> | z scale of the embedding |
 
+<a name="Embedding+_map"></a>
+
+### embedding._map()
+Translates from a source property of a datapoint to a target property of an embedding
+element.
+
+**Kind**: instance method of <code>[Embedding](#Embedding)</code>  
+<a name="Embedding+_mapAttr"></a>
+
+### embedding._mapAttr()
+Translates from a source property of a datapoint to a target property of an embedding
+element.
+
+**Kind**: instance method of <code>[Embedding](#Embedding)</code>  
 <a name="Embedding+embed"></a>
 
 ### *embedding.embed()*
@@ -219,6 +242,8 @@ Render the embedding - must be implemented by each concrete subclass.
 
 * [Embedding](#Embedding)
     * [new Embedding(scene, dataset, [options])](#new_Embedding_new)
+    * [._map()](#Embedding+_map)
+    * [._mapAttr()](#Embedding+_mapAttr)
     * *[.embed()](#Embedding+embed)*
 
 <a name="new_Embedding_new"></a>
@@ -242,6 +267,20 @@ Embedding base constructor.
 | [options.sy] | <code>Number</code> | <code>1</code> | y scale of the embedding |
 | [options.sz] | <code>Number</code> | <code>1</code> | z scale of the embedding |
 
+<a name="Embedding+_map"></a>
+
+### embedding._map()
+Translates from a source property of a datapoint to a target property of an embedding
+element.
+
+**Kind**: instance method of <code>[Embedding](#Embedding)</code>  
+<a name="Embedding+_mapAttr"></a>
+
+### embedding._mapAttr()
+Translates from a source property of a datapoint to a target property of an embedding
+element.
+
+**Kind**: instance method of <code>[Embedding](#Embedding)</code>  
 <a name="Embedding+embed"></a>
 
 ### *embedding.embed()*
@@ -254,10 +293,29 @@ Render the embedding - must be implemented by each concrete subclass.
 Base class for embeddings that render Datapoints as individual meshes
 
 **Kind**: global class  
+<a name="MeshEmbedding+createMeshForDatapoint"></a>
+
+### meshEmbedding.createMeshForDatapoint()
+A default mesh creator; this can be overriden by subclasses
+
+**Kind**: instance method of <code>[MeshEmbedding](#MeshEmbedding)</code>  
 <a name="PointsEmbedding"></a>
 
 ## PointsEmbedding
 Base class for embedding backed by a Points object (i.e., particle clouds)
+
+**Kind**: global class  
+<a name="ScatterEmbedding"></a>
+
+## ScatterEmbedding
+An embedding in which each datapoint is rendered as a vertex in a THREE.Points object.
+
+**Kind**: global class  
+<a name="PathEmbedding"></a>
+
+## PathEmbedding
+A {MeshEmbedding} in which each {Datapoint} is rendered as a Mesh that follows a
+path defined by waypoints.
 
 **Kind**: global class  
 <a name="initScene"></a>
