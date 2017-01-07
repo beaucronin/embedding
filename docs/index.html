@@ -1,0 +1,105 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Embedding.js</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400|Roboto+Mono|Muli:400,800|Roboto+Slab" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" type="text/css" media="screen"title="no title" charset="utf-8">
+  </head>
+  <body class="style-a">
+    <section id="top-home-section" class="top-section color-a">
+      <div id="top-home-image"></div>
+<!--        <h1 id="top-title">
+         <img src="images/browserify.png">
+       </h1> -->
+       <h1 id="top-title">Embedding.js</h1>
+       <h3 id="top-subtitle" class="large-font">Embedding lets you build data-driven environments that render responsively on desktop, touch, and WebVR.</h3>
+      <a href="#middle-section">
+        <button class="top-button" id="top-button1">
+          Getting Started
+        </button>
+      </a>
+      <a href="http://embeddingjs.org/docs">
+        <button class="top-button" id="top-button2">
+          Documentation
+        </button>
+      </a>
+<!--       <a href="articles.html">
+        <button class="top-button" id="top-button3">
+          Help + Articles
+        </button>
+      </a> -->
+      <a href="http://embeddingjs.org/examples">
+        <button class="top-button" id="top-button4">
+          Examples
+        </button>
+      </a>
+    </section>
+<!--     <section id="bottom-section" class="bottom-section color-c">
+      <header>
+         <h1 class="title" id="getting-started"><a name="rel_pos_size">Getting Started</a></h1>
+
+         <h2 class="subtitle">use the Embedding boilerplate</h2>
+      </header>
+      <div id="install" class="content">
+
+        <div class="step">
+          First install <a href="http://nodejs.org/">node</a>,
+          which ships with <a href="https://npmjs.org">npm</a>.
+          Then do:
+        </div>
+
+        <pre class="code"><span class="lightblue">npm</span> install -g <span class="gold">browserify</span></pre>
+      </div>
+    </section> -->
+    <section id="middle-section" class="middle-section color-b" >
+      <header>
+         <h1 class="title"><a name="rel_pos_size">Hello World with Embedding.js</a></h1>
+         <h2 class="subtitle">Creating your first data-driven environment</h2>
+      </header>
+      <div class="content">
+        <p>Just as <a href="https://d3js.org/">D3</a> makes it easy to create web documents whose appearance and behavior is generated dyamically from data, Embedding makes it easy to create immersive <em>environments</em> using proper abstractions with readable, clean Javascript.</p>
+        <p>This tutorial shows how quickly you can create your own environment, which you can then navigate and interact with from within your desktop browser, a mobile browser on a phone or tablet, or a WebVR-enabled browser - all supported from the same code without modification.</p>
+        <p>If you want, you can <a href="http://embeddingjs.org/examples">check out some examples</a> before returning here to roll your own.</p>
+        <!-- <div class="filename">main.js</div> -->
+
+        <div class="step">Clone the <a href="https://github.com/beaucronin/embedding-boilerplate">embedding-boilerplate repo</a> or download and unzip it.</div>
+        <pre class="code">$ git clone https://github.com/beaucronin/embedding-boilerplate.git</pre>
+        or
+        <pre class="code">$ wget https://github.com/beaucronin/embedding-boilerplate/archive/master.zip \
+    -O embedding-boilerplate.zip
+$ unzip embedding-boilerplate.zip</pre>
+
+        <h3><a name="more" href="#more">More</a></h3>
+
+        <div class="step">
+          <ul>
+            <li>Check out the <a href="">Medium post</a> introducing Embedding.js</li>
+            <li>Keep track of the <a href="https://iswebvrready.org/">overall progress of WebVR support</a> in major browsers.</li>
+            <li>See <a href="http://embeddingjs.org/docs/compatibility/">which hardware platforms and browsers</a> have been tested specifically for Embedding support.</li>
+            <li>Learn more about <a href="https://threejs.org/">three.js</a>, the primary library on which Embedding is built.</li>
+          </ul>
+        </div>
+
+        <div class="community">
+          <h3><a name="community" href="#community">Community</a></h3>
+
+          <div class="step">
+            Join <a href="https://gitter.im/embedding"><span class="blue">https://gitter.im/embedding</span></a> for help and to find ways to contribute.
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-55715697-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
