@@ -3,7 +3,6 @@
 ## Embeddings
 
 - Force-directed layout, including gravitational attraction, repulsion, springs, viscosity; possible starting points include
-- FIXME graph grammar
 - Embedding "chaining" via events
 - Aggregate embedding: display summary functions of data points that update as DPs are added/removed, possibly with filters, possibly grouped or binned
 
@@ -34,4 +33,4 @@
 
 - Automated testing and CI
 - Build status, code coverage, etc. reported in README widgets
-- Clean up dependencies to use node_modules where possible
+- Clean up dependencies to use node_modules where possible (rather than script tags)
