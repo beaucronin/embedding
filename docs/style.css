@@ -242,7 +242,7 @@ button:hover, button.transparent:hover {
 }
 
 .color-a {
-  background-color: #f0f0f0;
+  background-color: #d0d0d0;
   color: #3C6991;
 }
 
@@ -276,6 +276,8 @@ h1, h2, h3, p, div { padding: 0 5px; }
   font-size: 50px;
   margin-top: -20px;
   margin-bottom: -10px;
+  color: white;
+  text-shadow: 1px 1px black;
 }
 #top-title img {
   width: 300px;
