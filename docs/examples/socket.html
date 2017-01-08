@@ -7,7 +7,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<title>Embedding.js basic example</title>
+		<title>Embedding.js websocket data example</title>
 
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r80/three.min.js"></script>
 		<script type="text/javascript" src="js/VRControls.js"></script>
@@ -31,7 +31,6 @@
 	<body>
 		<script src="js/embedding.js"></script>
 		<script>
-		const params = EMBED.queryString.parse(window.location.search);
 		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene();
 		var dataset, embedding;
 
