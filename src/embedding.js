@@ -149,7 +149,11 @@ export class MeshEmbedding extends Embedding {
 					sizeX: .02
 				}, options);
 				break;
-		}	
+		}
+
+		// Ensure options.geometry is an array if it is present
+		if (options.geometry && !Array.isArray(options.geometry))
+			options.geometry = [options.geometry]; 
 
 		super(scene, dataset, options);
 
@@ -177,54 +181,56 @@ export class MeshEmbedding extends Embedding {
 	 * A default mesh creator; this can be overriden by subclasses 
 	 */
 	createMeshForDatapoint(dp) {
-		var geo, mat;
+		var geos, mat;
 		if (this.options.geometry) { 
-			// Geometry specified
-			if (typeof(this.options.geometry) == 'function')
-				geo = this.options.geometry(dp);
-			else if (this.options.geometry instanceof THREE.Geometry)
-				geo = this.options.geometry.clone();
-			else
-				console.warn('geometry type not recognized');
+			// Geometry(ies) specified
+			geos = this.options.geometry.map(function(g) {
+				if (typeof(g) == 'function')
+					return g(dp);
+				else if (g instanceof THREE.Geometry)
+					return g.clone();
+				else
+					console.warn('geometry type not recognized');
+			}.bind(this))
 		} else { 
 			// Create geometry from parameters
 			switch (this.options.meshType.toLowerCase()) {
 				case 'box':
-					geo = new THREE.BoxGeometry(
+					geos = [new THREE.BoxGeometry(
 						maybeEval(this.options.sizeX, dp),
 						maybeEval(this.options.sizeY, dp),
-						maybeEval(this.options.sizeZ, dp));
+						maybeEval(this.options.sizeZ, dp))];
 					break;
 				case 'sphere':
-					geo = new THREE.SphereGeometry(maybeEval(this.options.sizeR, dp), 16, 16);
+					geos = [new THREE.SphereGeometry(maybeEval(this.options.sizeR, dp), 16, 16)];
 					break;
 				case 'ellipsoid':
-					geo = new THREE.SphereGeometry(1.0, 16, 16);
-					geo.applyMatrix(new THREE.Matrix4().makeScale(
+					geos = [new THREE.SphereGeometry(1.0, 16, 16)];
+					geos[0].applyMatrix(new THREE.Matrix4().makeScale(
 						maybeEval(this.options.sizeX, dp),
 						maybeEval(this.options.sizeY, dp),
 						maybeEval(this.options.sizeZ, dp)));
 					break;
 				case 'tetrahedron':
-					geo = new THREE.TetrahedronGeometry(1.0);
-					geo.applyMatrix(new THREE.Matrix4().makeScale(
+					geos = [new THREE.TetrahedronGeometry(1.0)];
+					geos[0].applyMatrix(new THREE.Matrix4().makeScale(
 						maybeEval(this.options.sizeX, dp),
 						maybeEval(this.options.sizeY, dp),
 						maybeEval(this.options.sizeZ, dp)));
 					break;
 				case 'octahedron':
-					geo = new THREE.OctahedronGeometry(1.0);
-					geo.applyMatrix(new THREE.Matrix4().makeScale(
+					geos = [new THREE.OctahedronGeometry(1.0)];
+					geos[0].applyMatrix(new THREE.Matrix4().makeScale(
 						maybeEval(this.options.sizeX, dp),
 						maybeEval(this.options.sizeY, dp),
 						maybeEval(this.options.sizeZ, dp)));
 					break;
 				case 'cube':
 				default:
-					geo = new THREE.BoxGeometry(
+					geos = [new THREE.BoxGeometry(
 						maybeEval(this.options.sizeX, dp),
 						maybeEval(this.options.sizeX, dp),
-						maybeEval(this.options.sizeX, dp));
+						maybeEval(this.options.sizeX, dp))];
 					break;
 			}
 		}
@@ -237,14 +243,15 @@ export class MeshEmbedding extends Embedding {
 			else
 				console.warn('material type not recognized');
 		} else { // Create material from parameters
-			var c, e;
-			if (this.options.color)
 			mat = new THREE.MeshStandardMaterial({
 				color: maybeEval(this.options.color, dp),
 				emissive: maybeEval(this.options.emissive, dp)
 			});
 		}
-		return new THREE.Mesh(geo, mat);
+		let obj = new THREE.Object3D();
+		for (let geo of geos)
+			obj.add(new THREE.Mesh(geo, mat));
+		return obj;
 	}
 
 	_placeDatapoint(id) {
