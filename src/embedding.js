@@ -1,5 +1,6 @@
 import assign from 'object-assign';
 import TWEEN from 'tween.js';
+import { maybeEval } from './utils.js'
 
 /**
  * Base class for all embeddings.
@@ -82,24 +83,80 @@ export class Embedding {
 /**
  * Base class for embeddings that render Datapoints as individual meshes
  */
+/**
+ * Define individual properties
+ * position: x,y,z
+ * geo type: cube, box, sphere, ellipsoid, tetrahedron, octahedron
+ * color: hue, sat, luminance
+ * wireframe?
+ * 
+ * Supply functions to generate material and/or geometry from datapoint
+ */
 export class MeshEmbedding extends Embedding {
 	constructor(scene, dataset, options={}) {
 		options = assign(
 			{
-				meshSizeX: .02,
-				meshSizeY: .02,
-				meshSizeZ: .02,
-				material: new THREE.MeshStandardMaterial( {
-					color: 0xff00ff,
-					emissive: 0x888888,
-					shading: THREE.FlatShading
-				} )
+				meshType: 'cube',
+				color: 0xff00ff,
+				emissive: 0x888888,
 			}, options);
+
+		// Set defaults appropriate to the mesh type
+		switch (options.meshType.toLowerCase()) {
+			case 'box':
+				options = assign({
+					sizeX: .02,
+				}, options);
+				options = assign({
+					sizeY: options.sizeX,
+					sizeZ: options.sizeX
+				}, options);
+				break;
+			case 'sphere':
+				options = assign({
+					sizeR: .01
+				}, options);
+				break;
+			case 'ellipsoid':
+				options = assign({
+					sizeX: .01,
+					sizeY: .02,
+					sizeZ: .03
+				}, options);
+				break;
+			case 'tetrahedron':
+				options = assign({
+					sizeX: .02
+				}, options);
+				options = assign({
+					sizeY: options.sizeX,
+					sizeZ: options.sizeX
+				}, options);
+				break;
+			case 'octahedron':
+				options = assign({
+					sizeX: .02,
+				}, options);
+				options = assign({
+					sizeY: options.sizeX,
+					sizeZ: options.sizeX
+				}, options);
+				break;
+			case 'cube':
+			default:
+				// fall back to Cube
+				options = assign({
+					sizeX: .02
+				}, options);
+				break;
+		}	
+
 		super(scene, dataset, options);
 
 		// mapping from datapoint ids to meshes
 		this.dpMap = {};
 
+		// place the datapoints present in the dataset
 		for (let id of this.dataset.getIds()) this._placeDatapoint(id);
 	}
 
@@ -120,9 +177,73 @@ export class MeshEmbedding extends Embedding {
 	 * A default mesh creator; this can be overriden by subclasses 
 	 */
 	createMeshForDatapoint(dp) {
-		let geo = new THREE.BoxGeometry(
-			this.getOpt("meshSizeX", dp), this.getOpt("meshSizeY", dp), this.getOpt("meshSizeZ", dp));
-		let mat = this.getOpt('material').clone();
+		var geo, mat;
+		if (this.options.geometry) { 
+			// Geometry specified
+			if (typeof(this.options.geometry) == 'function')
+				geo = this.options.geometry(dp);
+			else if (this.options.geometry instanceof THREE.Geometry)
+				geo = this.options.geometry.clone();
+			else
+				console.warn('geometry type not recognized');
+		} else { 
+			// Create geometry from parameters
+			switch (this.options.meshType.toLowerCase()) {
+				case 'box':
+					geo = new THREE.BoxGeometry(
+						maybeEval(this.options.sizeX, dp),
+						maybeEval(this.options.sizeY, dp),
+						maybeEval(this.options.sizeZ, dp));
+					break;
+				case 'sphere':
+					geo = new THREE.SphereGeometry(maybeEval(this.options.sizeR, dp), 16, 16);
+					break;
+				case 'ellipsoid':
+					geo = new THREE.SphereGeometry(1.0, 16, 16);
+					geo.applyMatrix(new THREE.Matrix4().makeScale(
+						maybeEval(this.options.sizeX, dp),
+						maybeEval(this.options.sizeY, dp),
+						maybeEval(this.options.sizeZ, dp)));
+					break;
+				case 'tetrahedron':
+					geo = new THREE.TetrahedronGeometry(1.0);
+					geo.applyMatrix(new THREE.Matrix4().makeScale(
+						maybeEval(this.options.sizeX, dp),
+						maybeEval(this.options.sizeY, dp),
+						maybeEval(this.options.sizeZ, dp)));
+					break;
+				case 'octahedron':
+					geo = new THREE.OctahedronGeometry(1.0);
+					geo.applyMatrix(new THREE.Matrix4().makeScale(
+						maybeEval(this.options.sizeX, dp),
+						maybeEval(this.options.sizeY, dp),
+						maybeEval(this.options.sizeZ, dp)));
+					break;
+				case 'cube':
+				default:
+					geo = new THREE.BoxGeometry(
+						maybeEval(this.options.sizeX, dp),
+						maybeEval(this.options.sizeX, dp),
+						maybeEval(this.options.sizeX, dp));
+					break;
+			}
+		}
+
+		if (this.options.material) {
+			if (typeof(this.options.material) == 'function')
+				mat = this.options.material(dp);
+			else if (this.options.material instanceof THREE.Material) 
+				mat = this.options.material.clone();
+			else
+				console.warn('material type not recognized');
+		} else { // Create material from parameters
+			var c, e;
+			if (this.options.color)
+			mat = new THREE.MeshStandardMaterial({
+				color: maybeEval(this.options.color, dp),
+				emissive: maybeEval(this.options.emissive, dp)
+			});
+		}
 		return new THREE.Mesh(geo, mat);
 	}
 
@@ -345,19 +466,6 @@ export class PathEmbedding extends MeshEmbedding {
 
 		this.meshOffsets = {};
 		this.tweens = {};
-	}
-
-	embed() {
-		// process events sent by the dataset since last embed() call
-		if (this.events.length > 0) {
-			for (let i in this.events) {
-				let e = this.events[i];
-				if      (e.type == "add")    this._placeDatapoint(e.id);
-				else if (e.type == "remove") this._removeDatapoint(e.id);
-				else if (e.type == "update") this._updateDatapoint(e.id, e);
-			}
-		} 
-		this.events = [];		
 	}
 
 	_createMeshOffset(id) {

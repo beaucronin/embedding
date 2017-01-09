@@ -68,9 +68,10 @@
 			 [6, 0, 2 ],
 			 [10, 1, 0]],
 			 {
-			 	meshSizeX: (d) => d.get("size") / 500,
-			 	meshSizeY: (d) => d.get("vin_sz") / 5,
-			 	meshSizeZ: (d) => d.get("vout_sz") / 5,
+			 	meshType: 'ellipsoid',
+			 	sizeX: (d) => d.get("size") / 500,
+			 	sizeY: (d) => d.get("vin_sz") / 5,
+			 	sizeZ: (d) => d.get("vout_sz") / 5,
 			 	description: (d) => d.get("description"),
 			 	pathTime: 5000
 			 });
