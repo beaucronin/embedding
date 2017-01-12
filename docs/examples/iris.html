@@ -35,6 +35,8 @@
 		var dataset, embedding;
 		var S = .02;
 
+		scene.add(new THREE.AmbientLight( 0xffffff, 1.0 ));
+
 		EMBED.Dataset.createFromCSV('data/iris.csv', 
 			function(dataset) {
 				embedding = new EMBED.MeshEmbedding(scene, dataset, 
@@ -48,12 +50,11 @@
 							(dp) => new THREE.BoxGeometry(S*dp.get('petal_width'), S*dp.get('petal_length'), .01),
 							(dp) => new THREE.BoxGeometry(S*dp.get('sepal_width'), .01, S*dp.get('sepal_length'))
 						],
-						emissive: (dp) => {
-							console.log(dp.get('species'))
-							if (dp.get('species') == 'Iris-setosa') return 0xff0000;
-							else if (dp.get('species') == 'Iris-virginica') return 0x00ff00;
-							else if (dp.get('species') == 'Iris-versicolor') return 0x0000ff;
-						},
+						color: EMBED.utils.categoricalMap('species', {
+							'Iris-setosa': 0xff0000,
+							'Iris-virginica': 0x00ff00,
+							'Iris-versicolor': 0x0000ff
+						}),
 						ry: Math.PI,
 						z: 3
 					});
