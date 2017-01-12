@@ -23,7 +23,8 @@ import { detectMode } from './detection-utils.js';
 import {
 	latLongToEuclidean,
 	degToRad,
-	ajaxWithCallback
+	ajaxWithCallback,
+	categoricalMap
 } from './utils.js';
 
 var embeddings = [];
@@ -135,6 +136,7 @@ module.exports = {
 	utils: {
 		degToRad,
 		latLongToEuclidean,
-		ajaxWithCallback
+		ajaxWithCallback,
+		categoricalMap
 	}
 }
