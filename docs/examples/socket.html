@@ -79,16 +79,17 @@
 
 		let status = new EMBED.ConsoleEmbedding( scene, null, { x: 5, z: -20, font: "Bold 12px Arial" } );
 
+		// These input callbacks need to be cleaned up
 		THREE.input.on('rayover', function(mesh) {
 			if (mesh) {
 				status.setText(mesh.userData.description);
-				mesh.material.color.setHex(0xffffff)
+				mesh.children[0].material.color.setHex(0xffffff)
 			}
 		});
 		THREE.input.on('rayout', function(mesh) {
 			if (mesh) {
 				status.setText('');
-				mesh.material.color.setHex(0xff00ff)
+				mesh.children[0].material.color.setHex(0xff00ff)
 			}
 		});
 		EMBED.register(status);
