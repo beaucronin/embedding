@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Embedding.js Examples Gallery</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400|Roboto+Mono|Muli:400,800|Roboto+Slab" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" type="text/css" media="screen"title="no title" charset="utf-8">
+  </head>
+  <body class="style-a">
+    <section id="top-home-section" class="top-section color-a">
+      <div id="top-home-image"></div>
+      <h1 id="top-title">Embedding.js Examples</h1>
+      <a href="/">
+        <button class="top-button" id="top-button1">
+          Home
+        </button>
+      </a>
+      <a href="/docs">
+        <button class="top-button" id="top-button2">
+          Documentation
+        </button>
+      </a>
+    </section>
+    <section id="middle-section" class="middle-section color-b" >
+      <div class="content">
+      <div class="step">
+      <ul>
+      <li><a href="examples/basic.html">Basic example</a> (<a href="https://github.com/beaucronin/embedding/blob/master/docs/examples/basic.html?ts=4">source</a>) - A <a href="/docs/api/#ScatterEmbedding">ScatterEmbedding</a> backed by randomly-generated, dynamic Dataset</li>
+      <li><a href="examples/socket.html">Socket example</a> (<a href="https://github.com/beaucronin/embedding/blob/master/docs/examples/socket.html?ts=4">source</a>) - A <a href="/docs/api/#PathEmbedding">PathEmbedding</a> whose elements corresponding to real-time transactions from the bitcoin network, as read into a Dataset from a websocket</li>
+      <li><a href="examples/iris.html">Iris example</a> (<a href="https://github.com/beaucronin/embedding/blob/master/docs/examples/iris.html?ts=4">source</a>) - A <a href="/docs/api/#MeshEmbedding">MeshEmbedding</a> depicting Ronald Fisher's famous <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set">Iris dataset</a>.</li>
+      </ul>
+      </div>
+      </div>
+    </section>
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-89921769-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </body>
+</html>
