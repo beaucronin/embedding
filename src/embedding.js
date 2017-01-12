@@ -99,6 +99,8 @@ export class MeshEmbedding extends Embedding {
 				meshType: 'cube',
 				color: 0xff00ff,
 				emissive: 0x888888,
+				metalness: 0,
+				wireframe: false
 			}, options);
 
 		// Set defaults appropriate to the mesh type
@@ -245,7 +247,9 @@ export class MeshEmbedding extends Embedding {
 		} else { // Create material from parameters
 			mat = new THREE.MeshStandardMaterial({
 				color: maybeEval(this.options.color, dp),
-				emissive: maybeEval(this.options.emissive, dp)
+				emissive: maybeEval(this.options.emissive, dp),
+				metalness: maybeEval(this.options.metalness, dp),
+				wireframe: maybeEval(this.options.wireframe, dp)
 			});
 		}
 		let obj = new THREE.Object3D();
