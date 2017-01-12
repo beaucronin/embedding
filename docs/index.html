@@ -34,37 +34,119 @@
          <h2 class="subtitle">Creating your first data-driven environment</h2>
       </header>
       <div class="content">
-        <p>Just as <a href="https://d3js.org/">D3</a> makes it easy to create web documents whose appearance and behavior is generated dyamically from data, Embedding makes it easy to create immersive <em>environments</em> using proper abstractions with readable, clean Javascript.</p>
-        <p>This tutorial shows how quickly you can create your own environment, which you can then navigate and interact with from within your desktop browser, a mobile browser on a phone or tablet, or a WebVR-enabled browser - all supported from the same code without modification.</p>
-        <p>If you want, you can <a href="http://embeddingjs.org/examples">check out some examples</a> before returning here to roll your own.</p>
-        <!-- <div class="filename">main.js</div> -->
+      <p>Just as <a href="https://d3js.org/">D3</a> makes it easy to create web documents whose appearance and behavior is generated dyamically from data, Embedding makes it easy to create immersive <em>environments</em> using proper abstractions with readable, clean Javascript.</p>
+      <p>This tutorial shows how quickly you can create your own environment, which you can then navigate and interact with from within your desktop browser, a mobile browser on a phone or tablet, or a WebVR-enabled browser - all supported from the same code without modification.</p>
+      <p>If you want, you can <a href="http://embeddingjs.org/examples">check out some examples</a> before returning here to roll your own.</p>
+      <!-- <div class="filename">main.js</div> -->
 
-        <div class="step">Clone the <a href="https://github.com/beaucronin/embedding-boilerplate">embedding-boilerplate repo</a> or download and unzip it.</div>
-        <pre class="code">$ git clone https://github.com/beaucronin/embedding-boilerplate.git</pre>
-        or
-        <pre class="code">$ wget https://github.com/beaucronin/embedding-boilerplate/archive/master.zip \
-    -O embedding-boilerplate.zip
+      <div class="step">Clone the <a href="https://github.com/beaucronin/embedding-boilerplate">embedding-boilerplate repo</a> or download and unzip it.</div>
+      <pre class="code">$ git clone https://github.com/beaucronin/embedding-boilerplate.git</pre>
+      or
+      <pre class="code">$ wget https://github.com/beaucronin/embedding-boilerplate/archive/master.zip \
+  -O embedding-boilerplate.zip
 $ unzip embedding-boilerplate.zip</pre>
 
-        <h3><a name="more" href="#more">More</a></h3>
+      <div class="step">Open the <span class="blue"><a href="https://github.com/beaucronin/embedding-boilerplate/blob/master/index.html">index.html</a></span> file in your favorite editor and take a look. Note that a number of scripts are loaded in the <span class="blue">head</span> element - in addition to <a href="https://threejs.org">three.js</a>, these support WebVR, including the default [camera movement](https://github.com/mrdoob/three.js/blob/dev/examples/js/controls/VRControls.js), [distortion](https://github.com/mrdoob/three.js/blob/dev/examples/js/effects/VREffect.js), [responsiveness](https://github.com/borismus/webvr-boilerplate) and [input](https://github.com/borismus/ray-input) behaviors.</div>
+
+      <pre class="code">&lt;script type=&quot;text/javascript&quot; src=&quot;https://cdnjs.cloudflare.com/ajax/libs/three.js/r81/three.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/VRControls.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/VREffect.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/webvr-polyfill.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/webvr-manager.js&quot;&gt;&lt;/script&gt;
+</pre>
+
+      <div class="step">The style tag which follows ensures that the canvas element in which WebGL renders fills the entire window, without margin or overspill.</div>
+
+      <pre class="code">&lt;style&gt;
+body {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  color: #fff;
+  margin: 0px;
+  padding: 0;
+  overflow: hidden;
+}
+&lt;/style&gt;
+</pre>
+
+      <div class="step">Now take a look at the body script, which is where you'll do most of your work. The lines included there invoke a convenience function that configures the essential objects that you'll need in order to create and animate your environment. They also declare, but do not define, the dataset and embedding objects that you'll typically create - which we'll do next.</div>
+
+      <pre class="code">const { <a href="https://threejs.org/docs/?q=scene#Reference/Scenes/Scene">scene</a>, <a href="https://threejs.org/docs/?q=camera#Reference/Cameras/Camera">camera</a>, <a href="https://github.com/borismus/webvr-boilerplate/blob/master/src/webvr-manager.js">manager</a>, <a href="https://github.com/mrdoob/three.js/blob/dev/examples/js/effects/VREffect.js">effect</a>, <a href="https://github.com/mrdoob/three.js/blob/dev/examples/js/controls/VRControls.js">cameraControls</a> } = EMBED.<a href="https://github.com/beaucronin/embedding/blob/master/src/main.js">initScene()</a>;
+var <a href="http://embeddingjs.org/docs/api/#Dataset">dataset</a>, <a href="http://embeddingjs.org/docs/api/#embedding">embedding</a>;
+</pre>
+
+      <div class="step"><p>Every Embedding.js environment will have at least one <span class="blue"><a href="http://embeddingjs.org/docs/api/#Dataset">Dataset</a></span>, and at least one <span class="blue"><a href="http://embeddingjs.org/docs/api/#embedding">Embedding</a></span>. Datasets can be populated from many sources, including database queries, websocket connections, web APIs, and static files available from web servers. In this example, we'll use a CSV loader convenience function to load one of the most famous datasets in all of statistics, <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set">Fisher's Iris data.</a></p>
+      <p>Add the following lines of code to the script:</p></div>
+
+      <pre class="code">EMBED.Dataset.<a href="http://embeddingjs.org/docs/api/#datasetcreatefromcsvurl-callback">createFromCSV</a>('https://bit.ly/fisher-iris', 
+  function(dataset) {
+      // To be filled in below
+  }
+);
+</pre>
+
+      <div class="step">While there are many creative directions we could take in embedding this dataset in space, we'll start very simply. In the <span clas="blue">Dataset.createFromCSV()</span> callback, we create a MeshEmbedding - a basic embedding type in which each datapoint is represented by a single mesh in the scene. We'll rely entirely on MeshEmbedding's default behavior to start.</div>
+
+      <pre class="code">embedding = new EMBED.MeshEmbedding(scene, dataset, 
+{
+  mapping: {
+    x: 'petal_length',
+    y: 'petal_width',
+    z: 'sepal_length'
+  },
+  color: EMBED.utils.categoricalMap('species', {
+    'Iris-setosa': 0xff0000,
+    'Iris-virginica': 0x00ff00,
+    'Iris-versicolor': 0x0000ff
+  }),
+  ry: Math.PI,
+  z: 3
+});
+EMBED.register(embedding);
+EMBED.startAnimation();
+</pre>
+
+      <div class="step">
+      <p>The first two arguments to the <a href="http://embeddingjs.org/docs/api/#MeshEmbedding">MeshEmbedding</a> constructor are the scene, to ensure that the meshes created can be added to the environment, and the dataset we just created. The third argument is an options object that specifies how the embedding will render the data. In this example, we use only a few of the possible options.</p>
+      
+      <ul>
+      <li>The <span class="blue">mapping</span> tells the embedding which attributes in the dataset to use for the x, y, and z position of the meshes.</li>
+      <li>The <span class="blue">color</span> specifies the material color to use. In this case, we use a <span class="blue">categoricalMap</span> utility function that maps from attribute values (in this case, the possible Iris species) to colors.</li>
+      <li>The <span class="blue">ry</span> and <span class="blue">z</span> options specify the y-rotation and z position of the embedding object, respectively. These are a simple, if slightly inelegant, way ensure that the datapoint meshes are visible from the initial camera position and orientation.</li>
+      </ul>
+      
+      <p>After creating the embedding, we <span class="blue">register</span> it, which ensures that it will be updated properly to reflect changes in the underlying dataset, input actions, and so on. Finally, we start the animation loop with a call to <span class="blue">startAnimation()</span>.</p>
+
+      <p>Once you have filled in this code, you can view the resulting environment by serving it locally (for example using <a href="https://www.npmjs.com/package/http-server">http-server</a>) and then opening the page in your web browser. The resulting behavior will depend on the hardware and browser you use:
+
+      <ul>
+      <li><b>On any standard desktop browser with WebGL support</b>, such as Chrome, Firefox, or Safari, on either Windows or a Mac, you will see a canvas that takes up the entire browser window. You will be able to navigate with mouse and keyboard arrow keys.</li>
+      <li><b>On a mobile browser on either Android or Safari</b>, you should be able to direct the camera orientation using the phone position - a so-called magic window.</li>
+      <li><b>On a <a href="https://iswebvrready.org/">WebVR-capable browser</a></b>, you should be able to enter VR mode by clicking on the VR button in the bottom-right. At this point, you should be able to put on your HMD and look around the environment.</li>
+      <li><strike><b>On a mobile device that supports Cardboard or Daydream</b>, you should be able to enter a WebVR mode by touching the VR button in the bottom-right.</strike> <em>Coming soon.</em></li>
+      </ul>
+      </div>
+
+      <h3><a name="more" href="#more">More</a></h3>
+
+      <div class="step">
+        <ul>
+          <li>Check out the <a href="">Medium post</a> introducing Embedding.js</li>
+          <li>Keep track of the <a href="https://iswebvrready.org/">overall progress of WebVR support</a> in major browsers.</li>
+          <li>See <a href="http://embeddingjs.org/docs/compatibility/">which hardware platforms and browsers</a> have been tested specifically for Embedding support.</li>
+          <li>Learn more about <a href="https://threejs.org/">three.js</a>, the primary library on which Embedding is built.</li>
+        </ul>
+      </div>
+
+      <div class="community">
+        <h3><a name="community" href="#community">Community</a></h3>
 
         <div class="step">
-          <ul>
-            <li>Check out the <a href="">Medium post</a> introducing Embedding.js</li>
-            <li>Keep track of the <a href="https://iswebvrready.org/">overall progress of WebVR support</a> in major browsers.</li>
-            <li>See <a href="http://embeddingjs.org/docs/compatibility/">which hardware platforms and browsers</a> have been tested specifically for Embedding support.</li>
-            <li>Learn more about <a href="https://threejs.org/">three.js</a>, the primary library on which Embedding is built.</li>
-          </ul>
-        </div>
-
-        <div class="community">
-          <h3><a name="community" href="#community">Community</a></h3>
-
-          <div class="step">
-            Join <a href="https://gitter.im/embedding"><span class="blue">https://gitter.im/embedding</span></a> for help and to find ways to contribute.
-          </div>
+          Join <a href="https://gitter.im/embedding"><span class="blue">https://gitter.im/embedding</span></a> for help and to find ways to contribute.
         </div>
       </div>
+    </div>
     </section>
     
     <script>
