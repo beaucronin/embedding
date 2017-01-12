@@ -87,19 +87,3 @@ export function maybeEval(v, x) {
 		return v;
 }
 
-/**
- * Return a function that defines a mapping from values for an attribute to target values.
- * Can be used, for example, to map from attribute values to colors.
- */
-export function categoricalMap(attribute, map) {
-	return function(dp) {
-		let v = dp.get(attribute);
-		if (map[v])
-			return map[v];
-		else if (map._default)
-			return map._default;
-		else 
-			return undefined;
-	}
-}
-
