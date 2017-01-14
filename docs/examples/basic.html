@@ -26,7 +26,7 @@
 	</head>
 	<body>
 		<script>
-		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene();
+		const { scene, camera, manager, effect, cameraControls, hud } = EMBED.initScene();
 		var dataset, embedding;
 		var N = 1;
 		var c = 0;
@@ -35,6 +35,8 @@
 		EMBED.startAnimation();
 
 		function initEmbedding() {
+			hud.setText('some text that really should appear in the scene and I hopeit does oh please!')
+
 			dataset = new EMBED.Dataset();
 			var f = function() {
 				for (let i = 0; i < N; i++) {
@@ -67,7 +69,6 @@
 			}
 			window.setInterval(h, 200);
 
-			// var embedding = new EMBED.RandomEmbedding(scene, dataset);
 			embedding = new EMBED.ScatterEmbedding(
 				scene, dataset, {pointSize: 0.5, pointColor: 0x993333, moveSpeed: 3});
 			EMBED.register(embedding);
