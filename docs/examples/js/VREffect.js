@@ -371,7 +371,6 @@ THREE.VREffect = function ( renderer, onError ) {
 		}
 
 		// Regular render mode if not HMD
-
 		renderer.render( scene, camera, renderTarget, forceClear );
 
 	};

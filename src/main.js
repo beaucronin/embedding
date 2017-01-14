@@ -48,6 +48,8 @@ export function initScene() {
 	// This renderer is the standard WebGL renderer; it may be further processed for VR use depending
 	// on the mode selected by the webvr-boilerplate
 	const renderer = new THREE.WebGLRenderer();
+	renderer.autoClear = false;
+	renderer.setClearColor(0x000000);
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setPixelRatio(window.devicePixelRatio);
     document.body.appendChild( renderer.domElement );
@@ -76,7 +78,43 @@ export function initScene() {
 	THREE.input.setSize(renderer.getSize());
 	scene.add(THREE.input.getMesh());
 
-    return { scene, camera, manager, effect, cameraControls };
+	const hud = new Hud();
+
+    return { scene, camera, manager, effect, cameraControls, hud };
+}
+
+export class Hud {
+	constructor() {
+		this.width = 1024;
+		this.height = 512;
+		this.canvas = document.createElement('canvas');
+		this.canvas.width = this.width;
+		this.canvas.height = this.height;
+		this.scene = new THREE.Scene();
+		this.camera = new THREE.OrthographicCamera(-this.width/2, this.width/2, -this.height/2, this.height/2, 1, 50);
+		this.camera.position.set(0,0,40);
+		this.context = this.canvas.getContext('2d');
+		this.context.font = "Normal 24px Arial";
+		this.context.fillStyle = "rgba(245,245,245,0.75)";
+		// this.context.textAlign = 'center';
+	}
+
+	setText(text) {
+		console.log('setting text to '+text)
+		if (this.mesh) this.scene.remove(this.mesh);
+		this.context.clearRect(0, 0, this.width, this.height);
+		this.context.fillText(text, 0, 25);
+		let texture = new THREE.Texture(this.canvas);
+		texture.needsUpdate = true;
+		let material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+		material.transparent = true;
+		this.mesh = new THREE.Mesh(
+			new THREE.PlaneGeometry(this.width, this.height),
+			material
+		);
+		this.mesh.rotation.x = Math.PI
+		this.scene.add(this.mesh);
+	}
 }
 
 export function startAnimation() {
@@ -106,6 +144,8 @@ export function animate(timestamp) {
 	THREE.input.update();
     cameraControls.update();
     manager.render( scene, camera, timestamp );
+    manager.renderer.clearDepth();
+    if (hud) manager.render( hud.scene, hud.camera, timestamp );
 
     vrDisplay.requestAnimationFrame( animate );
 }
