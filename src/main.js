@@ -85,8 +85,8 @@ export function initScene() {
 
 export class Hud {
 	constructor() {
-		this.width = 1024;
-		this.height = 512;
+		this.width = 2048;
+		this.height = 1024;
 		this.canvas = document.createElement('canvas');
 		this.canvas.width = this.width;
 		this.canvas.height = this.height;
@@ -94,7 +94,7 @@ export class Hud {
 		this.camera = new THREE.OrthographicCamera(-this.width/2, this.width/2, -this.height/2, this.height/2, 1, 50);
 		this.camera.position.set(0,0,40);
 		this.context = this.canvas.getContext('2d');
-		this.context.font = "Normal 24px Arial";
+		this.context.font = "Normal 36px Arial";
 		this.context.fillStyle = "rgba(245,245,245,0.75)";
 		// this.context.textAlign = 'center';
 	}

@@ -40,8 +40,6 @@
 		EMBED.startAnimation();
 
 		function initEmbedding() {
-			hud.setText('some text that really should appear in the scene and I hopeit does oh please!')
-
 			dataset = new EMBED.Dataset();
 			var f = function() {
 				for (let i = 0; i < N; i++) {
@@ -77,6 +75,8 @@
 			embedding = new EMBED.ScatterEmbedding(
 				scene, dataset, {pointSize: 0.5, pointColor: 0x993333, moveSpeed: 3});
 			EMBED.register(embedding);
+
+			hud.setText('some text that \n really should appear in the scene \n and I hope it does oh please!')
 		}
 
 		</script>
