@@ -557,7 +557,8 @@ export class ConsoleEmbedding extends Embedding {
 	constructor(scene, dataset, options={}) {
 		options = assign({
 			font: "Bold 24px Arial",
-			fillStyle: "rgba(255,0,0,0.95)"
+			fillStyle: "rgba(255,0,0,0.95)",
+			align: "center"
 		}, options);
 		super(scene, dataset, options);
 		this.canvas = document.createElement('canvas');
@@ -566,6 +567,7 @@ export class ConsoleEmbedding extends Embedding {
 		this.context = this.canvas.getContext('2d');
 		this.context.font = this.getOpt('font');
 		this.context.fillStyle = this.getOpt('fillStyle');
+		this.context.textAlign = this.getOpt('align');
 		this.mesh = undefined;
 	}
 
