@@ -28,6 +28,7 @@ import {
 } from './utils.js';
 
 var embeddings = [];
+var updateFunc;
 var lastRender = 0;
 var vrDisplay;
 
@@ -35,7 +36,7 @@ var vrDisplay;
  * Convenience function to create a responsive THREE scene and related objects. Returns a number 
  * of objects that should probably be kept around by the enclosing script.
  */
-export function initScene() {
+export function initScene(options = {}) {
 	const scene = new THREE.Scene();
 	const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 10;
@@ -76,6 +77,8 @@ export function initScene() {
 	THREE.input.setSize(renderer.getSize());
 	scene.add(THREE.input.getMesh());
 
+	updateFunc = options.updateFunc;
+
     return { scene, camera, manager, effect, cameraControls };
 }
 
@@ -105,6 +108,8 @@ export function animate(timestamp) {
   	TWEEN.update();
 	THREE.input.update();
     cameraControls.update();
+    if (updateFunc) updateFunc(delta);
+
     manager.render( scene, camera, timestamp );
 
     vrDisplay.requestAnimationFrame( animate );

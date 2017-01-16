@@ -180,11 +180,22 @@ export class MeshEmbedding extends Embedding {
 	}
 
 	/**
-	 * A default mesh creator; this can be overriden by subclasses 
+	 * A default Object3D creator; this can be overriden by subclasses 
 	 */
-	createMeshForDatapoint(dp) {
+	createObjectForDatapoint(dp) {
 		var geos, mat;
-		if (this.options.geometry) { 
+		if (this.options.object3d) {
+
+			let object3d = this.options.object3d;
+			if (typeof(object3d) == 'function') 
+				return object3d(dp);
+			else if (object3d instanceof THREE.Object3D)
+				return object3d.clone();
+			else
+				console.warn('Object3D type not recognized');
+
+		} else if (this.options.geometry) { 
+
 			// Geometry(ies) specified
 			geos = this.options.geometry.map(function(g) {
 				if (typeof(g) == 'function')
@@ -194,6 +205,7 @@ export class MeshEmbedding extends Embedding {
 				else
 					console.warn('geometry type not recognized');
 			}.bind(this))
+
 		} else { 
 			// Create geometry from parameters
 			switch (this.options.meshType.toLowerCase()) {
@@ -260,12 +272,12 @@ export class MeshEmbedding extends Embedding {
 
 	_placeDatapoint(id) {
 		let dp  = this.dataset.datapoints[id];
-		let mesh = this.createMeshForDatapoint(dp);
-		mesh.userData.description = this.getOpt("description", dp);
-		this.dpMap[id] = mesh;
-		this.obj3D.add(mesh);
-		THREE.input.add(mesh);
-		mesh.position.set(dp.get(this._mapAttr('x')), dp.get(this._mapAttr('y')), dp.get(this._mapAttr('z')));
+		let obj = this.createObjectForDatapoint(dp);
+		obj.userData.description = this.getOpt("description", dp);
+		this.dpMap[id] = obj;
+		this.obj3D.add(obj);
+		THREE.input.add(obj);
+		obj.position.set(dp.get(this._mapAttr('x')), dp.get(this._mapAttr('y')), dp.get(this._mapAttr('z')));
 	}
 
 	_removeDatapoint(id) {
@@ -491,7 +503,7 @@ export class PathEmbedding extends MeshEmbedding {
 
 	_placeDatapoint(id) {
 		let dp  = this.dataset.datapoints[id];
-		let mesh = this.createMeshForDatapoint(dp);
+		let mesh = this.createObjectForDatapoint(dp);
 		this._createMeshOffset(id);
 		mesh.userData.description = this.getOpt("description", dp);
 		this.dpMap[id] = mesh;
