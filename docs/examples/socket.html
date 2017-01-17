@@ -26,7 +26,7 @@
 	</head>
 	<body>
 		<script>
-		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene();
+		const { scene, camera, manager, effect, cameraControls, hud } = EMBED.initScene({ hud: true });
 		var dataset, embedding;
 		var THREE = EMBED.THREE;
 
@@ -78,13 +78,13 @@
 		// These input callbacks need to be cleaned up
 		THREE.input.on('rayover', function(mesh) {
 			if (mesh) {
-				status.setText(mesh.userData.description);
+				hud.setText(mesh.userData.description);
 				mesh.children[0].material.color.setHex(0xffffff)
 			}
 		});
 		THREE.input.on('rayout', function(mesh) {
 			if (mesh) {
-				status.setText('');
+				hud.setText('');
 				mesh.children[0].material.color.setHex(0xff00ff)
 			}
 		});
