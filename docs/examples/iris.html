@@ -74,9 +74,9 @@
 				embedding = new EMBED.MeshEmbedding(scene, dataset, 
 					{
 						mapping: {
-							x: 'petal_length',
-							y: 'petal_width',
-							z: 'sepal_length'
+							x: (dp) => dp.get('petal_length') / 2,
+							y: (dp) => dp.get('petal_width'),
+							z: (dp) => dp.get('sepal_length') - 2
 						},
 						object3d: (dp) => new Iris(dp),
 						ry: .85 * Math.PI,
