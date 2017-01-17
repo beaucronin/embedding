@@ -28,9 +28,45 @@
 		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene();
 		var dataset, embedding;
 		var THREE = EMBED.THREE;
-		var S = .02;
 
-		scene.add(new THREE.AmbientLight( 0xffffff, 1.0 ));
+		lightPositions = [
+			[ 2, 10, 2],
+			[-2, 10, 0],
+			[ 0, 10, 2]
+		];
+		lightPositions.forEach((p) => {
+			let light = new THREE.PointLight(0xffffff, 1.0);
+			light.position.set(p[0], p[1], p[2]);
+			scene.add(light);
+		})
+
+		// An Iris Object3D that contains a separate mesh for every petal and sepal (3 of each), 
+		// scaled according to the data
+		class Iris extends THREE.Group {
+			constructor(dp) {
+				super();
+				let petalMat = new THREE.MeshStandardMaterial({
+					color: 0xebbbf7,
+					emissive: 0x666666
+				})
+				let sepalMat = new THREE.MeshStandardMaterial({
+					color: 0xf3abfc
+				})
+				for (let i = 0; i < 3; i++) {
+					let petalGeo = new THREE.TetrahedronGeometry(0.02);
+					let petalMesh = new THREE.Mesh(petalGeo, petalMat);
+					petalMesh.scale.set(dp.get('petal_length'), dp.get('petal_width'), 0.4);
+					petalMesh.rotation.z = i * 2/3 * Math.PI;
+					this.add(petalMesh);
+
+					let sepalGeo = new THREE.TetrahedronGeometry(0.02);
+					let sepalMesh = new THREE.Mesh(sepalGeo, sepalMat);
+					sepalMesh.scale.set(dp.get('sepal_length'), dp.get('sepal_width'), 0.4)
+					sepalMesh.rotation.z = i * 2/3 * Math.PI + Math.PI / 6;
+					this.add(sepalMesh);
+				}
+			}
+		}
 
 		EMBED.Dataset.createFromCSV('data/iris.csv', 
 			function(dataset) {
@@ -41,15 +77,7 @@
 							y: 'petal_width',
 							z: 'sepal_length'
 						},
-						geometry: [
-							(dp) => new THREE.BoxGeometry(S*dp.get('petal_width'), S*dp.get('petal_length'), .01),
-							(dp) => new THREE.BoxGeometry(S*dp.get('sepal_width'), .01, S*dp.get('sepal_length'))
-						],
-						color: EMBED.utils.categoricalMap('species', {
-							'Iris-setosa': 0xff0000,
-							'Iris-virginica': 0x00ff00,
-							'Iris-versicolor': 0x0000ff
-						}),
+						object3d: (dp) => new Iris(dp),
 						ry: .85 * Math.PI,
 						z: 3
 					});
