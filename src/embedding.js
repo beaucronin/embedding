@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import assign from 'object-assign';
 import TWEEN from 'tween.js';
 import { maybeEval } from './utils.js'

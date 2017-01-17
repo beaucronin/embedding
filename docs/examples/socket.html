@@ -9,9 +9,7 @@
 
 		<title>Embedding.js websocket data example</title>
 
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r80/three.min.js"></script>
-		<script type="text/javascript" src="js/VRControls.js"></script>
-		<script type="text/javascript" src="js/VREffect.js"></script>
+		<script type="text/javascript" src="js/embedding.js"></script>
 
 		<style>
 			/* Ensures that the canvas fills the entire window, and that there are no scrollbars */
@@ -27,10 +25,10 @@
 		</style>
 	</head>
 	<body>
-		<script src="js/embedding.js"></script>
 		<script>
 		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene();
 		var dataset, embedding;
+		var THREE = EMBED.THREE;
 
 		var N = 1;
 		var c = 0;

@@ -9,6 +9,8 @@
  *
  */
 
+import * as THREE from 'three'
+
 THREE.VREffect = function ( renderer, onError ) {
 
 	var vrDisplay, vrDisplays;

@@ -4,9 +4,17 @@
  * @author Beau Cronin <beau.cronin@gmail.com>
  */
 
+import * as THREE from 'three';
+import './external/VRControls.js';
+import './external/VREffect.js';
 import RayInput from 'ray-input';
 import TWEEN from 'tween.js';
+import { detectMode } from './detection-utils.js';
+import { VRDisplay } from 'webvr-polyfill';
+import WebVRManager from 'webvr-boilerplate';
+
 import queryString from 'query-string';
+
 import {
 	WebSocketDataset, 
 	Dataset
@@ -19,10 +27,6 @@ import {
 	PathEmbedding,
 	ConsoleEmbedding
 } from './embedding.js';
-import { detectMode } from './detection-utils.js';
-import { VRDisplay } from 'webvr-polyfill';
-import WebVRManager from 'webvr-boilerplate';
-
 import {
 	latLongToEuclidean,
 	degToRad,
@@ -146,5 +150,6 @@ module.exports = {
 		latLongToEuclidean,
 		ajaxWithCallback,
 		categoricalMap
-	}
+	},
+	THREE
 }
