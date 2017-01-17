@@ -38,6 +38,7 @@
 			let light = new THREE.PointLight(0xffffff, 1.0);
 			light.position.set(p[0], p[1], p[2]);
 			scene.add(light);
+			scene.add(new THREE.PointLightHelper(light, 0.1));
 		})
 
 		// An Iris Object3D that contains a separate mesh for every petal and sepal (3 of each), 
@@ -55,7 +56,7 @@
 				for (let i = 0; i < 3; i++) {
 					let petalGeo = new THREE.TetrahedronGeometry(0.02);
 					let petalMesh = new THREE.Mesh(petalGeo, petalMat);
-					petalMesh.scale.set(dp.get('petal_length'), dp.get('petal_width'), 0.4);
+					petalMesh.scale.set(dp.get('petal_length'), dp.get('petal_width'), 0.2);
 					petalMesh.rotation.z = i * 2/3 * Math.PI;
 					this.add(petalMesh);
 
