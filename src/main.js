@@ -20,6 +20,9 @@ import {
 	ConsoleEmbedding
 } from './embedding.js';
 import { detectMode } from './detection-utils.js';
+import { VRDisplay } from 'webvr-polyfill';
+import WebVRManager from 'webvr-boilerplate';
+
 import {
 	latLongToEuclidean,
 	degToRad,

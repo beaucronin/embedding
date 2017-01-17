@@ -1,0 +1,1 @@
+console.error("Error: Cannot find module '/Users/beau/proj/embedding/build' from '/Users/beau/proj/embedding'");
