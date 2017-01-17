@@ -13,8 +13,6 @@ import { detectMode } from './detection-utils.js';
 import { VRDisplay } from 'webvr-polyfill';
 import WebVRManager from 'webvr-boilerplate';
 
-import queryString from 'query-string';
-
 import {
 	WebSocketDataset, 
 	Dataset
@@ -38,6 +36,7 @@ var embeddings = [];
 var updateFunc;
 var lastRender = 0;
 var vrDisplay;
+export var input;
 
 /**
  * Convenience function to create a responsive THREE scene and related objects. Returns a number 
@@ -80,9 +79,9 @@ export function initScene(options = {}) {
 
     // TODO putting the input in the THREE global for now; probably want embeddings to fire 
     // events when meshes are added/removed rather than referencing the input directly
-	THREE.input = new RayInput(camera, renderer.domElement);
-	THREE.input.setSize(renderer.getSize());
-	scene.add(THREE.input.getMesh());
+	input = new RayInput(camera, renderer.domElement);
+	input.setSize(renderer.getSize());
+	scene.add(input.getMesh());
 
 	updateFunc = options.updateFunc;
 
@@ -113,7 +112,7 @@ export function animate(timestamp) {
 		e.embed();
   	}
   	TWEEN.update();
-	THREE.input.update();
+	input.update();
     cameraControls.update();
     if (updateFunc) updateFunc(delta);
 
@@ -141,7 +140,6 @@ module.exports = {
 	ConsoleEmbedding: ConsoleEmbedding,
 	initScene: initScene,
 	animate: animate,
-	queryString: queryString,
 	detectMode: detectMode,
 	register: register,
 	startAnimation,
@@ -151,5 +149,6 @@ module.exports = {
 		ajaxWithCallback,
 		categoricalMap
 	},
-	THREE
+	THREE,
+	input
 }
