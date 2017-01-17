@@ -8,11 +8,13 @@ import * as THREE from 'three';
 import './external/VRControls.js';
 import './external/VREffect.js';
 import RayInput from 'ray-input';
-import TWEEN from 'tween.js';
 import { detectMode } from './detection-utils.js';
 import { VRDisplay } from 'webvr-polyfill';
 import WebVRManager from 'webvr-boilerplate';
+import assign from 'object-assign';
 
+// can remove these two?:
+import TWEEN from 'tween.js';
 import queryString from 'query-string';
 
 import {
@@ -88,13 +90,22 @@ export function initScene(options = {}) {
 
 	updateFunc = options.updateFunc;
 
-	const hud = new Hud();
+	// Create a HUD if requested
+	var hud;
+	if (options.hud) {
+		hud = new Hud(options.hud);
+	}
 
     return { scene, camera, manager, effect, cameraControls, hud };
 }
 
 export class Hud {
-	constructor() {
+	constructor(options) {
+		options = assign({
+			font: "Normal 36px Arial",
+			fillStyle: "rgba(245,245,245,0.75)"
+		}, options);
+		this.options = options;
 		this.width = 2048;
 		this.height = 1024;
 		this.canvas = document.createElement('canvas');
@@ -104,8 +115,8 @@ export class Hud {
 		this.camera = new THREE.OrthographicCamera(-this.width/2, this.width/2, -this.height/2, this.height/2, 1, 50);
 		this.camera.position.set(0,0,40);
 		this.context = this.canvas.getContext('2d');
-		this.context.font = "Normal 36px Arial";
-		this.context.fillStyle = "rgba(245,245,245,0.75)";
+		this.context.font = this.options.font;
+		this.context.fillStyle = this.options.fillStyle;
 		// this.context.textAlign = 'center';
 	}
 
