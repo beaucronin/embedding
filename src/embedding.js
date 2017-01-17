@@ -188,13 +188,17 @@ export class MeshEmbedding extends Embedding {
 		if (this.options.object3d) {
 
 			let object3d = this.options.object3d;
-			if (typeof(object3d) == 'function') 
-				return object3d(dp);
-			else if (object3d instanceof THREE.Object3D)
-				return object3d.clone();
-			else
+			if (typeof(object3d) == 'function') {
+				let result = object3d(dp);
+				result.userData = dp;
+				return result;
+			} else if (object3d instanceof THREE.Object3D) {
+				let result = object3d.clone();
+				result.userData = dp;
+				return result;
+			} else {
 				console.warn('Object3D type not recognized');
-
+			}
 		} else if (this.options.geometry) { 
 
 			// Geometry(ies) specified
@@ -268,6 +272,7 @@ export class MeshEmbedding extends Embedding {
 		let obj = new THREE.Object3D();
 		for (let geo of geos)
 			obj.add(new THREE.Mesh(geo, mat));
+		obj.userData = dp;
 		return obj;
 	}
 
