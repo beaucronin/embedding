@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import assign from 'object-assign';
 import TWEEN from 'tween.js';
 import { maybeEval } from './utils.js'
+import { input } from './main.js'
 
 /**
  * Base class for all embeddings.
@@ -50,7 +51,13 @@ export class Embedding {
 	 */
 	_map(dp, src) {
 		let tgt = this.mapping[src];
-		return tgt ? dp.get(tgt) : dp.get(src);
+		if (tgt) {
+			if (typeof(tgt) == 'function')
+				return tgt(dp);
+			else 
+				return dp.get(tgt)
+		} else
+			return dp.get(src);
 	}
 
 	/**
@@ -186,7 +193,7 @@ export class MeshEmbedding extends Embedding {
 	createObjectForDatapoint(dp) {
 		var geos, mat;
 		if (this.options.object3d) {
-
+			// Objects specified
 			let object3d = this.options.object3d;
 			if (typeof(object3d) == 'function') {
 				let result = object3d(dp);
@@ -282,8 +289,8 @@ export class MeshEmbedding extends Embedding {
 		obj.userData.description = this.getOpt("description", dp);
 		this.dpMap[id] = obj;
 		this.obj3D.add(obj);
-		THREE.input.add(obj);
-		obj.position.set(dp.get(this._mapAttr('x')), dp.get(this._mapAttr('y')), dp.get(this._mapAttr('z')));
+		input.add(obj);
+		obj.position.set(this._map(dp, 'x'), this._map(dp, 'y'), this._map(dp, 'z'));
 	}
 
 	_removeDatapoint(id) {
@@ -603,10 +610,6 @@ export class ConsoleEmbedding extends Embedding {
 		this.mesh.position.set(this.getOpt('x'), this.getOpt('y'), this.getOpt('z'));
 		this.obj3D.add(this.mesh);
 	}
-}
-
-export class AggregateEmbedding extends Embedding {
-
 }
 
 class Rescaling {
