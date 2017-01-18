@@ -3,6 +3,7 @@ import assign from 'object-assign';
 import TWEEN from 'tween.js';
 import { maybeEval } from './utils.js'
 import { input } from './main.js'
+import { mean, identity, groupBy, map, keys } from 'lodash'
 
 /**
  * Base class for all embeddings.
@@ -609,6 +610,65 @@ export class ConsoleEmbedding extends Embedding {
 		);
 		this.mesh.position.set(this.getOpt('x'), this.getOpt('y'), this.getOpt('z'));
 		this.obj3D.add(this.mesh);
+	}
+}
+
+export class AggregateEmbedding extends Embedding {
+	constructor(attr, scene, dataset, options) {
+		options = assign({
+			filter: identity,
+			groupBy: (dp) => 1,
+			bin: null,
+			aggregate: 'mean',
+			baseSize: 0.1
+		}, options);
+		super(scene, dataset, options);
+
+		this.attr = attr;
+
+		this.initMeshes()
+	}
+
+	initMeshes() {
+		this.meshes = [];
+
+		let filtered = this.dataset.getDatapoints(this.options.filter);
+		let groups = groupBy(filtered, this.options.groupBy);
+		let groupedValues = keys(groups)
+			.map((key) => groups[key].map(
+				(dp) => dp.get(this.attr)));
+		let aggValues = groupedValues.map((vals) => mean(vals));
+		map(aggValues, (aggValue, i) => {
+			let geo = new THREE.SphereGeometry(this.options.baseSize, 32, 32);
+			let mat = new THREE.MeshStandardMaterial({ emissive: 'gray' });
+			let mesh = new THREE.Mesh(geo, mat);
+			let scale = Math.cbrt(aggValue);
+			mesh.scale.set(scale, scale, scale);
+			mesh.position.set(i, 0, 0)
+			this.obj3D.add(mesh);
+		})
+	}
+
+	embed() {
+		// process events sent by the dataset since last embed() call
+		if (this.events.length > 0) {
+			for (let i in this.events) {
+				let e = this.events[i];
+				if      (e.type == "add")    this._addDatapoint(e.id);
+				else if (e.type == "remove") this._removeDatapoint(e.id);
+				else if (e.type == "update") this._updateDatapoint(e.id, e);
+			}
+		} 
+		this.events = [];
+	}
+
+	_addDatapoint(id) {
+	}
+
+	_removeDatapoint(id) {
+	}
+
+	_updateDatapoint(id, event) {
 	}
 }
 

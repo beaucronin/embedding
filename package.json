@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "test": "mocha",
-    "build" : "browserify --standalone EMBED -v -d -t [ babelify --presets [ es2015 ] ] src/main.js -o build/embedding.js && uglify -s build/embedding.js -o build/embedding.min.js",
+    "build": "browserify --standalone EMBED -v -d -t [ babelify --presets [ es2015 ] ] src/main.js -o build/embedding.js && uglify -s build/embedding.js -o build/embedding.min.js",
     "start": "watchify --standalone EMBED -v -d -t [ babelify --presets [ es2015 ] ] src/main.js -o docs/examples/js/embedding.js",
     "build-docs": "jsdoc2md --files src/*.js > docs_src/docs/api.md && cd docs_src && mkdocs build"
   },
@@ -32,6 +32,7 @@
     "uglify-js": "^2.7.5"
   },
   "dependencies": {
+    "lodash": "^4.17.4",
     "object-assign": "^4.1.0",
     "papaparse": "^4.1.2",
     "query-string": "^4.2.3",

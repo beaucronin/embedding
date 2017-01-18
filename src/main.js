@@ -23,7 +23,8 @@ import {
 	RandomEmbedding,
 	ScatterEmbedding,
 	PathEmbedding,
-	ConsoleEmbedding
+	ConsoleEmbedding,
+	AggregateEmbedding
 } from './embedding.js';
 import {
 	latLongToEuclidean,
@@ -138,6 +139,7 @@ module.exports = {
 	ScatterEmbedding: ScatterEmbedding,
 	PathEmbedding: PathEmbedding,
 	ConsoleEmbedding: ConsoleEmbedding,
+	AggregateEmbedding,
 	initScene: initScene,
 	animate: animate,
 	detectMode: detectMode,
