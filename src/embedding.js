@@ -3,7 +3,7 @@ import assign from 'object-assign';
 import TWEEN from 'tween.js';
 import { maybeEval } from './utils.js'
 import { input } from './main.js'
-import { mean, identity, groupBy, map, keys } from 'lodash'
+import { mean, max, min, sum, identity, groupBy, map, keys } from 'lodash'
 
 /**
  * Base class for all embeddings.
@@ -613,34 +613,71 @@ export class ConsoleEmbedding extends Embedding {
 	}
 }
 
+// TODO map aggregate names to functions
+// TODO allow other aggregate functions (count, std, var, min, max, sum)
+// TODO avoid recomputing aggs on every event
 export class AggregateEmbedding extends Embedding {
+	static get IndividualGrouping() {
+		return (dp) => dp.getId()
+	}
+
+	static get CollapsedGrouping() {
+		return (dp) => 1
+	}
+
+	static get Aggregates() {
+		return {
+			mean,
+			max,
+			min,
+			sum,
+			identity
+		}
+	}
+
 	constructor(attr, scene, dataset, options) {
 		options = assign({
 			filter: identity,
-			groupBy: (dp) => 1,
+			groupBy: AggregateEmbedding.CollapsedGrouping,
 			bin: null,
-			aggregate: 'mean',
-			baseSize: 0.1
+			aggregate: AggregateEmbedding.Aggregates.mean,
+			baseSize: 0.1,
+			color: 'gray',
+			emissive: 0x000000
 		}, options);
 		super(scene, dataset, options);
 
 		this.attr = attr;
 
+		this.meshes = [];
 		this.initMeshes()
 	}
 
 	initMeshes() {
+		this.meshes.map((mesh) => this.remove(mesh));
 		this.meshes = [];
 
+		let aggValues = this.computeAggValues_();
+		this.createMeshes_(aggValues);
+	}
+
+	computeAggValues_() {
 		let filtered = this.dataset.getDatapoints(this.options.filter);
 		let groups = groupBy(filtered, this.options.groupBy);
 		let groupedValues = keys(groups)
 			.map((key) => groups[key].map(
 				(dp) => dp.get(this.attr)));
 		let aggValues = groupedValues.map((vals) => mean(vals));
+		return aggValues;		
+	}
+
+	createMeshes_() {
 		map(aggValues, (aggValue, i) => {
 			let geo = new THREE.SphereGeometry(this.options.baseSize, 32, 32);
-			let mat = new THREE.MeshStandardMaterial({ emissive: 'gray' });
+			let mat = new THREE.MeshStandardMaterial({ 
+				emissive: this.options.emissive,
+				color: this.options.color 
+			});
 			let mesh = new THREE.Mesh(geo, mat);
 			let scale = Math.cbrt(aggValue);
 			mesh.scale.set(scale, scale, scale);
@@ -663,12 +700,51 @@ export class AggregateEmbedding extends Embedding {
 	}
 
 	_addDatapoint(id) {
+		// TODO optimize
+		this.initMeshes();
 	}
 
 	_removeDatapoint(id) {
+		// TODO optimize
+		this.initMeshes();
 	}
 
 	_updateDatapoint(id, event) {
+		// TODO optimize
+		this.initMeshes();
+	}
+}
+
+export class BallChart extends AggregateEmbedding {
+	constructor(attr, scene, dataset, options) {
+		options = assign({
+			groupBy: AggregateEmbedding.IndividualGrouping,
+			aggregate: AggregateEmbedding.Aggregates.identity,
+			baseSize: 1.0
+		}, options);
+		super(attr, scene, dataset, options);
+	}
+
+	createMeshes_(aggValues) {
+		let total = sum(aggValues);
+		let accum = 0;
+		map(aggValues, (aggValue, i) => {
+			// Compute the sphere slice parameters
+			let start = accum / total;
+			let end = (accum + aggValue) / total;
+			accum += aggValue;
+			let phiStart = start * 2 * Math.PI;
+			let phiLength = (end - start) * 2 * Math.PI;
+
+			// Create the sphere slice
+			let geo = new THREE.SphereGeometry(this.options.baseSize, 32, 32, phiStart, phiLength);
+			let mat = new THREE.MeshStandardMaterial({ 
+				emissive: this.options.emissive,
+				color: this.options.color 
+			});
+			let mesh = new THREE.Mesh(geo, mat);
+			this.obj3D.add(mesh);
+		})
 	}
 }
 

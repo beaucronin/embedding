@@ -43,31 +43,11 @@
 
 		EMBED.Dataset.createFromCSV('data/iris.csv', 
 			function(dataset) {
-				embedding = new EMBED.AggregateEmbedding('petal_length', scene, dataset, 
+				embedding = new EMBED.BallChart('petal_length', scene, dataset, 
 					{
 						groupBy: (dp) => dp.get('species'),
-						y: 0,
-						z: -5
-					});
-				EMBED.register(embedding);
-				embedding = new EMBED.AggregateEmbedding('petal_width', scene, dataset, 
-					{
-						groupBy: (dp) => dp.get('species'),
-						y: 1,
-						z: -5
-					});
-				EMBED.register(embedding);
-				embedding = new EMBED.AggregateEmbedding('sepal_length', scene, dataset, 
-					{
-						groupBy: (dp) => dp.get('species'),
-						y: 2,
-						z: -5
-					});
-				EMBED.register(embedding);
-				embedding = new EMBED.AggregateEmbedding('sepal_width', scene, dataset, 
-					{
-						groupBy: (dp) => dp.get('species'),
-						y: 3,
+						aggregate: EMBED.AggregateEmbedding.Aggregates.mean,
+						emissive: 'dimgray',
 						z: -5
 					});
 				EMBED.register(embedding);
