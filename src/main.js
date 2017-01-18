@@ -24,7 +24,8 @@ import {
 	ScatterEmbedding,
 	PathEmbedding,
 	ConsoleEmbedding,
-	AggregateEmbedding
+	AggregateEmbedding,
+	BallChart
 } from './embedding.js';
 import {
 	latLongToEuclidean,
@@ -131,19 +132,20 @@ export function register(embedding) {
 }
 
 module.exports = {
-	Dataset: Dataset,
-	WebSocketDataset: WebSocketDataset,
-	Embedding: Embedding,
-	MeshEmbedding: MeshEmbedding,
-	RandomEmbedding: RandomEmbedding,
-	ScatterEmbedding: ScatterEmbedding,
-	PathEmbedding: PathEmbedding,
-	ConsoleEmbedding: ConsoleEmbedding,
+	Dataset,
+	WebSocketDataset,
+	Embedding,
+	MeshEmbedding,
+	RandomEmbedding,
+	ScatterEmbedding,
+	PathEmbedding,
+	ConsoleEmbedding,
 	AggregateEmbedding,
-	initScene: initScene,
-	animate: animate,
-	detectMode: detectMode,
-	register: register,
+	BallChart,
+	initScene,
+	animate,
+	detectMode,
+	register,
 	startAnimation,
 	utils: {
 		degToRad,
