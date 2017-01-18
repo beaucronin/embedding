@@ -4,9 +4,15 @@
  * @author Beau Cronin <beau.cronin@gmail.com>
  */
 
+import * as THREE from 'three';
+import './external/VRControls.js';
+import './external/VREffect.js';
 import RayInput from 'ray-input';
 import TWEEN from 'tween.js';
-import queryString from 'query-string';
+import { detectMode } from './detection-utils.js';
+import { VRDisplay } from 'webvr-polyfill';
+import WebVRManager from 'webvr-boilerplate';
+
 import {
 	WebSocketDataset, 
 	Dataset
@@ -17,9 +23,10 @@ import {
 	RandomEmbedding,
 	ScatterEmbedding,
 	PathEmbedding,
-	ConsoleEmbedding
+	ConsoleEmbedding,
+	AggregateEmbedding,
+	BallChart
 } from './embedding.js';
-import { detectMode } from './detection-utils.js';
 import {
 	latLongToEuclidean,
 	degToRad,
@@ -28,14 +35,16 @@ import {
 } from './utils.js';
 
 var embeddings = [];
+var updateFunc;
 var lastRender = 0;
 var vrDisplay;
+export var input;
 
 /**
  * Convenience function to create a responsive THREE scene and related objects. Returns a number 
  * of objects that should probably be kept around by the enclosing script.
  */
-export function initScene() {
+export function initScene(options = {}) {
 	const scene = new THREE.Scene();
 	const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 10;
@@ -50,11 +59,11 @@ export function initScene() {
 	const renderer = new THREE.WebGLRenderer();
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setPixelRatio(window.devicePixelRatio);
-    document.body.appendChild( renderer.domElement );
-    
-    // The VREffect is responsible for distorting the rendered image to match the optics of the HMD,
-    // as well as rendering different, offset images for each eye
-    const effect = new THREE.VREffect(renderer);
+	document.body.appendChild( renderer.domElement );
+	
+	// The VREffect is responsible for distorting the rendered image to match the optics of the HMD,
+	// as well as rendering different, offset images for each eye
+	const effect = new THREE.VREffect(renderer);
 	effect.setSize( window.innerWidth, window.innerHeight );
 
 	// The WebVRManager is provided by the webvr-boilerplate, and handles detection of display hardware
@@ -70,22 +79,26 @@ export function initScene() {
 	window.addEventListener('resize', onResize, true);
 	window.addEventListener('vrdisplaypresentchange', onResize, true);
 
-    // TODO putting the input in the THREE global for now; probably want embeddings to fire 
-    // events when meshes are added/removed rather than referencing the input directly
-	THREE.input = new RayInput(camera, renderer.domElement);
-	THREE.input.setSize(renderer.getSize());
-	scene.add(THREE.input.getMesh());
+	// TODO putting the input in the THREE global for now; probably want embeddings to fire 
+	// events when meshes are added/removed rather than referencing the input directly
+	input = new RayInput(camera, renderer.domElement);
+	input.setSize(renderer.getSize());
+	scene.add(input.getMesh());
 
-    return { scene, camera, manager, effect, cameraControls };
+	updateFunc = options.updateFunc;
+
+	if (options.room) createRoom(options.room, scene);
+
+	return { scene, camera, manager, effect, cameraControls };
 }
 
 export function startAnimation() {
 	// NOTE: assumes the webvr polyfill is present, so can count on a valid display
 	navigator.getVRDisplays().then(function(displays) {
-	    if (displays.length > 0) {
-	      	vrDisplay = displays[0];
-	      	vrDisplay.requestAnimationFrame(animate);
-	    }
+		if (displays.length > 0) {
+			vrDisplay = displays[0];
+			vrDisplay.requestAnimationFrame(animate);
+		}
 	});
 }
 
@@ -97,17 +110,19 @@ export function startAnimation() {
 export function animate(timestamp) {
 	if (! timestamp) timestamp = Date.now();
 	var delta = Math.min(timestamp - lastRender, 500);
-  	lastRender = timestamp;
+	lastRender = timestamp;
 
-  	for (let e of embeddings) {
+	for (let e of embeddings) {
 		e.embed();
-  	}
-  	TWEEN.update();
-	THREE.input.update();
-    cameraControls.update();
-    manager.render( scene, camera, timestamp );
+	}
+	TWEEN.update();
+	input.update();
+	cameraControls.update();
+	if (updateFunc) updateFunc(delta);
 
-    vrDisplay.requestAnimationFrame( animate );
+	manager.render( scene, camera, timestamp );
+
+	vrDisplay.requestAnimationFrame( animate );
 }
 
 /**
@@ -118,25 +133,56 @@ export function register(embedding) {
 	embeddings.push(embedding);
 }
 
+function createRoom(options, scene) {
+	// Adapted from the ray-input example
+	let boxSize = 12;
+	let image = new Image();
+	image.src = "data:image/png;base64,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"
+	let texture = new THREE.Texture();
+	texture.wrapS = THREE.RepeatWrapping;
+	texture.wrapT = THREE.RepeatWrapping;
+	texture.repeat.set(boxSize, boxSize);
+	texture.image = image;
+	image.onload = () => {
+		texture.needsUpdate = true;
+
+		var geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
+		var material = new THREE.MeshBasicMaterial({
+			map: texture,
+			color: 0x015500,
+			side: THREE.BackSide
+		});
+
+		// Align the skybox to the floor (which is at y=0).
+		let skybox = new THREE.Mesh(geometry, material);
+		skybox.position.y = boxSize / 2;
+
+		scene.add(skybox);
+	}
+}
+
 module.exports = {
-	Dataset: Dataset,
-	WebSocketDataset: WebSocketDataset,
-	Embedding: Embedding,
-	MeshEmbedding: MeshEmbedding,
-	RandomEmbedding: RandomEmbedding,
-	ScatterEmbedding: ScatterEmbedding,
-	PathEmbedding: PathEmbedding,
-	ConsoleEmbedding: ConsoleEmbedding,
-	initScene: initScene,
-	animate: animate,
-	queryString: queryString,
-	detectMode: detectMode,
-	register: register,
+	Dataset,
+	WebSocketDataset,
+	Embedding,
+	MeshEmbedding,
+	RandomEmbedding,
+	ScatterEmbedding,
+	PathEmbedding,
+	ConsoleEmbedding,
+	AggregateEmbedding,
+	BallChart,
+	initScene,
+	animate,
+	detectMode,
+	register,
 	startAnimation,
 	utils: {
 		degToRad,
 		latLongToEuclidean,
 		ajaxWithCallback,
 		categoricalMap
-	}
+	},
+	THREE,
+	input
 }

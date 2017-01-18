@@ -90,6 +90,18 @@ export class Dataset {
 		this.embeddings.push(embedding);
 	}
 
+	/**
+	 * Returns the datapoints in the dataset, in id order. This is live data, and should not be modified
+	 * @param filter - An optional filter function
+	 */
+	getDatapoints(filter) {
+		let dps = this.getIds().map((id) => this.get(id));
+		if (filter)
+			return dps.filter(filter);
+		else
+			return dps;
+	}
+
 	sendNotifications(type, id, ...x) {
 		let msg = { type: type, id: id };
 		if (type == 'update') {

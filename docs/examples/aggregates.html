@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<title>Embedding.js Aggregates example</title>
+
+		<style>
+			/* Ensures that the canvas fills the entire window, and that there are no scrollbars */
+			body {
+				width: 100%;
+				height: 100%;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				padding: 0;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="js/embedding.js"></script>
+		<script>
+		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene({ room: true });
+		var dataset, embedding;
+		var THREE = EMBED.THREE;
+
+		lightPositions = [
+			[10, 10, 5],
+			[-5, 10, 0],
+			[ 0, 10, 10]
+		];
+		lightPositions.forEach((p) => {
+			let light = new THREE.PointLight(0xffffff, 1.0);
+			light.position.set(p[0], p[1], p[2]);
+			scene.add(light);
+			scene.add(new THREE.PointLightHelper(light, 0.1));
+		})
+
+		EMBED.Dataset.createFromCSV('data/iris.csv', 
+			function(dataset) {
+				embedding = new EMBED.BallChart('sepal_width', scene, dataset, 
+					{
+						groupBy: (dp) => dp.get('species'),
+						aggregate: EMBED.AggregateEmbedding.Aggregates.mean,
+						y: 1,
+						z: -4,
+						baseSize: 0.75,
+						rx: Math.PI / 4,
+						rz: Math.PI / 8
+					});
+				EMBED.register(embedding);
+				EMBED.startAnimation();
+			}
+		);
+
+		</script>
+	</body>
+</html>

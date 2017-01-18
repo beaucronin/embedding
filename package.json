@@ -1,12 +1,12 @@
 {
   "name": "embedding",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Embedding data into time and space",
   "main": "src/main.js",
   "scripts": {
     "test": "mocha",
-    "build": "browserify --standalone EMBED -v -d -t [ babelify --presets [ es2015 ] ] src/main.js -o build/embedding.js && uglify -s build/embedding.js -o build/embedding.min.js && cp build/embedding.js docs/examples/js/",
-    "start": "watchify ./build/embedding.js --standalone EMBED -v -o bundle.js",
+    "build": "browserify --standalone EMBED -v -d -t [ babelify --presets [ es2015 ] ] src/main.js -o build/embedding.js && uglify -s build/embedding.js -o build/embedding.min.js",
+    "start": "watchify --standalone EMBED -v -d -t [ babelify --presets [ es2015 ] ] src/main.js -o docs/examples/js/embedding.js",
     "build-docs": "jsdoc2md --files src/*.js > docs_src/docs/api.md && cd docs_src && mkdocs build"
   },
   "repository": {
@@ -32,10 +32,12 @@
     "uglify-js": "^2.7.5"
   },
   "dependencies": {
+    "chroma-js": "^1.2.1",
+    "lodash": "^4.17.4",
     "object-assign": "^4.1.0",
     "papaparse": "^4.1.2",
     "query-string": "^4.2.3",
-    "ray-input": "^0.1.2",
+    "ray-input": "beaucronin/ray-input",
     "three": "^0.81.2",
     "three-orbit-controls": "^72.0.0",
     "tween.js": "^16.3.5",

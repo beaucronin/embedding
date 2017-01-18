@@ -1,6 +1,10 @@
+import * as THREE from 'three';
 import assign from 'object-assign';
 import TWEEN from 'tween.js';
 import { maybeEval } from './utils.js'
+import { input } from './main.js'
+import { mean, max, min, sum, identity, groupBy, map, keys } from 'lodash'
+import chroma from 'chroma-js'
 
 /**
  * Base class for all embeddings.
@@ -49,7 +53,13 @@ export class Embedding {
 	 */
 	_map(dp, src) {
 		let tgt = this.mapping[src];
-		return tgt ? dp.get(tgt) : dp.get(src);
+		if (tgt) {
+			if (typeof(tgt) == 'function')
+				return tgt(dp);
+			else 
+				return dp.get(tgt)
+		} else
+			return dp.get(src);
 	}
 
 	/**
@@ -180,11 +190,26 @@ export class MeshEmbedding extends Embedding {
 	}
 
 	/**
-	 * A default mesh creator; this can be overriden by subclasses 
+	 * A default Object3D creator; this can be overriden by subclasses 
 	 */
-	createMeshForDatapoint(dp) {
+	createObjectForDatapoint(dp) {
 		var geos, mat;
-		if (this.options.geometry) { 
+		if (this.options.object3d) {
+			// Objects specified
+			let object3d = this.options.object3d;
+			if (typeof(object3d) == 'function') {
+				let result = object3d(dp);
+				result.userData = dp;
+				return result;
+			} else if (object3d instanceof THREE.Object3D) {
+				let result = object3d.clone();
+				result.userData = dp;
+				return result;
+			} else {
+				console.warn('Object3D type not recognized');
+			}
+		} else if (this.options.geometry) { 
+
 			// Geometry(ies) specified
 			geos = this.options.geometry.map(function(g) {
 				if (typeof(g) == 'function')
@@ -194,6 +219,7 @@ export class MeshEmbedding extends Embedding {
 				else
 					console.warn('geometry type not recognized');
 			}.bind(this))
+
 		} else { 
 			// Create geometry from parameters
 			switch (this.options.meshType.toLowerCase()) {
@@ -255,17 +281,18 @@ export class MeshEmbedding extends Embedding {
 		let obj = new THREE.Object3D();
 		for (let geo of geos)
 			obj.add(new THREE.Mesh(geo, mat));
+		obj.userData = dp;
 		return obj;
 	}
 
 	_placeDatapoint(id) {
 		let dp  = this.dataset.datapoints[id];
-		let mesh = this.createMeshForDatapoint(dp);
-		mesh.userData.description = this.getOpt("description", dp);
-		this.dpMap[id] = mesh;
-		this.obj3D.add(mesh);
-		THREE.input.add(mesh);
-		mesh.position.set(dp.get(this._mapAttr('x')), dp.get(this._mapAttr('y')), dp.get(this._mapAttr('z')));
+		let obj = this.createObjectForDatapoint(dp);
+		obj.userData.description = this.getOpt("description", dp);
+		this.dpMap[id] = obj;
+		this.obj3D.add(obj);
+		input.add(obj);
+		obj.position.set(this._map(dp, 'x'), this._map(dp, 'y'), this._map(dp, 'z'));
 	}
 
 	_removeDatapoint(id) {
@@ -491,7 +518,7 @@ export class PathEmbedding extends MeshEmbedding {
 
 	_placeDatapoint(id) {
 		let dp  = this.dataset.datapoints[id];
-		let mesh = this.createMeshForDatapoint(dp);
+		let mesh = this.createObjectForDatapoint(dp);
 		this._createMeshOffset(id);
 		mesh.userData.description = this.getOpt("description", dp);
 		this.dpMap[id] = mesh;
@@ -545,30 +572,41 @@ export class ConsoleEmbedding extends Embedding {
 	constructor(scene, dataset, options={}) {
 		options = assign({
 			font: "Bold 24px Arial",
-			fillStyle: "rgba(255,0,0,0.95)"
+			fillStyle: "rgba(225,225,225,0.90)",
+			align: "center",
+			width: 1.0
 		}, options);
 		super(scene, dataset, options);
 		this.canvas = document.createElement('canvas');
-		this.canvas.width = 256;
-		this.canvas.height = 128;
+		this.canvas.width = 1024;
+		this.canvas.height = 512;
 		this.context = this.canvas.getContext('2d');
 		this.context.font = this.getOpt('font');
 		this.context.fillStyle = this.getOpt('fillStyle');
+		this.context.textAlign = this.getOpt('align');
 		this.mesh = undefined;
 	}
 
 	setText(text) {
 		if (this.mesh)
 			this.obj3D.remove(this.mesh)
-
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.context.fillText(text, 0, 25);
+
+		if (this.getOpt('align') == 'left')
+			this.context.fillText(text, 0, this.canvas.height / 2);
+		else if (this.getOpt('align') == 'right')
+			this.context.fillText(text, this.canvas.width, this.canvas.height / 2);
+		else // default to center
+			this.context.fillText(text, this.canvas.width / 2, this.canvas.height / 2);
+
 		let texture = new THREE.Texture(this.canvas);
 		texture.needsUpdate = true;
 		let material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
 		material.transparent = true;
+
 		this.mesh = new THREE.Mesh(
-			new THREE.PlaneGeometry(this.canvas.width * .1, this.canvas.height * .1),
+			new THREE.PlaneGeometry(
+				this.getOpt('width') * this.canvas.width / 256, this.getOpt('width') * this.canvas.height / 128),
 			material
 		);
 		this.mesh.position.set(this.getOpt('x'), this.getOpt('y'), this.getOpt('z'));
@@ -576,8 +614,144 @@ export class ConsoleEmbedding extends Embedding {
 	}
 }
 
+// TODO map aggregate names to functions
+// TODO allow other aggregate functions (count, std, var, min, max, sum)
+// TODO avoid recomputing aggs on every event
 export class AggregateEmbedding extends Embedding {
+	static get IndividualGrouping() {
+		return (dp) => dp.id
+	}
 
+	static get CollapsedGrouping() {
+		return (dp) => 1
+	}
+
+	static get Aggregates() {
+		return {
+			mean,
+			max,
+			min,
+			sum,
+			identity
+		}
+	}
+
+	constructor(attr, scene, dataset, options) {
+		options = assign({
+			filter: identity,
+			groupBy: AggregateEmbedding.CollapsedGrouping,
+			bin: null,
+			aggregate: AggregateEmbedding.Aggregates.mean,
+			baseSize: 0.1,
+			color: 'gray',
+			emissive: 0x000000
+		}, options);
+		super(scene, dataset, options);
+
+		this.attr = attr;
+
+		this.meshes = [];
+		this.initMeshes()
+	}
+
+	initMeshes() {
+		this.meshes.map((mesh) => this.remove(mesh));
+		this.meshes = [];
+
+		let aggValues = this.computeAggValues_();
+		this.createMeshes_(aggValues);
+	}
+
+	computeAggValues_() {
+		let filtered = this.dataset.getDatapoints(this.options.filter);
+		let groups = groupBy(filtered, this.options.groupBy);
+		let groupedValues = keys(groups)
+			.map((key) => groups[key].map(
+				(dp) => dp.get(this.attr)));
+		let aggValues = groupedValues.map((vals) => mean(vals));
+		return aggValues;		
+	}
+
+	createMeshes_() {
+		map(aggValues, (aggValue, i) => {
+			let geo = new THREE.SphereGeometry(this.options.baseSize, 32, 32);
+			let mat = new THREE.MeshStandardMaterial({ 
+				emissive: this.options.emissive,
+				color: this.options.color 
+			});
+			let mesh = new THREE.Mesh(geo, mat);
+			let scale = Math.cbrt(aggValue);
+			mesh.scale.set(scale, scale, scale);
+			mesh.position.set(i, 0, 0)
+			this.obj3D.add(mesh);
+		})
+	}
+
+	embed() {
+		// process events sent by the dataset since last embed() call
+		if (this.events.length > 0) {
+			for (let i in this.events) {
+				let e = this.events[i];
+				if      (e.type == "add")    this._addDatapoint(e.id);
+				else if (e.type == "remove") this._removeDatapoint(e.id);
+				else if (e.type == "update") this._updateDatapoint(e.id, e);
+			}
+		} 
+		this.events = [];
+	}
+
+	_addDatapoint(id) {
+		// TODO optimize
+		this.initMeshes();
+	}
+
+	_removeDatapoint(id) {
+		// TODO optimize
+		this.initMeshes();
+	}
+
+	_updateDatapoint(id, event) {
+		// TODO optimize
+		this.initMeshes();
+	}
+}
+
+export class BallChart extends AggregateEmbedding {
+	constructor(attr, scene, dataset, options) {
+		options = assign({
+			groupBy: AggregateEmbedding.IndividualGrouping,
+			aggregate: AggregateEmbedding.Aggregates.identity,
+			baseSize: 1.0
+		}, options);
+		super(attr, scene, dataset, options);
+	}
+
+	createMeshes_(aggValues) {
+		let scale = chroma.scale(['green', 'white', 'red']);
+		let total = sum(aggValues);
+		let accum = 0;
+		map(aggValues, (aggValue, i) => {
+			// Compute the sphere slice parameters
+			let start = accum / total;
+			let end = (accum + aggValue) / total;
+			accum += aggValue;
+			let phiStart = start * 2 * Math.PI;
+			let phiLength = (end - start) * 2 * Math.PI;
+
+			// Create the sphere slice
+			let segments = Math.ceil(64 * (end - start))
+			let geo = new THREE.SphereGeometry(this.options.baseSize, segments, 32, phiStart, phiLength);
+			let mat = new THREE.MeshStandardMaterial({
+				color: scale(start).hex(),
+				emissive: scale(start).hex(),
+				roughness: 0.0,
+				metalness: 0.5,
+				emissive: this.options.emissive
+			});
+			let mesh = new THREE.Mesh(geo, mat);
+			this.obj3D.add(mesh);
+		})
+	}
 }
 
 class Rescaling {
