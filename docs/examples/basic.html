@@ -26,7 +26,7 @@
 	</head>
 	<body>
 		<script>
-		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene();
+		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene({ room: true });
 		var dataset, embedding;
 		var N = 1;
 		var c = 0;
@@ -69,7 +69,7 @@
 
 			// var embedding = new EMBED.RandomEmbedding(scene, dataset);
 			embedding = new EMBED.ScatterEmbedding(
-				scene, dataset, {pointSize: 0.5, pointColor: 0x993333, moveSpeed: 3});
+				scene, dataset, {y: 2, pointSize: 0.2, pointColor: 0x993333, moveSpeed: 3});
 			EMBED.register(embedding);
 		}
 

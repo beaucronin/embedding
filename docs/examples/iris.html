@@ -25,7 +25,7 @@
 	<body>
 		<script src="js/embedding.js"></script>
 		<script>
-		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene();
+		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene({ room: true });
 		var dataset, embedding;
 		var THREE = EMBED.THREE;
 
@@ -80,7 +80,7 @@
 						},
 						object3d: (dp) => new Iris(dp),
 						ry: .85 * Math.PI,
-						z: 3
+						z: 2
 					});
 				EMBED.register(embedding);
 				EMBED.startAnimation();
