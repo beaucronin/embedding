@@ -30,9 +30,9 @@
 		var THREE = EMBED.THREE;
 
 		lightPositions = [
-			[ 2, 10, 2],
-			[-2, 10, 0],
-			[ 0, 10, 2]
+			[10, 10, 5],
+			[-5, 10, 0],
+			[ 0, 10, 10]
 		];
 		lightPositions.forEach((p) => {
 			let light = new THREE.PointLight(0xffffff, 1.0);
@@ -43,12 +43,13 @@
 
 		EMBED.Dataset.createFromCSV('data/iris.csv', 
 			function(dataset) {
-				embedding = new EMBED.BallChart('petal_length', scene, dataset, 
+				embedding = new EMBED.BallChart('sepal_width', scene, dataset, 
 					{
 						groupBy: (dp) => dp.get('species'),
 						aggregate: EMBED.AggregateEmbedding.Aggregates.mean,
-						emissive: 'dimgray',
-						z: -5
+						z: -5,
+						rx: Math.PI / 4,
+						rz: Math.PI / 8
 					});
 				EMBED.register(embedding);
 				EMBED.startAnimation();

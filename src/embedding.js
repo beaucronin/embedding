@@ -4,6 +4,7 @@ import TWEEN from 'tween.js';
 import { maybeEval } from './utils.js'
 import { input } from './main.js'
 import { mean, max, min, sum, identity, groupBy, map, keys } from 'lodash'
+import chroma from 'chroma-js'
 
 /**
  * Base class for all embeddings.
@@ -618,7 +619,7 @@ export class ConsoleEmbedding extends Embedding {
 // TODO avoid recomputing aggs on every event
 export class AggregateEmbedding extends Embedding {
 	static get IndividualGrouping() {
-		return (dp) => dp.getId()
+		return (dp) => dp.id
 	}
 
 	static get CollapsedGrouping() {
@@ -726,6 +727,7 @@ export class BallChart extends AggregateEmbedding {
 	}
 
 	createMeshes_(aggValues) {
+		let scale = chroma.scale(['green', 'white', 'red']);
 		let total = sum(aggValues);
 		let accum = 0;
 		map(aggValues, (aggValue, i) => {
@@ -737,10 +739,14 @@ export class BallChart extends AggregateEmbedding {
 			let phiLength = (end - start) * 2 * Math.PI;
 
 			// Create the sphere slice
-			let geo = new THREE.SphereGeometry(this.options.baseSize, 32, 32, phiStart, phiLength);
-			let mat = new THREE.MeshStandardMaterial({ 
-				emissive: this.options.emissive,
-				color: this.options.color 
+			let segments = Math.ceil(64 * (end - start))
+			let geo = new THREE.SphereGeometry(this.options.baseSize, segments, 32, phiStart, phiLength);
+			let mat = new THREE.MeshStandardMaterial({
+				color: scale(start).hex(),
+				emissive: scale(start).hex(),
+				roughness: 0.0,
+				metalness: 0.5,
+				emissive: this.options.emissive
 			});
 			let mesh = new THREE.Mesh(geo, mat);
 			this.obj3D.add(mesh);
