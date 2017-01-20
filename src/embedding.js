@@ -667,8 +667,8 @@ export class AggregateEmbedding extends Embedding {
 		let groupedValues = keys(groups)
 			.map((key) => groups[key].map(
 				(dp) => dp.get(this.attr)));
-		let aggValues = groupedValues.map((vals) => mean(vals));
-		return aggValues;		
+		let aggValues = groupedValues.map((vals) => this.options.aggregate(vals));
+		return aggValues;
 	}
 
 	createMeshes_() {
