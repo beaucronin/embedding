@@ -82,6 +82,7 @@ export function initScene(options = {}) {
 	// TODO putting the input in the THREE global for now; probably want embeddings to fire 
 	// events when meshes are added/removed rather than referencing the input directly
 	input = new RayInput(camera, renderer.domElement);
+	module.exports.input = input;
 	input.setSize(renderer.getSize());
 	scene.add(input.getMesh());
 

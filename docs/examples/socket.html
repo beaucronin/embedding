@@ -73,16 +73,16 @@
 			 });
 		EMBED.register(embedding);
 
-		let status = new EMBED.ConsoleEmbedding( scene, null, { x: 5, z: -20, font: "Bold 12px Arial" } );
+		let status = new EMBED.ConsoleEmbedding( scene, null, { width: 4.0, z: -10, font: "Bold 24px Arial" } );
 
 		// These input callbacks need to be cleaned up
-		THREE.input.on('rayover', function(mesh) {
+		EMBED.input.on('rayover', function(mesh) {
 			if (mesh) {
 				status.setText(mesh.userData.description);
 				mesh.children[0].material.color.setHex(0xffffff)
 			}
 		});
-		THREE.input.on('rayout', function(mesh) {
+		EMBED.input.on('rayout', function(mesh) {
 			if (mesh) {
 				status.setText('');
 				mesh.children[0].material.color.setHex(0xff00ff)

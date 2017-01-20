@@ -523,7 +523,7 @@ export class PathEmbedding extends MeshEmbedding {
 		mesh.userData.description = this.getOpt("description", dp);
 		this.dpMap[id] = mesh;
 		this.obj3D.add(mesh);
-		THREE.input.add(mesh);
+		input.add(mesh);
 
 		// create path tween
 		let start = { x: this.waypoints[0].x, y: this.waypoints[0].y, z: this.waypoints[0].z }
