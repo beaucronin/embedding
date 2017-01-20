@@ -614,8 +614,6 @@ export class ConsoleEmbedding extends Embedding {
 	}
 }
 
-// TODO map aggregate names to functions
-// TODO allow other aggregate functions (count, std, var, min, max, sum)
 // TODO avoid recomputing aggs on every event
 export class AggregateEmbedding extends Embedding {
 	static get IndividualGrouping() {
@@ -659,6 +657,7 @@ export class AggregateEmbedding extends Embedding {
 		this.meshes = [];
 
 		let aggValues = this.computeAggValues_();
+		this.cachedAggValues = aggValues;
 		this.createMeshes_(aggValues);
 	}
 
