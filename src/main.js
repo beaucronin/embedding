@@ -25,7 +25,8 @@ import {
 	PathEmbedding,
 	ConsoleEmbedding,
 	AggregateEmbedding,
-	BallChart
+	BallChart,
+	Histogram
 } from './embedding.js';
 import {
 	latLongToEuclidean,
@@ -173,6 +174,7 @@ module.exports = {
 	ConsoleEmbedding,
 	AggregateEmbedding,
 	BallChart,
+	Histogram,
 	initScene,
 	animate,
 	detectMode,

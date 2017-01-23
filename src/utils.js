@@ -56,6 +56,10 @@ export function normal(options) {
 	return dev * norm + mean;
 }
 
+export function randomRange(lo, hi) {
+	return lo + (hi - lo) * Math.random();
+}
+
 export function degToRad(deg) {
 	return deg * Math.PI / 180;
 }

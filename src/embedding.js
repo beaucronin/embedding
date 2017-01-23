@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import assign from 'object-assign';
 import TWEEN from 'tween.js';
-import { maybeEval } from './utils.js'
+import { maybeEval, randomRange } from './utils.js'
 import { input } from './main.js'
-import { mean, max, min, sum, identity, groupBy, map, keys } from 'lodash'
+import { mean, max, min, sum, identity, groupBy, map, keys, sortBy } from 'lodash'
 import chroma from 'chroma-js'
 
 /**
@@ -614,6 +614,10 @@ export class ConsoleEmbedding extends Embedding {
 	}
 }
 
+/**
+ * An embedding that represents an aggregation of a dataset, including many operations
+ * from traditional data analytics.
+ */
 // TODO avoid recomputing aggs on every event
 export class AggregateEmbedding extends Embedding {
 	static get IndividualGrouping() {
@@ -634,11 +638,24 @@ export class AggregateEmbedding extends Embedding {
 		}
 	}
 
+	/**
+	 * Create a new AggregateEmbedding.
+	 * @param {string} attr - The attribute which is being aggregated
+	 * @param scene - The scene to which the embedding belongs
+	 * @param {Dataset} dataset - The dataset that backs the embedding
+	 * @param {Object} [options={}] - Options describing the embedding's location and scale
+	 * @param {function} [options.filter=identity] - A filter to apply to the Dataset before 
+	 *        applying the aggregator. Default is to keep all datapoints in the Dataset
+	 * @param {function} [options.groupBy=AggregateEmbedding.CollapsedGrouping] - A function 
+	 *        by whose output the Dataset will be grouped before applyting the aggregator. 
+	          Default is to place all datapoints into a single group.
+	 * @param {function} [options.aggregate=AggregateEmbedding.Aggregates.mean] - The function by
+	          which to aggregate the dataset attribute
+	 */
 	constructor(attr, scene, dataset, options) {
 		options = assign({
 			filter: identity,
 			groupBy: AggregateEmbedding.CollapsedGrouping,
-			bin: null,
 			aggregate: AggregateEmbedding.Aggregates.mean,
 			baseSize: 0.1,
 			color: 'gray',
@@ -683,6 +700,7 @@ export class AggregateEmbedding extends Embedding {
 			mesh.scale.set(scale, scale, scale);
 			mesh.position.set(i, 0, 0)
 			this.obj3D.add(mesh);
+			this.meshes.push(mesh);
 		})
 	}
 
@@ -749,7 +767,128 @@ export class BallChart extends AggregateEmbedding {
 			});
 			let mesh = new THREE.Mesh(geo, mat);
 			this.obj3D.add(mesh);
+			this.meshes.push(mesh);
 		})
+	}
+}
+
+export class Histogram extends AggregateEmbedding {
+	constructor(attr, scene, dataset, options) {
+		options = assign({
+			color: 0x888888,
+			emissive: 0x222222,
+			layout: {
+				shape: 'cylinder',
+				thetaCenter: 0,
+				thetaWidth: 2 * Math.PI,
+				phiCenter: 0,
+				phiWidth: 0,
+				align: 'bottom'
+			},
+			baseSize: 1
+		}, options)
+		super(attr, scene, dataset, options);
+	}
+
+	createMeshes_(aggValues) {
+		let sortedValues = sortBy(aggValues, (x) => -1 * x)
+		map(sortedValues, (val, i) => {
+			// if (i > 10) return
+			let mesh = this.createMesh_(val, this.options.layout)
+			this.layoutMesh_(mesh)
+			this.obj3D.add(mesh)
+			this.meshes.push(mesh)
+		})
+	}
+
+	createMesh_(val, layout) {
+		let geo;
+		let mat = new THREE.MeshStandardMaterial({ emissive: this.options.emissive, color: this.options.color });
+		switch(layout.shape) {
+			case 'box':
+				break;
+			case 'sphere':
+				break;
+			case 'cylinder':
+				// choose a random height/radius ratio, and solve for 
+				// height and radius values under fixed volume
+				let a = randomRange(0.5, 2) // a = h / (2*r)
+				let r = Math.cbrt(val / (2 * Math.PI * a)) * this.options.baseSize
+				let h = 2 * a * r 
+				geo = new THREE.CylinderGeometry(r, r, h, 32)
+				geo.computeBoundingBox();
+				break;
+		}
+		let mesh = new THREE.Mesh(geo, mat)
+		return mesh
+	}
+
+	layoutMesh_(mesh) {
+		let yOffset;
+		switch (this.options.layout.align) {
+			case 'center':
+				yOffset = 0;
+				break
+			case 'bottom':
+				yOffset = mesh.geometry.boundingBox.getSize().y / 2;
+				break
+			case 'top':
+				yOffset = -1 * mesh.geometry.boundingBox.getSize().y / 2;
+				break
+		}
+		let theta = randomRange(this.options.layout.thetaCenter - this.options.layout.thetaWidth / 2,
+			this.options.layout.thetaCenter + this.options.layout.thetaWidth / 2)
+		// TODO phi
+
+		this.setMeshPosition_(mesh, theta, yOffset)
+	}
+
+	setMeshPosition_(mesh, theta, yOffset) {
+		// TODO solve directly using known mesh geometries and angle of attack?
+
+		if (this.meshes.length == 0) {
+			// first one doesn't get moved
+			mesh.position.set(0, yOffset, 0)
+			return
+		}
+
+		let lo = 0 // highest known unsafe 
+		let hi = 1000 // lowest known safe
+		let next = 500
+		let count = 0
+		while (true) {
+			// console.log(next);
+			if (count > 500)
+				break
+			count += 1
+			let R = next
+			let x = R * Math.cos(theta)
+			let z = R * Math.sin(theta)
+			mesh.position.set(x, yOffset, z)
+			mesh.geometry.computeBoundingBox()
+			let collision = false
+			let thisBox = mesh.geometry.boundingBox.clone()
+			thisBox.translate(mesh.position)
+			for (let existingMesh of this.meshes) {
+				let thatBox = existingMesh.geometry.boundingBox.clone()
+				thatBox.translate(existingMesh.position)
+				if (thisBox.intersectsBox(thatBox)) {
+					collision = true
+					break
+				}
+			}
+			if (collision) {
+				// move farther
+				lo = next
+			} else {
+				// move closer
+				if (hi - lo < .0001) // done
+					break
+				hi = next
+			}
+			next = lo + .9 * (hi - lo)
+			// console.log(next)
+		}
 	}
 }
 
