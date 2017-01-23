@@ -35,7 +35,7 @@
 			[ 0, 10, 10]
 		];
 		lightPositions.forEach((p) => {
-			let light = new THREE.PointLight(0xffffff, 1.0);
+			let light = new THREE.PointLight(0xffffff, 0.5);
 			light.position.set(p[0], p[1], p[2]);
 			scene.add(light);
 			scene.add(new THREE.PointLightHelper(light, 0.1));
@@ -49,19 +49,22 @@
 						aggregate: EMBED.AggregateEmbedding.Aggregates.sum,
 						filter: (dp) => typeof(dp.get('mass_g')) == 'number',
 						layout: {
-							shape: 'cylinder',
+							shape: 'sphere',
 							thetaCenter: Math.PI / 2,
-							thetaWidth: Math.PI / 2,
-							align: 'center'
+							thetaWidth: Math.PI * .5,
+							align: 'bottom'
 						},
 						color: 0xaaaaaa,
 						// emissive: 0x222222,
-						baseSize: .01,
+						roughness: 0.0,
+						metalness: 0.0,
+						baseSize: .005,
 						y: 1,
-						z: -32,
-						rx: Math.PI / 8
+						z: -24,
+						rx: 0* Math.PI / 8
 					});
 				EMBED.register(embedding);
+
 				EMBED.startAnimation();
 			}
 		);

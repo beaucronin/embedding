@@ -688,7 +688,7 @@ export class AggregateEmbedding extends Embedding {
 		return aggValues;
 	}
 
-	createMeshes_() {
+	createMeshes_(aggValues) {
 		map(aggValues, (aggValue, i) => {
 			let geo = new THREE.SphereGeometry(this.options.baseSize, 32, 32);
 			let mat = new THREE.MeshStandardMaterial({ 
@@ -777,6 +777,8 @@ export class Histogram extends AggregateEmbedding {
 		options = assign({
 			color: 0x888888,
 			emissive: 0x222222,
+			roughness: 1.0,
+			metalness: 0.0,
 			layout: {
 				shape: 'cylinder',
 				thetaCenter: 0,
@@ -795,29 +797,44 @@ export class Histogram extends AggregateEmbedding {
 		map(sortedValues, (val, i) => {
 			// if (i > 10) return
 			let mesh = this.createMesh_(val, this.options.layout)
-			this.layoutMesh_(mesh)
-			this.obj3D.add(mesh)
-			this.meshes.push(mesh)
+			if (mesh) {
+				this.layoutMesh_(mesh)
+				input.add(mesh)
+				this.obj3D.add(mesh)
+				this.meshes.push(mesh)				
+			}
 		})
 	}
 
 	createMesh_(val, layout) {
 		let geo;
-		let mat = new THREE.MeshStandardMaterial({ emissive: this.options.emissive, color: this.options.color });
+		let mat = new THREE.MeshStandardMaterial({ 
+			emissive: this.options.emissive, 
+			color: this.options.color,
+			roughness: this.options.roughness,
+			metalness: this.options.metalness
+		});
+		let r
 		switch(layout.shape) {
 			case 'box':
 				break;
 			case 'sphere':
+				r = Math.cbrt(val) * this.options.baseSize
+				if (r == 0) return
+				geo = new THREE.SphereGeometry(r, 32, 32)
+				geo.computeBoundingBox()
+				geo.computeBoundingSphere()
 				break;
 			case 'cylinder':
 				// choose a random height/radius ratio, and solve for 
 				// height and radius values under fixed volume
 				let a = randomRange(0.5, 2) // a = h / (2*r)
-				let r = Math.cbrt(val / (2 * Math.PI * a)) * this.options.baseSize
+				r = Math.cbrt(val / (2 * Math.PI * a)) * this.options.baseSize
 				let h = 2 * a * r 
 				geo = new THREE.CylinderGeometry(r, r, h, 32)
-				geo.computeBoundingBox();
-				break;
+				geo.computeBoundingBox()
+				geo.computeBoundingSphere()
+				break
 		}
 		let mesh = new THREE.Mesh(geo, mat)
 		return mesh
@@ -844,8 +861,6 @@ export class Histogram extends AggregateEmbedding {
 	}
 
 	setMeshPosition_(mesh, theta, yOffset) {
-		// TODO solve directly using known mesh geometries and angle of attack?
-
 		if (this.meshes.length == 0) {
 			// first one doesn't get moved
 			mesh.position.set(0, yOffset, 0)
@@ -857,22 +872,25 @@ export class Histogram extends AggregateEmbedding {
 		let next = 500
 		let count = 0
 		while (true) {
-			// console.log(next);
 			if (count > 500)
 				break
 			count += 1
+
 			let R = next
 			let x = R * Math.cos(theta)
 			let z = R * Math.sin(theta)
 			mesh.position.set(x, yOffset, z)
 			mesh.geometry.computeBoundingBox()
+			mesh.geometry.computeBoundingSphere()
+
 			let collision = false
-			let thisBox = mesh.geometry.boundingBox.clone()
-			thisBox.translate(mesh.position)
+			let thisBound = mesh.geometry.boundingBox.clone()
+			thisBound.translate(mesh.position)
+
 			for (let existingMesh of this.meshes) {
-				let thatBox = existingMesh.geometry.boundingBox.clone()
-				thatBox.translate(existingMesh.position)
-				if (thisBox.intersectsBox(thatBox)) {
+				let thatBound = existingMesh.geometry.boundingBox.clone()
+				thatBound.translate(existingMesh.position)
+				if (thisBound.intersectsBox(thatBound)) {
 					collision = true
 					break
 				}
@@ -886,9 +904,9 @@ export class Histogram extends AggregateEmbedding {
 					break
 				hi = next
 			}
-			next = lo + .9 * (hi - lo)
-			// console.log(next)
+			next = lo + .6 * (hi - lo)
 		}
+		console.log(count)
 	}
 }
 
