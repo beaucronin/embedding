@@ -57,7 +57,7 @@ export function initScene(options = {}) {
 
 	// This renderer is the standard WebGL renderer; it may be further processed for VR use depending
 	// on the mode selected by the webvr-boilerplate
-	const renderer = new THREE.WebGLRenderer();
+	const renderer = new THREE.WebGLRenderer({ antialias: true });
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setPixelRatio(window.devicePixelRatio);
 	document.body.appendChild( renderer.domElement );
