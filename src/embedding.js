@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import assign from 'object-assign';
 import TWEEN from 'tween.js';
-import { maybeEval, randomRange } from './utils.js'
+import { maybeEval, randomRange, vectorFromObject } from './utils.js'
 import { input } from './main.js'
 import { mean, max, min, sum, identity, groupBy, map, keys, sortBy } from 'lodash'
 import chroma from 'chroma-js'
@@ -10,21 +10,22 @@ import chroma from 'chroma-js'
  * Base class for all embeddings.
  */
 export class Embedding {
+
 	/**
 	 * Embedding base constructor.
 	 * @constructor
 	 * @param scene - The scene to which the embedding belongs
 	 * @param {Dataset} dataset - The dataset that backs the embedding
 	 * @param {Object} [options={}] - Options describing the embedding's location and scale
-	 * @param {Number} [options.x=0] - x position of the embedding
-	 * @param {Number} [options.y=0] - y position of the embedding
-	 * @param {Number} [options.z=0] - z position of the embedding
-	 * @param {Number} [options.rx=0] - x rotation of the embedding
-	 * @param {Number} [options.ry=0] - y rotation of the embedding
-	 * @param {Number} [options.rz=0] - z rotation of the embedding
-	 * @param {Number} [options.sx=1] - x scale of the embedding
-	 * @param {Number} [options.sy=1] - y scale of the embedding
-	 * @param {Number} [options.sz=1] - z scale of the embedding
+	 * @param {Number} [options.position.x=0] - x position of the embedding
+	 * @param {Number} [options.position.y=0] - y position of the embedding
+	 * @param {Number} [options.position.z=0] - z position of the embedding
+	 * @param {Number} [options.rotation.x=0] - x rotation of the embedding
+	 * @param {Number} [options.rotation.y=0] - y rotation of the embedding
+	 * @param {Number} [options.rotation.z=0] - z rotation of the embedding
+	 * @param {Number} [options.scale.x=1] - x scale of the embedding
+	 * @param {Number} [options.scale.y=1] - y scale of the embedding
+	 * @param {Number} [options.scale.z=1] - z scale of the embedding
 	 */
 	constructor(scene, dataset, options = {}) {
 		this.dataset = dataset;
@@ -34,17 +35,21 @@ export class Embedding {
 		this.initialized = false;
 		this.events = [];
 
-		// set default position and rotation
-		options = assign({ x: 0, y: 0, z: 0 }, options);
-		options = assign({ rx:0, ry:0, rz:0 }, options);
-		options = assign({ sx:1, sy:1, sz:1 }, options);
-		options = assign({ mapping: {} }, options);
-		this.options = options;
-		this.obj3D.position.set(options.x, options.y, options.z);
-		this.obj3D.rotation.set(options.rx, options.ry, options.rz);
-		this.obj3D.scale.set(options.sx, options.sy, options.sz);
-		// TODO canonicalize, sanitize mapping
-		this.mapping = this.options.mapping;
+		options = assign({
+			position: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+			scale: { x: 1, y: 1, z: 1 },
+			mapping: {}
+		}, options)
+		this.options = options
+		this.options.position = vectorFromObject(this.options.position, { x: 0, y: 0, z: 0 })
+		this.options.rotation = vectorFromObject(this.options.rotation, { x: 0, y: 0, z: 0 })
+		this.options.scale = vectorFromObject(this.options.scale, { x: 1, y: 1, z: 1 })
+
+		this.obj3D.position.copy(this.options.position)
+		this.obj3D.rotation.setFromVector3(this.options.rotation)
+		this.obj3D.scale.copy(this.options.scale)
+		this.mapping = this.options.mapping
 	}
 
 	/**
@@ -92,15 +97,6 @@ export class Embedding {
 
 /**
  * Base class for embeddings that render Datapoints as individual meshes
- */
-/**
- * Define individual properties
- * position: x,y,z
- * geo type: cube, box, sphere, ellipsoid, tetrahedron, octahedron
- * color: hue, sat, luminance
- * wireframe?
- * 
- * Supply functions to generate material and/or geometry from datapoint
  */
 export class MeshEmbedding extends Embedding {
 	constructor(scene, dataset, options={}) {

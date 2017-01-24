@@ -69,7 +69,8 @@
 
 			// var embedding = new EMBED.RandomEmbedding(scene, dataset);
 			embedding = new EMBED.ScatterEmbedding(
-				scene, dataset, {y: 2, pointSize: 0.2, pointColor: 0x993333, moveSpeed: 3});
+				scene, dataset, {
+					position: {y: 2}, pointSize: 0.2, pointColor: 0x993333, moveSpeed: 3});
 			EMBED.register(embedding);
 		}
 

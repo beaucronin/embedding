@@ -159,6 +159,8 @@
         
             <li><a href="#datasetupdateid-k">dataset.update(id, k)</a></li>
         
+            <li><a href="#datasetgetdatapointsfilter">dataset.getDatapoints(filter)</a></li>
+        
             <li><a href="#datasetcreatefromcsvurl-callback">Dataset.createFromCSV(url, callback)</a></li>
         
     
@@ -169,6 +171,8 @@
             <li><a href="#datasetremoveid_1">dataset.remove(id)</a></li>
         
             <li><a href="#datasetupdateid-k_1">dataset.update(id, k)</a></li>
+        
+            <li><a href="#datasetgetdatapointsfilter_1">dataset.getDatapoints(filter)</a></li>
         
             <li><a href="#datasetcreatefromcsvurl-callback_1">Dataset.createFromCSV(url, callback)</a></li>
         
@@ -200,7 +204,7 @@
     
         <li class="main "><a href="#meshembedding">MeshEmbedding</a></li>
         
-            <li><a href="#meshembeddingcreatemeshfordatapoint">meshEmbedding.createMeshForDatapoint()</a></li>
+            <li><a href="#meshembeddingcreateobjectfordatapoint">meshEmbedding.createObjectForDatapoint()</a></li>
         
     
         <li class="main "><a href="#pointsembedding">PointsEmbedding</a></li>
@@ -212,6 +216,16 @@
         <li class="main "><a href="#pathembedding">PathEmbedding</a></li>
         
     
+        <li class="main "><a href="#aggregateembedding">AggregateEmbedding</a></li>
+        
+            <li><a href="#new-aggregateembeddingattr-scene-dataset-options">new AggregateEmbedding(attr, scene, dataset, [options])</a></li>
+        
+    
+        <li class="main "><a href="#aggregateembedding_1">AggregateEmbedding</a></li>
+        
+            <li><a href="#new-aggregateembeddingattr-scene-dataset-options_1">new AggregateEmbedding(attr, scene, dataset, [options])</a></li>
+        
+    
         <li class="main "><a href="#initscene">initScene()</a></li>
         
     
@@ -219,6 +233,9 @@
         
     
         <li class="main "><a href="#registerembedding">register(embedding)</a></li>
+        
+    
+        <li class="main "><a href="#categoricalmap">categoricalMap()</a></li>
         
     
         <li class="main "><a href="#csvdatasetcallback-function">CSVDatasetCallback : function</a></li>
@@ -256,6 +273,12 @@
 <dd><p>A {MeshEmbedding} in which each {Datapoint} is rendered as a Mesh that follows a
 path defined by waypoints.</p>
 </dd>
+<dt><a href="#AggregateEmbedding">AggregateEmbedding</a></dt>
+<dd><p>An embedding that represents an aggregation of a dataset, including many operations
+from traditional data analytics.</p>
+</dd>
+<dt><a href="#AggregateEmbedding">AggregateEmbedding</a></dt>
+<dd></dd>
 </dl>
 
 <h2 id="functions">Functions</h2>
@@ -271,6 +294,10 @@ using the WebVRManager, which applies the VREffect if in VR mode.</p>
 </dd>
 <dt><a href="#register">register(embedding)</a></dt>
 <dd><p>Register an embedding so that it will be updated on each animation frame.</p>
+</dd>
+<dt><a href="#categoricalMap">categoricalMap()</a></dt>
+<dd><p>Return a function that defines a mapping from values for an attribute to target values.
+Can be used, for example, to map from attribute values to colors.</p>
 </dd>
 </dl>
 
@@ -292,6 +319,7 @@ an embedding based on the dataset.</p>
 <li><a href="#Dataset+add">.add(datapoint)</a></li>
 <li><a href="#Dataset+remove">.remove(id)</a></li>
 <li><a href="#Dataset+update">.update(id, k)</a></li>
+<li><a href="#Dataset+getDatapoints">.getDatapoints(filter)</a></li>
 </ul>
 </li>
 <li><em>static</em><ul>
@@ -359,6 +387,24 @@ an embedding based on the dataset.</p>
 </tr>
 </tbody>
 </table>
+<p><a name="Dataset+getDatapoints"></a></p>
+<h3 id="datasetgetdatapointsfilter">dataset.getDatapoints(filter)</h3>
+<p>Returns the datapoints in the dataset, in id order. This is live data, and should not be modified</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>filter</td>
+<td>An optional filter function</td>
+</tr>
+</tbody>
+</table>
 <p><a name="Dataset.createFromCSV"></a></p>
 <h3 id="datasetcreatefromcsvurl-callback">Dataset.createFromCSV(url, callback)</h3>
 <p>Create a {Dataset} from a csv file that can be found at the given url</p>
@@ -393,6 +439,7 @@ an embedding based on the dataset.</p>
 <li><a href="#Dataset+add">.add(datapoint)</a></li>
 <li><a href="#Dataset+remove">.remove(id)</a></li>
 <li><a href="#Dataset+update">.update(id, k)</a></li>
+<li><a href="#Dataset+getDatapoints">.getDatapoints(filter)</a></li>
 </ul>
 </li>
 <li><em>static</em><ul>
@@ -457,6 +504,24 @@ an embedding based on the dataset.</p>
 <tr>
 <td>k</td>
 <td>The key whose value to modify      @ @param v - The new value</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Dataset+getDatapoints"></a></p>
+<h3 id="datasetgetdatapointsfilter_1">dataset.getDatapoints(filter)</h3>
+<p>Returns the datapoints in the dataset, in id order. This is live data, and should not be modified</p>
+<p><strong>Kind</strong>: instance method of <code><a href="#Dataset">Dataset</a></code>  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>filter</td>
+<td>An optional filter function</td>
 </tr>
 </tbody>
 </table>
@@ -534,55 +599,55 @@ an embedding based on the dataset.</p>
 <td>Options describing the embedding's location and scale</td>
 </tr>
 <tr>
-<td>[options.x]</td>
+<td>[options.position.x]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>x position of the embedding</td>
 </tr>
 <tr>
-<td>[options.y]</td>
+<td>[options.position.y]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>y position of the embedding</td>
 </tr>
 <tr>
-<td>[options.z]</td>
+<td>[options.position.z]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>z position of the embedding</td>
 </tr>
 <tr>
-<td>[options.rx]</td>
+<td>[options.rotation.x]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>x rotation of the embedding</td>
 </tr>
 <tr>
-<td>[options.ry]</td>
+<td>[options.rotation.y]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>y rotation of the embedding</td>
 </tr>
 <tr>
-<td>[options.rz]</td>
+<td>[options.rotation.z]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>z rotation of the embedding</td>
 </tr>
 <tr>
-<td>[options.sx]</td>
+<td>[options.scale.x]</td>
 <td><code>Number</code></td>
 <td><code>1</code></td>
 <td>x scale of the embedding</td>
 </tr>
 <tr>
-<td>[options.sy]</td>
+<td>[options.scale.y]</td>
 <td><code>Number</code></td>
 <td><code>1</code></td>
 <td>y scale of the embedding</td>
 </tr>
 <tr>
-<td>[options.sz]</td>
+<td>[options.scale.z]</td>
 <td><code>Number</code></td>
 <td><code>1</code></td>
 <td>z scale of the embedding</td>
@@ -647,55 +712,55 @@ element.</p>
 <td>Options describing the embedding's location and scale</td>
 </tr>
 <tr>
-<td>[options.x]</td>
+<td>[options.position.x]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>x position of the embedding</td>
 </tr>
 <tr>
-<td>[options.y]</td>
+<td>[options.position.y]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>y position of the embedding</td>
 </tr>
 <tr>
-<td>[options.z]</td>
+<td>[options.position.z]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>z position of the embedding</td>
 </tr>
 <tr>
-<td>[options.rx]</td>
+<td>[options.rotation.x]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>x rotation of the embedding</td>
 </tr>
 <tr>
-<td>[options.ry]</td>
+<td>[options.rotation.y]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>y rotation of the embedding</td>
 </tr>
 <tr>
-<td>[options.rz]</td>
+<td>[options.rotation.z]</td>
 <td><code>Number</code></td>
 <td><code>0</code></td>
 <td>z rotation of the embedding</td>
 </tr>
 <tr>
-<td>[options.sx]</td>
+<td>[options.scale.x]</td>
 <td><code>Number</code></td>
 <td><code>1</code></td>
 <td>x scale of the embedding</td>
 </tr>
 <tr>
-<td>[options.sy]</td>
+<td>[options.scale.y]</td>
 <td><code>Number</code></td>
 <td><code>1</code></td>
 <td>y scale of the embedding</td>
 </tr>
 <tr>
-<td>[options.sz]</td>
+<td>[options.scale.z]</td>
 <td><code>Number</code></td>
 <td><code>1</code></td>
 <td>z scale of the embedding</td>
@@ -720,9 +785,9 @@ element.</p>
 <h2 id="meshembedding">MeshEmbedding</h2>
 <p>Base class for embeddings that render Datapoints as individual meshes</p>
 <p><strong>Kind</strong>: global class<br />
-<a name="MeshEmbedding+createMeshForDatapoint"></a></p>
-<h3 id="meshembeddingcreatemeshfordatapoint">meshEmbedding.createMeshForDatapoint()</h3>
-<p>A default mesh creator; this can be overriden by subclasses</p>
+<a name="MeshEmbedding+createObjectForDatapoint"></a></p>
+<h3 id="meshembeddingcreateobjectfordatapoint">meshEmbedding.createObjectForDatapoint()</h3>
+<p>A default Object3D creator; this can be overriden by subclasses</p>
 <p><strong>Kind</strong>: instance method of <code><a href="#MeshEmbedding">MeshEmbedding</a></code><br />
 <a name="PointsEmbedding"></a></p>
 <h2 id="pointsembedding">PointsEmbedding</h2>
@@ -737,7 +802,129 @@ element.</p>
 <p>A {MeshEmbedding} in which each {Datapoint} is rendered as a Mesh that follows a
 path defined by waypoints.</p>
 <p><strong>Kind</strong>: global class<br />
-<a name="initScene"></a></p>
+<a name="AggregateEmbedding"></a></p>
+<h2 id="aggregateembedding">AggregateEmbedding</h2>
+<p>An embedding that represents an aggregation of a dataset, including many operations
+from traditional data analytics.</p>
+<p><strong>Kind</strong>: global class<br />
+<a name="new_AggregateEmbedding_new"></a></p>
+<h3 id="new-aggregateembeddingattr-scene-dataset-options">new AggregateEmbedding(attr, scene, dataset, [options])</h3>
+<p>Create a new AggregateEmbedding.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>attr</td>
+<td><code>string</code></td>
+<td></td>
+<td>The attribute which is being aggregated</td>
+</tr>
+<tr>
+<td>scene</td>
+<td></td>
+<td></td>
+<td>The scene to which the embedding belongs</td>
+</tr>
+<tr>
+<td>dataset</td>
+<td><code><a href="#Dataset">Dataset</a></code></td>
+<td></td>
+<td>The dataset that backs the embedding</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td><code>{}</code></td>
+<td>Options describing the embedding's location and scale</td>
+</tr>
+<tr>
+<td>[options.filter]</td>
+<td><code>function</code></td>
+<td><code>identity</code></td>
+<td>A filter to apply to the Dataset before         applying the aggregator. Default is to keep all datapoints in the Dataset</td>
+</tr>
+<tr>
+<td>[options.groupBy]</td>
+<td><code>function</code></td>
+<td><code>AggregateEmbedding.CollapsedGrouping</code></td>
+<td>A function         by whose output the Dataset will be grouped before applyting the aggregator.             Default is to place all datapoints into a single group.</td>
+</tr>
+<tr>
+<td>[options.aggregate]</td>
+<td><code>function</code></td>
+<td><code>AggregateEmbedding.Aggregates.mean</code></td>
+<td>The function by             which to aggregate the dataset attribute</td>
+</tr>
+</tbody>
+</table>
+<p><a name="AggregateEmbedding"></a></p>
+<h2 id="aggregateembedding_1">AggregateEmbedding</h2>
+<p><strong>Kind</strong>: global class<br />
+<a name="new_AggregateEmbedding_new"></a></p>
+<h3 id="new-aggregateembeddingattr-scene-dataset-options_1">new AggregateEmbedding(attr, scene, dataset, [options])</h3>
+<p>Create a new AggregateEmbedding.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>attr</td>
+<td><code>string</code></td>
+<td></td>
+<td>The attribute which is being aggregated</td>
+</tr>
+<tr>
+<td>scene</td>
+<td></td>
+<td></td>
+<td>The scene to which the embedding belongs</td>
+</tr>
+<tr>
+<td>dataset</td>
+<td><code><a href="#Dataset">Dataset</a></code></td>
+<td></td>
+<td>The dataset that backs the embedding</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td><code>{}</code></td>
+<td>Options describing the embedding's location and scale</td>
+</tr>
+<tr>
+<td>[options.filter]</td>
+<td><code>function</code></td>
+<td><code>identity</code></td>
+<td>A filter to apply to the Dataset before         applying the aggregator. Default is to keep all datapoints in the Dataset</td>
+</tr>
+<tr>
+<td>[options.groupBy]</td>
+<td><code>function</code></td>
+<td><code>AggregateEmbedding.CollapsedGrouping</code></td>
+<td>A function         by whose output the Dataset will be grouped before applyting the aggregator.             Default is to place all datapoints into a single group.</td>
+</tr>
+<tr>
+<td>[options.aggregate]</td>
+<td><code>function</code></td>
+<td><code>AggregateEmbedding.Aggregates.mean</code></td>
+<td>The function by             which to aggregate the dataset attribute</td>
+</tr>
+</tbody>
+</table>
+<p><a name="initScene"></a></p>
 <h2 id="initscene">initScene()</h2>
 <p>Convenience function to create a responsive THREE scene and related objects. Returns a number 
 of objects that should probably be kept around by the enclosing script.</p>
@@ -768,7 +955,12 @@ using the WebVRManager, which applies the VREffect if in VR mode.</p>
 </tr>
 </tbody>
 </table>
-<p><a name="CSVDatasetCallback"></a></p>
+<p><a name="categoricalMap"></a></p>
+<h2 id="categoricalmap">categoricalMap()</h2>
+<p>Return a function that defines a mapping from values for an attribute to target values.
+Can be used, for example, to map from attribute values to colors.</p>
+<p><strong>Kind</strong>: global function<br />
+<a name="CSVDatasetCallback"></a></p>
 <h2 id="csvdatasetcallback-function">CSVDatasetCallback : <code>function</code></h2>
 <p>A callback that is triggered after the dataset is loaded; typically used to create
 an embedding based on the dataset.</p>
