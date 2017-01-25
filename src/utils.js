@@ -1,5 +1,6 @@
 'use strict';
 
+import * as THREE from 'three';
 import assign from 'object-assign';
 
 // from https://github.com/mock-end/random-normal
@@ -54,6 +55,27 @@ export function normal(options) {
 
 	// Shape and scale
 	return dev * norm + mean;
+}
+
+export function randomRange(lo, hi) {
+	return lo + (hi - lo) * Math.random();
+}
+
+export function vectorFromObject(obj, default_) {
+	if (obj instanceof THREE.Vector3) {
+		return obj
+	} else if (typeof(obj) == 'object') {
+		let v = new THREE.Vector3()
+		if (typeof(obj.x) == 'number') v.setX(obj.x)
+		else v.setX(default_.x)
+		if (typeof(obj.y) == 'number') v.setY(obj.y)
+		else v.setY(default_.y)
+		if (typeof(obj.z) == 'number') v.setZ(obj.z)
+		else v.setZ(default_.z)
+		return v
+	} else {
+		return new THREE.Vector3(default_.x, default_.y, default_.z)
+	}
 }
 
 export function degToRad(deg) {

@@ -1,30 +1,31 @@
 import * as THREE from 'three';
 import assign from 'object-assign';
 import TWEEN from 'tween.js';
-import { maybeEval } from './utils.js'
+import { maybeEval, randomRange, vectorFromObject } from './utils.js'
 import { input } from './main.js'
-import { mean, max, min, sum, identity, groupBy, map, keys } from 'lodash'
+import { mean, max, min, sum, identity, groupBy, map, keys, sortBy, zip, unzip } from 'lodash'
 import chroma from 'chroma-js'
 
 /**
  * Base class for all embeddings.
  */
 export class Embedding {
+
 	/**
 	 * Embedding base constructor.
 	 * @constructor
 	 * @param scene - The scene to which the embedding belongs
 	 * @param {Dataset} dataset - The dataset that backs the embedding
 	 * @param {Object} [options={}] - Options describing the embedding's location and scale
-	 * @param {Number} [options.x=0] - x position of the embedding
-	 * @param {Number} [options.y=0] - y position of the embedding
-	 * @param {Number} [options.z=0] - z position of the embedding
-	 * @param {Number} [options.rx=0] - x rotation of the embedding
-	 * @param {Number} [options.ry=0] - y rotation of the embedding
-	 * @param {Number} [options.rz=0] - z rotation of the embedding
-	 * @param {Number} [options.sx=1] - x scale of the embedding
-	 * @param {Number} [options.sy=1] - y scale of the embedding
-	 * @param {Number} [options.sz=1] - z scale of the embedding
+	 * @param {Number} [options.position.x=0] - x position of the embedding
+	 * @param {Number} [options.position.y=0] - y position of the embedding
+	 * @param {Number} [options.position.z=0] - z position of the embedding
+	 * @param {Number} [options.rotation.x=0] - x rotation of the embedding
+	 * @param {Number} [options.rotation.y=0] - y rotation of the embedding
+	 * @param {Number} [options.rotation.z=0] - z rotation of the embedding
+	 * @param {Number} [options.scale.x=1] - x scale of the embedding
+	 * @param {Number} [options.scale.y=1] - y scale of the embedding
+	 * @param {Number} [options.scale.z=1] - z scale of the embedding
 	 */
 	constructor(scene, dataset, options = {}) {
 		this.dataset = dataset;
@@ -34,17 +35,21 @@ export class Embedding {
 		this.initialized = false;
 		this.events = [];
 
-		// set default position and rotation
-		options = assign({ x: 0, y: 0, z: 0 }, options);
-		options = assign({ rx:0, ry:0, rz:0 }, options);
-		options = assign({ sx:1, sy:1, sz:1 }, options);
-		options = assign({ mapping: {} }, options);
-		this.options = options;
-		this.obj3D.position.set(options.x, options.y, options.z);
-		this.obj3D.rotation.set(options.rx, options.ry, options.rz);
-		this.obj3D.scale.set(options.sx, options.sy, options.sz);
-		// TODO canonicalize, sanitize mapping
-		this.mapping = this.options.mapping;
+		options = assign({
+			position: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+			scale: { x: 1, y: 1, z: 1 },
+			mapping: {}
+		}, options)
+		this.options = options
+		this.options.position = vectorFromObject(this.options.position, { x: 0, y: 0, z: 0 })
+		this.options.rotation = vectorFromObject(this.options.rotation, { x: 0, y: 0, z: 0 })
+		this.options.scale = vectorFromObject(this.options.scale, { x: 1, y: 1, z: 1 })
+
+		this.obj3D.position.copy(this.options.position)
+		this.obj3D.rotation.setFromVector3(this.options.rotation)
+		this.obj3D.scale.copy(this.options.scale)
+		this.mapping = this.options.mapping
 	}
 
 	/**
@@ -91,16 +96,7 @@ export class Embedding {
 }
 
 /**
- * Base class for embeddings that render Datapoints as individual meshes
- */
-/**
- * Define individual properties
- * position: x,y,z
- * geo type: cube, box, sphere, ellipsoid, tetrahedron, octahedron
- * color: hue, sat, luminance
- * wireframe?
- * 
- * Supply functions to generate material and/or geometry from datapoint
+ * Base class for embeddings that render each Datapoint as an Object3D
  */
 export class MeshEmbedding extends Embedding {
 	constructor(scene, dataset, options={}) {
@@ -614,8 +610,10 @@ export class ConsoleEmbedding extends Embedding {
 	}
 }
 
-// TODO map aggregate names to functions
-// TODO allow other aggregate functions (count, std, var, min, max, sum)
+/**
+ * An embedding that represents an aggregation of a dataset, including many operations
+ * from traditional data analytics.
+ */
 // TODO avoid recomputing aggs on every event
 export class AggregateEmbedding extends Embedding {
 	static get IndividualGrouping() {
@@ -636,11 +634,24 @@ export class AggregateEmbedding extends Embedding {
 		}
 	}
 
+	/**
+	 * Create a new AggregateEmbedding.
+	 * @param {string} attr - The attribute which is being aggregated
+	 * @param scene - The scene to which the embedding belongs
+	 * @param {Dataset} dataset - The dataset that backs the embedding
+	 * @param {Object} [options={}] - Options describing the embedding's location and scale
+	 * @param {function} [options.filter=identity] - A filter to apply to the Dataset before 
+	 *        applying the aggregator. Default is to keep all datapoints in the Dataset
+	 * @param {function} [options.groupBy=AggregateEmbedding.CollapsedGrouping] - A function 
+	 *        by whose output the Dataset will be grouped before applyting the aggregator. 
+	          Default is to place all datapoints into a single group.
+	 * @param {function} [options.aggregate=AggregateEmbedding.Aggregates.mean] - The function by
+	          which to aggregate the dataset attribute
+	 */
 	constructor(attr, scene, dataset, options) {
 		options = assign({
 			filter: identity,
 			groupBy: AggregateEmbedding.CollapsedGrouping,
-			bin: null,
 			aggregate: AggregateEmbedding.Aggregates.mean,
 			baseSize: 0.1,
 			color: 'gray',
@@ -655,10 +666,11 @@ export class AggregateEmbedding extends Embedding {
 	}
 
 	initMeshes() {
-		this.meshes.map((mesh) => this.remove(mesh));
+		this.meshes.map((mesh) => this.obj3D.remove(mesh));
 		this.meshes = [];
 
 		let aggValues = this.computeAggValues_();
+		this.cachedAggValues = aggValues;
 		this.createMeshes_(aggValues);
 	}
 
@@ -668,11 +680,13 @@ export class AggregateEmbedding extends Embedding {
 		let groupedValues = keys(groups)
 			.map((key) => groups[key].map(
 				(dp) => dp.get(this.attr)));
-		let aggValues = groupedValues.map((vals) => mean(vals));
-		return aggValues;		
+		let aggValues = zip(
+			keys(groups), 
+			groupedValues.map((vals) => this.options.aggregate(vals)));
+		return aggValues;
 	}
 
-	createMeshes_() {
+	createMeshes_(aggValues) {
 		map(aggValues, (aggValue, i) => {
 			let geo = new THREE.SphereGeometry(this.options.baseSize, 32, 32);
 			let mat = new THREE.MeshStandardMaterial({ 
@@ -680,10 +694,12 @@ export class AggregateEmbedding extends Embedding {
 				color: this.options.color 
 			});
 			let mesh = new THREE.Mesh(geo, mat);
-			let scale = Math.cbrt(aggValue);
+			let scale = Math.cbrt(aggValue[1]);
 			mesh.scale.set(scale, scale, scale);
 			mesh.position.set(i, 0, 0)
+			mesh.userData.name = aggValue[0]
 			this.obj3D.add(mesh);
+			this.meshes.push(mesh);
 		})
 	}
 
@@ -728,13 +744,13 @@ export class BallChart extends AggregateEmbedding {
 
 	createMeshes_(aggValues) {
 		let scale = chroma.scale(['green', 'white', 'red']);
-		let total = sum(aggValues);
+		let total = sum(unzip(aggValues)[1]);
 		let accum = 0;
 		map(aggValues, (aggValue, i) => {
 			// Compute the sphere slice parameters
 			let start = accum / total;
-			let end = (accum + aggValue) / total;
-			accum += aggValue;
+			let end = (accum + aggValue[1]) / total;
+			accum += aggValue[1];
 			let phiStart = start * 2 * Math.PI;
 			let phiLength = (end - start) * 2 * Math.PI;
 
@@ -750,7 +766,181 @@ export class BallChart extends AggregateEmbedding {
 			});
 			let mesh = new THREE.Mesh(geo, mat);
 			this.obj3D.add(mesh);
+			this.meshes.push(mesh);
 		})
+	}
+}
+
+export class Histogram extends AggregateEmbedding {
+	constructor(attr, scene, dataset, options) {
+		options = assign({
+			color: 0x888888,
+			emissive: 0x222222,
+			roughness: 1.0,
+			metalness: 0.0,
+			layout: {
+				shape: 'cylinder',
+				thetaCenter: 0,
+				thetaWidth: 2 * Math.PI,
+				phiCenter: 0,
+				phiWidth: 0,
+				align: 'bottom'
+			},
+			baseSize: 1
+		}, options)
+		super(attr, scene, dataset, options);
+		if (this.options.texture) {
+			let loader = new THREE.TextureLoader()
+			this.texture = loader.load(
+				this.options.texture,
+				(texture) => {
+					this.texture = texture
+					this.initMeshes()
+				})
+		}
+	}
+
+	createMeshes_(aggValues) {
+		let sortedValues = sortBy(aggValues, (x) => -1 * x[1])
+		map(sortedValues, (val, i) => {
+			// if (i > 10) return
+			let mesh = this.createMesh_(val, this.options.layout)
+			if (mesh) {
+				this.layoutMesh_(mesh)
+				input.add(mesh)
+				this.obj3D.add(mesh)
+				this.meshes.push(mesh)				
+			}
+		})
+	}
+
+	createMesh_(val, layout) {
+		let geo;
+		let valObject = {
+			name: val[0],
+			value: val[1]
+		}
+		let mat = new THREE.MeshStandardMaterial({ 
+			color: maybeEval(this.options.color, valObject),
+			emissive: maybeEval(this.options.emissive, valObject),
+			metalness: maybeEval(this.options.metalness, valObject),
+			roughness: maybeEval(this.options.roughness, valObject)
+		});
+		if (this.texture) {
+			let texture = this.texture.clone()
+			texture.wrapS = THREE.RepeatWrapping
+			texture.wrapT = THREE.RepeatWrapping
+			let repeat = Math.ceil(Math.cbrt(val[1]) / 5)
+			texture.repeat.set(repeat, repeat)
+			texture.needsUpdate = true
+			mat.bumpMap = texture
+			mat.needsUpdate = true
+		}
+		let r
+		switch(layout.shape) {
+			case 'box':
+				break;
+			case 'tetrahedron':
+				r = Math.cbrt(val[1]) * this.options.baseSize
+				geo = new THREE.TetrahedronGeometry(r)
+				geo.computeBoundingBox()
+				geo.computeBoundingSphere()
+				break;
+			case 'octahedron':				
+				r = Math.cbrt(val[1]) * this.options.baseSize
+				geo = new THREE.OctahedronGeometry(r)
+				geo.computeBoundingBox()
+				geo.computeBoundingSphere()
+				break;
+			case 'sphere':
+				r = Math.cbrt(val[1]) * this.options.baseSize
+				if (r == 0) return
+				geo = new THREE.SphereGeometry(r, 32, 32)
+				geo.computeBoundingBox()
+				geo.computeBoundingSphere()
+				break;
+			case 'cylinder':
+				// choose a random height/radius ratio, and solve for 
+				// height and radius values under fixed volume
+				let a = randomRange(0.5, 2) // a = h / (2*r)
+				r = Math.cbrt(val[1] / (2 * Math.PI * a)) * this.options.baseSize
+				let h = 2 * a * r 
+				geo = new THREE.CylinderGeometry(r, r, h, 32)
+				geo.computeBoundingBox()
+				geo.computeBoundingSphere()
+				break
+		}
+		let mesh = new THREE.Mesh(geo, mat)
+		mesh.userData.name = val[0]
+		return mesh
+	}
+
+	layoutMesh_(mesh) {
+		let yOffset;
+		switch (this.options.layout.align) {
+			case 'center':
+				yOffset = 0;
+				break
+			case 'bottom':
+				yOffset = mesh.geometry.boundingBox.getSize().y / 2;
+				break
+			case 'top':
+				yOffset = -1 * mesh.geometry.boundingBox.getSize().y / 2;
+				break
+		}
+		let theta = randomRange(this.options.layout.thetaCenter - this.options.layout.thetaWidth / 2,
+			this.options.layout.thetaCenter + this.options.layout.thetaWidth / 2)
+		// TODO phi
+
+		this.setMeshPosition_(mesh, theta, yOffset)
+	}
+
+	setMeshPosition_(mesh, theta, yOffset) {
+		if (this.meshes.length == 0) {
+			// first one doesn't get moved
+			mesh.position.set(0, yOffset, 0)
+			return
+		}
+
+		let lo = 0 // highest known unsafe 
+		let hi = 1000 // lowest known safe
+		let next = 500
+		let count = 0
+		while (true) {
+			if (count > 500)
+				break
+			count += 1
+
+			let R = next
+			let x = R * Math.cos(theta)
+			let z = R * Math.sin(theta)
+			mesh.position.set(x, yOffset, z)
+			mesh.geometry.computeBoundingBox()
+			mesh.geometry.computeBoundingSphere()
+
+			let collision = false
+			let thisBound = mesh.geometry.boundingBox.clone()
+			thisBound.translate(mesh.position)
+
+			for (let existingMesh of this.meshes) {
+				let thatBound = existingMesh.geometry.boundingBox.clone()
+				thatBound.translate(existingMesh.position)
+				if (thisBound.intersectsBox(thatBound)) {
+					collision = true
+					break
+				}
+			}
+			if (collision) {
+				// move farther
+				lo = next
+			} else {
+				// move closer
+				if (hi - lo < .0001) // done
+					break
+				hi = next
+			}
+			next = lo + .6 * (hi - lo)
+		}
 	}
 }
 

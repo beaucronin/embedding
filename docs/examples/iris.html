@@ -79,8 +79,8 @@
 							z: (dp) => dp.get('sepal_length') - 2
 						},
 						object3d: (dp) => new Iris(dp),
-						ry: .85 * Math.PI,
-						z: 2
+						rotation: { y: .85 * Math.PI },
+						position: { z: 2 }
 					});
 				EMBED.register(embedding);
 				EMBED.startAnimation();

@@ -47,11 +47,9 @@
 					{
 						groupBy: (dp) => dp.get('species'),
 						aggregate: EMBED.AggregateEmbedding.Aggregates.mean,
-						y: 1,
-						z: -4,
+						position: { x: 0, y: 1, z: -4 },
+						rotation: { x: Math.PI / 4, z: Math.PI / 8 },
 						baseSize: 0.75,
-						rx: Math.PI / 4,
-						rz: Math.PI / 8
 					});
 				EMBED.register(embedding);
 				EMBED.startAnimation();

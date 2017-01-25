@@ -1,6 +1,6 @@
 {
   "name": "embedding",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Embedding data into time and space",
   "main": "src/main.js",
   "scripts": {
@@ -41,6 +41,6 @@
     "three": "^0.81.2",
     "three-orbit-controls": "^72.0.0",
     "tween.js": "^16.3.5",
-    "webvr-boilerplate": "^0.4.9"
+    "webvr-boilerplate": "beaucronin/webvr-boilerplate"
   }
 }

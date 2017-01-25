@@ -73,7 +73,8 @@
 			 });
 		EMBED.register(embedding);
 
-		let status = new EMBED.ConsoleEmbedding( scene, null, { width: 4.0, z: -10, font: "Bold 24px Arial" } );
+		let status = new EMBED.ConsoleEmbedding( scene, null, { 
+			width: 4.0, position: {z: -10}, font: "Bold 24px Arial" } );
 
 		// These input callbacks need to be cleaned up
 		EMBED.input.on('rayover', function(mesh) {
