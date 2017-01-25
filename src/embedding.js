@@ -3,7 +3,7 @@ import assign from 'object-assign';
 import TWEEN from 'tween.js';
 import { maybeEval, randomRange, vectorFromObject } from './utils.js'
 import { input } from './main.js'
-import { mean, max, min, sum, identity, groupBy, map, keys, sortBy } from 'lodash'
+import { mean, max, min, sum, identity, groupBy, map, keys, sortBy, zip, unzip } from 'lodash'
 import chroma from 'chroma-js'
 
 /**
@@ -96,7 +96,7 @@ export class Embedding {
 }
 
 /**
- * Base class for embeddings that render Datapoints as individual meshes
+ * Base class for embeddings that render each Datapoint as an Object3D
  */
 export class MeshEmbedding extends Embedding {
 	constructor(scene, dataset, options={}) {
@@ -666,7 +666,7 @@ export class AggregateEmbedding extends Embedding {
 	}
 
 	initMeshes() {
-		this.meshes.map((mesh) => this.remove(mesh));
+		this.meshes.map((mesh) => this.obj3D.remove(mesh));
 		this.meshes = [];
 
 		let aggValues = this.computeAggValues_();
@@ -680,7 +680,9 @@ export class AggregateEmbedding extends Embedding {
 		let groupedValues = keys(groups)
 			.map((key) => groups[key].map(
 				(dp) => dp.get(this.attr)));
-		let aggValues = groupedValues.map((vals) => this.options.aggregate(vals));
+		let aggValues = zip(
+			keys(groups), 
+			groupedValues.map((vals) => this.options.aggregate(vals)));
 		return aggValues;
 	}
 
@@ -692,9 +694,10 @@ export class AggregateEmbedding extends Embedding {
 				color: this.options.color 
 			});
 			let mesh = new THREE.Mesh(geo, mat);
-			let scale = Math.cbrt(aggValue);
+			let scale = Math.cbrt(aggValue[1]);
 			mesh.scale.set(scale, scale, scale);
 			mesh.position.set(i, 0, 0)
+			mesh.userData.name = aggValue[0]
 			this.obj3D.add(mesh);
 			this.meshes.push(mesh);
 		})
@@ -741,13 +744,13 @@ export class BallChart extends AggregateEmbedding {
 
 	createMeshes_(aggValues) {
 		let scale = chroma.scale(['green', 'white', 'red']);
-		let total = sum(aggValues);
+		let total = sum(unzip(aggValues)[1]);
 		let accum = 0;
 		map(aggValues, (aggValue, i) => {
 			// Compute the sphere slice parameters
 			let start = accum / total;
-			let end = (accum + aggValue) / total;
-			accum += aggValue;
+			let end = (accum + aggValue[1]) / total;
+			accum += aggValue[1];
 			let phiStart = start * 2 * Math.PI;
 			let phiLength = (end - start) * 2 * Math.PI;
 
@@ -786,10 +789,19 @@ export class Histogram extends AggregateEmbedding {
 			baseSize: 1
 		}, options)
 		super(attr, scene, dataset, options);
+		if (this.options.texture) {
+			let loader = new THREE.TextureLoader()
+			this.texture = loader.load(
+				this.options.texture,
+				(texture) => {
+					this.texture = texture
+					this.initMeshes()
+				})
+		}
 	}
 
 	createMeshes_(aggValues) {
-		let sortedValues = sortBy(aggValues, (x) => -1 * x)
+		let sortedValues = sortBy(aggValues, (x) => -1 * x[1])
 		map(sortedValues, (val, i) => {
 			// if (i > 10) return
 			let mesh = this.createMesh_(val, this.options.layout)
@@ -804,18 +816,44 @@ export class Histogram extends AggregateEmbedding {
 
 	createMesh_(val, layout) {
 		let geo;
+		let valObject = {
+			name: val[0],
+			value: val[1]
+		}
 		let mat = new THREE.MeshStandardMaterial({ 
-			emissive: this.options.emissive, 
-			color: this.options.color,
-			roughness: this.options.roughness,
-			metalness: this.options.metalness
+			color: maybeEval(this.options.color, valObject),
+			emissive: maybeEval(this.options.emissive, valObject),
+			metalness: maybeEval(this.options.metalness, valObject),
+			roughness: maybeEval(this.options.roughness, valObject)
 		});
+		if (this.texture) {
+			let texture = this.texture.clone()
+			texture.wrapS = THREE.RepeatWrapping
+			texture.wrapT = THREE.RepeatWrapping
+			let repeat = Math.ceil(Math.cbrt(val[1]) / 5)
+			texture.repeat.set(repeat, repeat)
+			texture.needsUpdate = true
+			mat.bumpMap = texture
+			mat.needsUpdate = true
+		}
 		let r
 		switch(layout.shape) {
 			case 'box':
 				break;
+			case 'tetrahedron':
+				r = Math.cbrt(val[1]) * this.options.baseSize
+				geo = new THREE.TetrahedronGeometry(r)
+				geo.computeBoundingBox()
+				geo.computeBoundingSphere()
+				break;
+			case 'octahedron':				
+				r = Math.cbrt(val[1]) * this.options.baseSize
+				geo = new THREE.OctahedronGeometry(r)
+				geo.computeBoundingBox()
+				geo.computeBoundingSphere()
+				break;
 			case 'sphere':
-				r = Math.cbrt(val) * this.options.baseSize
+				r = Math.cbrt(val[1]) * this.options.baseSize
 				if (r == 0) return
 				geo = new THREE.SphereGeometry(r, 32, 32)
 				geo.computeBoundingBox()
@@ -825,7 +863,7 @@ export class Histogram extends AggregateEmbedding {
 				// choose a random height/radius ratio, and solve for 
 				// height and radius values under fixed volume
 				let a = randomRange(0.5, 2) // a = h / (2*r)
-				r = Math.cbrt(val / (2 * Math.PI * a)) * this.options.baseSize
+				r = Math.cbrt(val[1] / (2 * Math.PI * a)) * this.options.baseSize
 				let h = 2 * a * r 
 				geo = new THREE.CylinderGeometry(r, r, h, 32)
 				geo.computeBoundingBox()
@@ -833,6 +871,7 @@ export class Histogram extends AggregateEmbedding {
 				break
 		}
 		let mesh = new THREE.Mesh(geo, mat)
+		mesh.userData.name = val[0]
 		return mesh
 	}
 
@@ -902,7 +941,6 @@ export class Histogram extends AggregateEmbedding {
 			}
 			next = lo + .6 * (hi - lo)
 		}
-		console.log(count)
 	}
 }
 

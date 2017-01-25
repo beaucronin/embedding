@@ -1,0 +1,109 @@
+Department,Amount_B,color
+Department of Health and Human Services,1027507,gray
+Social Security Administration,944122,gray
+Department of Defense--Military Programs,562499,gray
+Department of the Treasury,485623,gray
+Department of Veterans Affairs,159216,gray
+Department of Agriculture,139115,gray
+Office of Personnel Management,91734,gray
+Department of Education,90029,gray
+Department of Transportation,75425,gray
+Other Defense Civil Programs,62966,gray
+Department of Labor,45217,gray
+Department of Homeland Security,42573,gray
+Department of Housing and Urban Development,35527,gray
+Department of Justice,26906,gray
+Department of State,26498,gray
+Department of Energy,25424,gray
+International Assistance Programs,20950,gray
+National Aeronautics and Space Administration,18268,gray
+Department of the Interior,12340,gray
+Department of Commerce,8958,gray
+Judicial Branch,7137,gray
+Environmental Protection Agency,7007,gray
+National Science Foundation,6837,gray
+Corps of Engineers--Civil Works,6685,gray
+Legislative Branch,4330,gray
+Other Independent Agencies,2163,gray
+Corporation for National and Community Service,1316,gray
+Nuclear Regulatory Commission,1103,gray
+Smithsonian Institution,1048,gray
+Patient-Centered Outcomes Research Trust Fund,924,gray
+Broadcasting Board of Governors ,799,gray
+Securities and Exchange Commission,676,gray
+Bureau of Consumer Financial Protection,629,gray
+Intelligence Community Management Account,577,gray
+Central Intelligence Agency,514,gray
+Corporation for Public Broadcasting,445,gray
+Legal Services Corporation,424,gray
+Executive Office of the President,397,gray
+Tennessee Valley Authority,394,gray
+Equal Employment Opportunity Commission,365,gray
+National Archives and Records Administration,342,gray
+Federal Drug Control Programs,288,gray
+Affordable Housing Program,287,gray
+National Labor Relations Board,278,gray
+Commodity Futures Trading Commission,273,gray
+Institute of Museum and Library Services,267,gray
+Federal Housing Finance Agency,262,gray
+Court Services and Offender Supervision Agency for the District of Columbia,231,gray
+Federal Retirement Thrift Investment Board,209,gray
+Neighborhood Reinvestment Corporation,182,gray
+Federal Trade Commission,172,gray
+National Endowment for the Arts,150,red
+National Endowment for the Humanities,150,red
+National Infrastructure Bank,129,gray
+Consumer Product Safety Commission,121,gray
+Corporation for Travel Promotion,103,gray
+National Transportation Safety Board,102,gray
+Electric Reliability Organization,100,gray
+Appalachian Regional Commission,89,gray
+International Trade Commission,86,gray
+Federal Election Commission,68,gray
+United States Holocaust Memorial Museum,53,gray
+United States Institute of Peace,48,gray
+Federal Mediation and Conciliation Service,47,gray
+Merit Systems Protection Board,40,gray
+United States Court of Appeals for Veterans Claims,40,gray
+Civilian Property Realignment Board,33,gray
+Defense Nuclear Facilities Safety Board,30,gray
+Denali Commission,28,gray
+Federal Maritime Commission,27,gray
+Federal Labor Relations Authority,26,gray
+National Railroad Passenger Corporation Office of Inspector General,25,gray
+Recovery Accountability and Transparency Board,21,gray
+Office of Special Counsel,20,gray
+Federal Mine Safety and Health Review Commission,17,gray
+Delta Regional Authority,16,gray
+Presidio Trust,16,gray
+Office of Government Ethics,15,gray
+Morris K. Udall and Stewart L. Udall Foundation ,13,gray
+National Mediation Board,13,gray
+Occupational Safety and Health Review Commission,13,gray
+Chemical Safety and Hazard Investigation Board,12,gray
+Institute of American Indian and Alaska Native Culture and Arts Development,11,gray
+Commission on Civil Rights,10,gray
+Election Assistance Commission,9,gray
+Access Board,8,gray
+National Capital Planning Commission,8,gray
+Office of Navajo and Hopi Indian Relocation,8,gray
+Federal Communications Commission,7,gray
+Privacy and Civil Liberties Oversight Board,7,gray
+Advisory Council on Historic Preservation,6,gray
+State Justice Institute,6,gray
+Committee for Purchase from People Who Are Blind or Severely Disabled,5,gray
+Vietnam Education Foundation ,5,gray
+Barry Goldwater Scholarship and Excellence in Education Foundation,4,gray
+Northern Border Regional Commission,4,gray
+United States Interagency Council on Homelessness,4,gray
+Administrative Conference of the United States ,3,gray
+Commission of Fine Arts,3,gray
+Japan-United States Friendship Commission,3,gray
+Marine Mammal Commission,3,gray
+National Council on Disability,3,gray
+Nuclear Waste Technical Review Board,3,gray
+James Madison Memorial Fellowship Foundation,2,gray
+Christopher Columbus Fellowship Foundation,1,gray
+Council of the Inspectors General on Integrity and Efficiency,0,gray
+Small Business Administration,-746,gray
+General Services Administration,-890,gray

@@ -72,7 +72,7 @@ THREE.VRControls = function ( object, onError ) {
 
 	};
 
-	this.update = function () {
+	this.update = function (pin = false) {
 
 		if ( vrDisplay ) {
 
@@ -101,7 +101,7 @@ THREE.VRControls = function ( object, onError ) {
 
 			} else {
 
-				object.position.set( 0, 0, 0 );
+				// if (pin) object.position.set( 0, 0, 0 );
 
 			}
 
@@ -115,8 +115,10 @@ THREE.VRControls = function ( object, onError ) {
 					object.applyMatrix( standingMatrix );
 
 				} else {
+					if (pin) {
+						object.position.setY( this.userHeight );
+					}
 
-					object.position.setY( object.position.y + this.userHeight );
 
 				}
 

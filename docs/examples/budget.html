@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<title>Embedding.js Federal Budget by Department</title>
+
+		<style>
+			/* Ensures that the canvas fills the entire window, and that there are no scrollbars */
+			body {
+				width: 100%;
+				height: 100%;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				padding: 0;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="js/embedding.min.js"></script>
+		<script>
+		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene(
+			{ room: { boxSize: 2000 } });
+		var dataset, embedding;
+		var THREE = EMBED.THREE;
+		// scene.fog = new THREE.FogExp2( 0xefd1b5, 0.25 )
+		scene.fog = new THREE.Fog( 0xc1c1c1, 1, 600 )
+
+		let dataFile = 'data/2015_expenditures_by_agency.csv'
+		let aggregateAttribute = 'Amount_B'
+
+		lightPositions = [
+			[1000, 500, 500],
+			[-500, 500, 0],
+			[ 0, 500, 1000]
+		];
+		lightPositions.forEach((p) => {
+			let light = new THREE.PointLight(0xffffff, 0.5);
+			light.position.set(p[0], p[1], p[2]);
+			scene.add(light);
+			scene.add(new THREE.PointLightHelper(light, 0.1));
+		})
+
+		window.addEventListener('keydown', (e) => {
+			if (e.keyCode == 87) { //w
+				camera.position.add(camera.getWorldDirection())
+			} else if (e.keyCode == 65) { //a
+				camera.position.setX(camera.position.x - 1)
+			} else if (e.keyCode == 83) { //s
+				camera.position.subtract(camera.getWorldDirection())
+			} else if (e.keyCode == 68) { //d
+				camera.position.setX(camera.position.x + 1)
+			}
+		})
+
+		EMBED.Dataset.createFromCSV(dataFile, 
+			function(dataset) {
+				embedding = new EMBED.Histogram(aggregateAttribute, scene, dataset, 
+					{
+						groupBy: EMBED.AggregateEmbedding.IndividualGrouping,
+						aggregate: EMBED.AggregateEmbedding.Aggregates.identity,
+						filter: (dp) => typeof(dp.get(aggregateAttribute)) == 'number' && dp.get(aggregateAttribute) > 0,
+						layout: {
+							shape: 'octahedron',
+							thetaCenter: Math.PI / 2,
+							thetaWidth: Math.PI * .4,
+							align: 'center'
+						},
+						color: (val) => {
+							if (val.name == 51)
+								return 0xff1654
+							else if (val.name == 1)
+								return 0x3538ff
+							else
+								return 0x759179
+						},
+						// emissive: 0x222222,
+						roughness: 0.5,
+						metalness: 0.2,
+						baseSize: 1,
+						texture: 'assets/brickwork-bump-map.jpg',
+						position: { y: 0, z: -500 },
+						rotation: { x: 0*Math.PI / 8 }
+					});
+				EMBED.register(embedding);
+
+				EMBED.startAnimation();
+			}
+		);
+
+		</script>
+	</body>
+</html>
