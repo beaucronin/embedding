@@ -1,0 +1,113 @@
+ICD_Group,ICD_Group_Code,Deaths_2006-2015,Deaths_10yr_avg
+Salmonella infections (A01-A02),GR113-001,388,38.8
+"Shigellosis and amebiasis (A03,A06)",GR113-002,57,5.7
+"Certain other intestinal infections (A04,A07-A09)",GR113-003,93894,9389.4
+Respiratory tuberculosis (A16),GR113-005,4052,405.2
+Other tuberculosis (A17-A19),GR113-006,1404,140.4
+Whooping cough (A37),GR113-007,136,13.6
+"Scarlet fever and erysipelas (A38,A46)",GR113-008,27,2.7
+Meningococcal infection (A39),GR113-009,774,77.4
+Septicemia (A40-A41),GR113-010,364899,36489.9
+Syphilis (A50-A53),GR113-011,395,39.5
+"Arthropod-borne viral encephalitis (A83-A84,A85.2)",GR113-013,41,4.1
+Measles (B05),GR113-014,6,0.6
+Viral hepatitis (B15-B19),GR113-015,77155,7715.5
+Human immunodeficiency virus (HIV) disease (B20-B24),GR113-016,86508,8650.8
+Malaria (B50-B54),GR113-017,67,6.7
+"Other and unspecified infectious and parasitic diseases and their sequelae (A00,A05,A20-A36,A42-A44,A48-A49,A54-A79,A81-A82,A85.0-A85.1,A85.8,A86-B04,B06-B09,B25-B49,B55-B99)",GR113-018,59944,5994.4
+"Malignant neoplasms of lip, oral cavity and pharynx (C00-C14)",GR113-020,85792,8579.2
+Malignant neoplasm of esophagus (C15),GR113-021,143322,14332.2
+Malignant neoplasm of stomach (C16),GR113-022,112790,11279
+"Malignant neoplasms of colon, rectum and anus (C18-C21)",GR113-023,527449,52744.9
+Malignant neoplasms of liver and intrahepatic bile ducts (C22),GR113-024,210613,21061.3
+Malignant neoplasm of pancreas (C25),GR113-025,372494,37249.4
+Malignant neoplasm of larynx (C32),GR113-026,37180,3718
+"Malignant neoplasms of trachea, bronchus and lung (C33-C34)",GR113-027,1572753,157275.3
+Malignant melanoma of skin (C43),GR113-028,89861,8986.1
+Malignant neoplasm of breast (C50),GR113-029,413640,41364
+Malignant neoplasm of cervix uteri (C53),GR113-030,40526,4052.6
+"Malignant neoplasms of corpus uteri and uterus, part unspecified (C54-C55)",GR113-031,85330,8533
+Malignant neoplasm of ovary (C56),GR113-032,143989,14398.9
+Malignant neoplasm of prostate (C61),GR113-033,282675,28267.5
+Malignant neoplasms of kidney and renal pelvis (C64-C65),GR113-034,133539,13353.9
+Malignant neoplasm of bladder (C67),GR113-035,148331,14833.1
+"Malignant neoplasms of meninges, brain and other parts of central nervous system (C70-C72)",GR113-036,145562,14556.2
+Hodgkin's disease (C81),GR113-038,11835,1183.5
+Non-Hodgkin's lymphoma (C82-C85),GR113-039,203535,20353.5
+Leukemia (C91-C95),GR113-040,227070,22707
+"Multiple myeloma and immunoproliferative neoplasms (C88,C90)",GR113-041,117489,11748.9
+"Other and unspecified malignant neoplasms of lymphoid, hematopoietic and related tissue (C96)",GR113-042,752,75.2
+"All other and unspecified malignant neoplasms (C17,C23-C24,C26-C31,C37-C41,C44-C49,C51-C52,C57-C60,C62-C63,C66,C68-C69,C73-C80,C97)",GR113-043,655900,65590
+"In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior (D00-D48)",GR113-044,149919,14991.9
+Anemias (D50-D64),GR113-045,48922,4892.2
+Diabetes mellitus (E10-E14),GR113-046,731524,73152.4
+Malnutrition (E40-E46),GR113-048,31441,3144.1
+Other nutritional deficiencies (E50-E64),GR113-049,1841,184.1
+"Meningitis (G00,G03)",GR113-050,6018,601.8
+Parkinson's disease (G20-G21),GR113-051,228951,22895.1
+Alzheimer's disease (G30),GR113-052,849476,84947.6
+Acute rheumatic fever and chronic rheumatic heart diseases (I00-I09),GR113-055,31926,3192.6
+Hypertensive heart disease (I11),GR113-056,346040,34604
+Hypertensive heart and renal disease (I13),GR113-057,35433,3543.3
+Acute myocardial infarction (I21-I22),GR113-059,1238607,123860.7
+Other acute ischemic heart diseases (I24),GR113-060,40273,4027.3
+"Atherosclerotic cardiovascular disease, so described (I25.0)",GR113-062,591365,59136.5
+"All other forms of chronic ischemic heart disease (I20,I25.1-I25.9)",GR113-063,1981094,198109.4
+Acute and subacute endocarditis (I33),GR113-065,12167,1216.7
+"Diseases of pericardium and acute myocarditis (I30-I31,I40)",GR113-066,8455,845.5
+Heart failure (I50),GR113-067,615546,61554.6
+"All other forms of heart disease (I26-I28,I34-I38,I42-I49,I51)",GR113-068,1216310,121631
+"Essential hypertension and hypertensive renal disease (I10,I12,I15)",GR113-069,276089,27608.9
+Cerebrovascular diseases (I60-I69),GR113-070,1325419,132541.9
+Atherosclerosis (I70),GR113-071,72347,7234.7
+Aortic aneurysm and dissection (I71),GR113-073,107898,10789.8
+"Other diseases of arteries, arterioles and capillaries (I72-I78)",GR113-074,90092,9009.2
+Other disorders of circulatory system (I80-I99),GR113-075,42822,4282.2
+Influenza (J09-J11),GR113-077,22591,2259.1
+Pneumonia (J12-J18),GR113-078,520255,52025.5
+Acute bronchitis and bronchiolitis (J20-J21),GR113-080,2219,221.9
+"Other and unspecified acute lower respiratory infections (J22,U04)",GR113-081,471,47.1
+"Bronchitis, chronic and unspecified (J40-J42)",GR113-083,6476,647.6
+Emphysema (J43),GR113-084,99526,9952.6
+Asthma (J45-J46),GR113-085,35021,3502.1
+"Other chronic lower respiratory diseases (J44,J47)",GR113-086,1265786,126578.6
+"Pneumoconioses and chemical effects (J60-J66,J68)",GR113-087,8242,824.2
+Pneumonitis due to solids and liquids (J69),GR113-088,176708,17670.8
+"Other diseases of respiratory system (J00-J06,J30- J39,J67,J70-J98)",GR113-089,323527,32352.7
+Peptic ulcer (K25-K28),GR113-090,30342,3034.2
+Diseases of appendix (K35-K38),GR113-091,4007,400.7
+Hernia (K40-K46),GR113-092,18595,1859.5
+Alcoholic liver disease (K70),GR113-094,166223,16622.3
+Other chronic liver disease and cirrhosis (K73-K74),GR113-095,166465,16646.5
+Cholelithiasis and other disorders of gallbladder (K80-K82),GR113-096,33703,3370.3
+"Acute and rapidly progressive nephritic and nephrotic syndrome (N00-N01,N04)",GR113-098,2958,295.8
+"Chronic glomerulonephritis, nephritis and nephropathy not specified as acute or chronic, and renal sclerosis unspecified (N02-N03,N05-N07,N26)",GR113-099,21134,2113.4
+Renal failure (N17-N19),GR113-100,451527,45152.7
+"Other disorders of kidney (N25,N27)",GR113-101,251,25.1
+"Infections of kidney (N10-N12,N13.6,N15.1)",GR113-102,6482,648.2
+Hyperplasia of prostate (N40),GR113-103,5158,515.8
+Inflammatory diseases of female pelvic organs (N70-N76),GR113-104,1272,127.2
+Pregnancy with abortive outcome (O00-O07),GR113-106,280,28
+"Other complications of pregnancy, childbirth and the puerperium (O10-O99)",GR113-107,9151,915.1
+Certain conditions originating in the perinatal period (P00-P96),GR113-108,127866,12786.6
+"Congenital malformations, deformations and chromosomal abnormalities (Q00-Q99)",GR113-109,99301,9930.1
+"Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified (R00-R99)",GR113-110,366206,36620.6
+All other diseases (Residual) ,GR113-111,2807156,280715.6
+"Motor vehicle accidents (V02-V04,V09.0,V09.2,V12-V14,V19.0-V19.2,V19.4-V19.6,V20-V79,V80.3-V80.5,V81.0-V81.1,V82.0-V82.1,V83-V86,V87.0-V87.8,V88.0-V88.8,V89.0,V89.2)",GR113-114,380841,38084.1
+"Other land transport accidents (V01,V05-V06,V09.1,V09.3-V09.9,V10-V11,V15-V18,V19.3,V19.8-V19.9,V80.0-V80.2,V80.6-V80.9,V81.2-V81.9,V82.2-V82.9,V87.9,V88.9,V89.1,V89.3,V89.9)",GR113-115,10449,1044.9
+"Water, air and space, and other and unspecified transport accidents and their sequelae (V90-V99,Y85)",GR113-116,17064,1706.4
+Falls (W00-W19),GR113-118,270052,27005.2
+Accidental discharge of firearms (W32-W34),GR113-119,5726,572.6
+Accidental drowning and submersion (W65-W74),GR113-120,35375,3537.5
+"Accidental exposure to smoke, fire and flames (X00-X09)",GR113-121,28162,2816.2
+Accidental poisoning and exposure to noxious substances (X40-X49),GR113-122,354265,35426.5
+"Other and unspecified nontransport accidents and their sequelae (W20-W31,W35-W64,W75-W99,X10-X39,X50-X59,Y86)",GR113-123,171564,17156.4
+Intentional self-harm (suicide) by discharge of firearms (X72-X74),GR113-125,195768,19576.8
+"Intentional self-harm (suicide) by other and unspecified means and their sequelae (*U03,X60-X71,X75-X84,Y87.0)",GR113-126,191671,19167.1
+"Assault (homicide) by discharge of firearms (*U01.4,X93-X95)",GR113-128,117995,11799.5
+"Assault (homicide) by other and unspecified means and their sequelae (*U01.0-*U01.3,*U01.5-*U01.9,*U02,X85-X92,X96-Y09,Y87.1)",GR113-129,52472,5247.2
+"Legal intervention (Y35,Y89.0)",GR113-130,4637,463.7
+"Discharge of firearms, undetermined intent (Y22-Y24)",GR113-132,2590,259
+"Other and unspecified events of undetermined intent and their sequelae (Y10-Y21,Y25-Y34,Y87.2,Y89.9)",GR113-133,46490,4649
+"Operations of war and their sequelae (Y36,Y89.1)",GR113-134,172,17.2
+"Complications of medical and surgical care (Y40-Y84,Y88)",GR113-135,25995,2599.5

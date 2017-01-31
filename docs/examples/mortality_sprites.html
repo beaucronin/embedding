@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<title>Embedding.js US Mortality 2006-2015</title>
+
+		<style>
+			/* Ensures that the canvas fills the entire window, and that there are no scrollbars */
+			body {
+				width: 100%;
+				height: 100%;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				padding: 0;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="js/embedding.js"></script>
+		<script>
+		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene(
+			{ room: { boxSize: 2000 } });
+		var dataset, embedding;
+		var THREE = EMBED.THREE;
+
+		let dataFile = 'data/CDC_Deaths_2006_2015_ICD113.csv'
+		let aggregateAttribute = 'Deaths_10yr_avg'
+		let indexAttribute = 'ICD_Group'
+
+		EMBED.Dataset.createFromCSV(dataFile, 
+			function(dataset) {
+				embedding = new EMBED.Histogram(aggregateAttribute, scene, dataset, 
+					{
+						groupBy: EMBED.AggregateEmbedding.IndividualGrouping,
+						aggregate: EMBED.AggregateEmbedding.Aggregates.identity,
+					});
+				EMBED.register(embedding);
+
+				EMBED.startAnimation();
+			},
+			indexAttribute
+		);
+
+		</script>
+	</body>
+</html>
