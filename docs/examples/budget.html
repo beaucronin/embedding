@@ -23,7 +23,7 @@
 		</style>
 	</head>
 	<body>
-		<script src="js/embedding.min.js"></script>
+		<script src="js/embedding.js"></script>
 		<script>
 		const { scene, camera, manager, effect, cameraControls } = EMBED.initScene(
 			{ room: { boxSize: 2000 } });
@@ -51,11 +51,11 @@
 			if (e.keyCode == 87) { //w
 				camera.position.add(camera.getWorldDirection())
 			} else if (e.keyCode == 65) { //a
-				camera.position.setX(camera.position.x - 1)
+				camera.position.add(camera.getWorldDirection().applyAxisAngle(new THREE.Vector3(0,1,0), Math.PI / 2).multiplyScalar(1.1))
 			} else if (e.keyCode == 83) { //s
-				camera.position.subtract(camera.getWorldDirection())
+				camera.position.add(camera.getWorldDirection().negate())
 			} else if (e.keyCode == 68) { //d
-				camera.position.setX(camera.position.x + 1)
+				camera.position.add(camera.getWorldDirection().applyAxisAngle(new THREE.Vector3(0,1,0), - 1 * Math.PI / 2).multiplyScalar(1.1))
 			}
 		})
 
@@ -73,9 +73,9 @@
 							align: 'center'
 						},
 						color: (val) => {
-							if (val.name == 51)
+							if (val.name == 'National Endowment for the Arts')
 								return 0xff1654
-							else if (val.name == 1)
+							else if (val.name == 'Department of Defense--Military Programs')
 								return 0x3538ff
 							else
 								return 0x759179
@@ -89,9 +89,36 @@
 						rotation: { x: 0*Math.PI / 8 }
 					});
 				EMBED.register(embedding);
+				console.log(dataset)
+
+				let status = new EMBED.ConsoleEmbedding(scene, null, 
+					{
+						width: 10,
+						font: "Bold 24px Arial",
+						fillStyle: "rgba(15,15,15,0.90)"
+					})
+				EMBED.input.on('raydown', function(mesh) {
+					if (mesh) {
+						// status.setText(mesh.userData.description)
+						let v = new THREE.Vector3()
+						v.setFromMatrixPosition(mesh.matrixWorld)
+						status.setText(mesh.userData.description)
+						status.options.x = v.x
+						status.options.y = 20
+						status.options.z = v.z
+						status.obj3D.lookAt(camera.position)
+						// status.obj3D.rotateY(Math.PI / 2)
+					}
+				});
+				EMBED.input.on('rayout', function(mesh) {
+					if (mesh) {
+						// status.setText('');
+					}
+				});
 
 				EMBED.startAnimation();
-			}
+			},
+			'Department'
 		);
 
 		</script>
