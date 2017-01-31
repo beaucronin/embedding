@@ -605,7 +605,7 @@ export class ConsoleEmbedding extends Embedding {
 				this.getOpt('width') * this.canvas.width / 256, this.getOpt('width') * this.canvas.height / 128),
 			material
 		);
-		this.mesh.position.set(this.getOpt('x'), this.getOpt('y'), this.getOpt('z'));
+		this.obj3D.position.set(this.getOpt('x'), this.getOpt('y'), this.getOpt('z'));
 		this.obj3D.add(this.mesh);
 	}
 }
@@ -824,7 +824,8 @@ export class Histogram extends AggregateEmbedding {
 			color: maybeEval(this.options.color, valObject),
 			emissive: maybeEval(this.options.emissive, valObject),
 			metalness: maybeEval(this.options.metalness, valObject),
-			roughness: maybeEval(this.options.roughness, valObject)
+			roughness: maybeEval(this.options.roughness, valObject),
+			side: THREE.FrontSide
 		});
 		if (this.texture) {
 			let texture = this.texture.clone()
@@ -871,7 +872,7 @@ export class Histogram extends AggregateEmbedding {
 				break
 		}
 		let mesh = new THREE.Mesh(geo, mat)
-		mesh.userData.name = val[0]
+		mesh.userData.description = val[0]
 		return mesh
 	}
 
