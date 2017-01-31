@@ -9,9 +9,10 @@ export class Dataset {
 	/**
 	 *
 	 */
-	constructor() {
+	constructor(idAttribute = '_id') {
 		this.datapoints = {};
 		this.embeddings = [];
+		this.idAttribute = idAttribute
 	}
 
 	/**
@@ -26,16 +27,18 @@ export class Dataset {
 	 * @param {String} url - The url where the csv file can be found
 	 * @param {CSVDatasetCallback} callback
 	 */
-	static createFromCSV(url, callback) {
+	static createFromCSV(url, callback, idAttribute='_id') {
 		Papa.parse(url, {
 			download: true,
 			header: true,
 			dynamicTyping: true,
 			complete: function(results) {
-				var ds = new Dataset();
+				var ds = new Dataset(idAttribute);
 				for (let i in results.data) {
 					let dp = results.data[i];
-					dp._id = i;
+					if (!dp[idAttribute]) {
+						dp[idAttribute] = i;
+					}
 					ds.add(dp);
 				}
 				callback(ds);
@@ -50,7 +53,7 @@ export class Dataset {
 	add(datapoint) {
 		var d;
 		if (! (datapoint instanceof Datapoint)) {
-			d = new Datapoint(datapoint);
+			d = new Datapoint(datapoint, this.idAttribute);
 		} else {
 			d = datapoint;
 		}
