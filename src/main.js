@@ -12,6 +12,7 @@ import TWEEN from 'tween.js';
 import { detectMode } from './detection-utils.js';
 import { VRDisplay } from 'webvr-polyfill';
 import WebVRManager from 'webvr-boilerplate';
+import assign from 'object-assign';
 
 import {
 	WebSocketDataset, 
@@ -46,6 +47,10 @@ export var input;
  * of objects that should probably be kept around by the enclosing script.
  */
 export function initScene(options = {}) {
+	options = assign({
+		room: false,
+		wasd: true
+	}, options)
 	const scene = new THREE.Scene();
 	const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 10;
@@ -90,7 +95,7 @@ export function initScene(options = {}) {
 	updateFunc = options.updateFunc;
 
 	if (options.room) createRoom(options.room, scene);
-
+	if (options.wasd) initWASD()
 
 	return { scene, camera, manager, effect, cameraControls };
 }
@@ -168,6 +173,25 @@ function createRoom(options, scene) {
 
 		scene.add(skybox);
 	}
+}
+
+function initWASD() {
+	window.addEventListener('keydown', (e) => {
+		switch (e.keyCode) {
+			case 87: //w
+				camera.position.add(camera.getWorldDirection())
+				break
+			case 65: //a
+				camera.position.add(camera.getWorldDirection().applyAxisAngle(new THREE.Vector3(0,1,0), Math.PI / 2).multiplyScalar(1.1))
+				break
+			case 83: //s
+				camera.position.add(camera.getWorldDirection().negate())
+				break
+			case 68: //d
+				camera.position.add(camera.getWorldDirection().applyAxisAngle(new THREE.Vector3(0,1,0), - 1 * Math.PI / 2).multiplyScalar(1.1))
+				break
+		}
+	})	
 }
 
 module.exports = {
