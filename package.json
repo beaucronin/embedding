@@ -1,6 +1,6 @@
 {
   "name": "embedding",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Embedding data into time and space",
   "main": "src/main.js",
   "scripts": {
